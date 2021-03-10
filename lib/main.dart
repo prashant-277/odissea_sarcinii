@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 import 'Registration/RegistrationPage.dart';
 
@@ -17,9 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Color(0xff4e2c82),
-          accentColor: Colors.purple[300]
-        ),
+            primaryColor: Color(0xff4e2c82), accentColor: Colors.purple[300]),
         home: MyHomePage());
   }
 }

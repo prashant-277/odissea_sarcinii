@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/Dashboard_Page.dart';
 import 'package:odiseea_sarcinii/Registration/ForgotPassword_Page.dart';
 import 'package:odiseea_sarcinii/Registration/SignIn_Page.dart';
 import 'package:odiseea_sarcinii/Registration/SignUp_Page.dart';
@@ -81,14 +82,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             FlatButton(
               color: Colors.transparent,
               splashColor: Colors.transparent,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
-
               onPressed: () {
                 Navigator.push(
                     context,
@@ -101,12 +101,33 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 10,
             ),
-            Text(
-              "> Skip",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            )
+            FlatButton(
+                color: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Dashboard_Page()));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                    Text(
+                      "Skip",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ],
+                )),
           ],
         ),
       ),
