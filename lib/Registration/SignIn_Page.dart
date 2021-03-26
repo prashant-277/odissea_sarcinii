@@ -8,9 +8,21 @@ class SignIn_Page extends StatefulWidget {
 }
 
 class _SignIn_PageState extends State<SignIn_Page> {
+  bool rememberMe = false;
+
+  void _onRememberMeChanged(bool newValue) => setState(() {
+        rememberMe = newValue;
+        if (rememberMe) {
+          print("Remember");
+        } else {
+          print("Not Remember");
+        }
+      });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange[100],
       appBar: AppBar(
         backgroundColor: Theme.of(context).accentColor,
         title: Text("Sign In"),
@@ -32,9 +44,7 @@ class _SignIn_PageState extends State<SignIn_Page> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.orange[100],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -90,6 +100,7 @@ class _SignIn_PageState extends State<SignIn_Page> {
                   height: 40,
                   width: MediaQuery.of(context).size.width / 1.4,
                   child: TextField(
+                    obscureText: true,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Password",
@@ -115,15 +126,21 @@ class _SignIn_PageState extends State<SignIn_Page> {
                     color: Colors.white38,
                   ),
                   padding: EdgeInsets.only(left: 5, right: 10)),
-              SizedBox(
-                height: 10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: rememberMe,
+                    onChanged: _onRememberMeChanged,
+                  ),
+                  Text("Remember Password"),
+                ],
               ),
-              Text("Remember Password"),
               SizedBox(
                 height: 10,
               ),
               Container(
-                color: Colors.purple[300],
+                color: Theme.of(context).accentColor,
                 width: MediaQuery.of(context).size.width / 3,
                 height: 35,
                 child: FlatButton(

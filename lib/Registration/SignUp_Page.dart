@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 
 class SignUp_Page extends StatefulWidget {
@@ -8,18 +9,20 @@ class SignUp_Page extends StatefulWidget {
 
 class _SignUp_PageState extends State<SignUp_Page> {
   List<RadioModel> sampleData = new List<RadioModel>();
+  TextEditingController dob_controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    sampleData.add(new RadioModel(false, 'M', 'Male'));
-    sampleData.add(new RadioModel(false, 'F', 'Female'));
+    sampleData.add(new RadioModel(false, 'M', 'Male',Icon(Icons.arrow_back_ios_outlined)));
+    sampleData.add(new RadioModel(false, 'F', 'Female', Icon(Icons.arrow_forward_ios_outlined)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange[100],
       appBar: AppBar(
         backgroundColor: Theme.of(context).accentColor,
         title: Text("Sign Up"),
@@ -41,9 +44,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.orange[100],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -227,35 +228,91 @@ class _SignUp_PageState extends State<SignUp_Page> {
               Container(
                   height: 40,
                   width: MediaQuery.of(context).size.width / 1.2,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.datetime,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Birth Date",
-                        hintStyle: TextStyle(color: Colors.black26),
-                        prefixIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.date_range_outlined,
-                              color: Colors.black26,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Container(
-                                width: 1,
-                                color: Colors.black26,
+                  child: GestureDetector(
+                    onTap: () async {
+                      DateTime date = await
+
+                          /*showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1970),
+                        lastDate:
+                            new DateTime.now().add(new Duration(days: 30)),
+                        builder: (BuildContext context, Widget child) {
+                          return Theme(
+                            data: ThemeData.dark().copyWith(
+                              colorScheme: ColorScheme.dark(
+                                primary: Colors.purpleAccent,
+                                onPrimary: Colors.purple[00],
+                                surface: Colors.purple[200],
+                                onSurface: Colors.purple,
                               ),
-                            )
-                          ],
+                              dialogBackgroundColor: Colors.orange[100],
+                            ),
+                            child: child,
+                          );
+                        },
+                      );*/
+
+                          DatePicker.showDatePicker(
+                        context,
+                        showTitleActions: true,
+                        minTime: DateTime(1980, 3, 5),
+                        maxTime: DateTime.now(),
+                        onChanged: (date) {},
+                        onConfirm: (date) {},
+                        locale: LocaleType.en,
+                        theme: DatePickerTheme(
+                          backgroundColor: Colors.orange[100],
+                          headerColor: Theme.of(context).accentColor,
+                          containerHeight: 200,
+                          doneStyle: TextStyle(color: Colors.white),
+                          cancelStyle: TextStyle(color: Colors.white),
                         ),
-                        suffixIcon: Icon(
-                          Icons.date_range,
-                          color: Colors.black54,
-                        )),
-                    cursorColor: Theme.of(context).primaryColor,
+                      );
+
+                      setState(() {
+                        date = date;
+                        dob_controller.text = date.day.toString() +
+                            "-" +
+                            date.month.toString() +
+                            "-" +
+                            date.year.toString();
+                      });
+                    },
+                    child: AbsorbPointer(
+                      child: TextField(
+                        controller: dob_controller,
+                        maxLines: 1,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Birth Date",
+                            hintStyle: TextStyle(color: Colors.black26),
+                            prefixIcon: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.date_range_outlined,
+                                  color: Colors.black26,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child: Container(
+                                    width: 1,
+                                    color: Colors.black26,
+                                  ),
+                                )
+                              ],
+                            ),
+                            suffixIcon: Icon(
+                              Icons.date_range,
+                              color: Colors.black54,
+                            )),
+                        cursorColor: Theme.of(context).primaryColor,
+                      ),
+                    ),
                   ),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black26),
@@ -360,6 +417,6 @@ class RadioModel {
   bool isSelected;
   final String buttonText;
   final String text;
-
-  RadioModel(this.isSelected, this.buttonText, this.text);
+  final Widget icon;
+  RadioModel(this.isSelected, this.buttonText, this.text,this.icon);
 }

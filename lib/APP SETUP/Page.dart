@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:odiseea_sarcinii/ProfileDetails_Page.dart';
 import 'package:odiseea_sarcinii/Tabs/Baby_page.dart';
 import 'package:odiseea_sarcinii/Tabs/Community_page.dart';
 import 'package:odiseea_sarcinii/Tabs/Me_page.dart';
-import 'package:odiseea_sarcinii/setting.dart';
-import 'package:popup_menu/popup_menu.dart';
 
-import 'Home_Page.dart';
-import 'Profile_page.dart';
+import '../Tabs/Home_Page.dart';
+import '../Tabs/Profile_page.dart';
 
 class page extends StatelessWidget {
   final String title;
@@ -74,7 +71,6 @@ class page extends StatelessWidget {
           }.map((String choice) {
             return PopupMenuItem<String>(
               value: choice,
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

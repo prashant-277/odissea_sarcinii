@@ -1,7 +1,7 @@
 import 'package:custom_navigator/custom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:odiseea_sarcinii/Tabs/Page.dart';
+import 'package:odiseea_sarcinii/APP%20SETUP/Page.dart';
 
 class Dashboard_Page extends StatefulWidget {
   @override
@@ -22,45 +22,34 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
     BottomNavigationBarItem(
       icon: Icon(
         Icons.home_outlined,
-        color: Colors.black38,
       ),
       title: Text(
         'Home',
-        style: TextStyle(color: Colors.black38),
       ),
-      backgroundColor: Colors.purple[100],
     ),
     BottomNavigationBarItem(
       icon: Icon(
         Icons.account_circle_outlined,
-        color: Colors.black38,
       ),
-      title: Text('Me', style: TextStyle(color: Colors.black38)),
-      backgroundColor: Colors.purple[100],
+      title: Text('Me'),
     ),
     BottomNavigationBarItem(
       icon: Icon(
         Icons.child_care_rounded,
-        color: Colors.black38,
       ),
-      title: Text('Baby', style: TextStyle(color: Colors.black38)),
-      backgroundColor: Colors.purple[100],
+      title: Text('Baby'),
     ),
     BottomNavigationBarItem(
       icon: Icon(
         Icons.all_inbox,
-        color: Colors.black38,
       ),
-      title: Text('Community', style: TextStyle(color: Colors.black38)),
-      backgroundColor: Colors.purple[100],
+      title: Text('Community'),
     ),
     BottomNavigationBarItem(
       icon: Icon(
         Icons.person_outline_rounded,
-        color: Colors.black38,
       ),
-      title: Text('Profile', style: TextStyle(color: Colors.black38)),
-      backgroundColor: Colors.purple[100],
+      title: Text('Profile'),
     ),
   ];
 
@@ -69,6 +58,19 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         items: _items,
+        showUnselectedLabels: true,
+        backgroundColor: Colors.orange[100],
+        unselectedItemColor: Colors.black45,
+        selectedItemColor: Theme.of(context).accentColor,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        elevation: 25,
+        showSelectedLabels: true,
+        enableFeedback: true,
+        type: BottomNavigationBarType.fixed,
+        unselectedIconTheme: IconThemeData(color: Colors.black45, size: 25),
+        selectedIconTheme:
+            IconThemeData(color: Theme.of(context).accentColor, size: 25),
         onTap: (index) {
           setState(() {
             _currentIndex = index;

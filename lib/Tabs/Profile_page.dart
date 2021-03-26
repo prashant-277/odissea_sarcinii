@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../ProfileDetails_Page.dart';
-
 class Profile_page extends StatefulWidget {
   @override
   _Profile_pageState createState() => _Profile_pageState();
@@ -93,7 +91,7 @@ class _Profile_pageState extends State<Profile_page> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ListTile(
-                title: Text("Register / Login / Logout"),
+                title: Text("Register / SignIn / SignOut"),
                 leading: Container(
                     height: 60,
                     width: 60,
@@ -169,12 +167,4 @@ class _Profile_pageState extends State<Profile_page> {
           ],
         ));
   }
-
-/*Center(
-        child: FlatButton(
-            child: Text("Profile"),
-            onPressed: () => _openProfileDetailsPage(context)),
-      ),*/
-  _openProfileDetailsPage(BuildContext context) => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => ProfileDetails_Page()));
 }

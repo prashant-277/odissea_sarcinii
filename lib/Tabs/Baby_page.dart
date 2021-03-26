@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/BABY%20TAB/kickCounter_page.dart';
 
 class Baby_page extends StatefulWidget {
   @override
@@ -53,6 +54,9 @@ class _Baby_pageState extends State<Baby_page> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListTile(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>kickCounter_page()));
+              },
               title: Text("Kick Counters"),
               leading: Container(
                   height: 60,
