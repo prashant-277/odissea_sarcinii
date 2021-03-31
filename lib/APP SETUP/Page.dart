@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:odiseea_sarcinii/SETTINGS/feedbackPage.dart';
+import 'package:odiseea_sarcinii/SETTINGS/nameDuedate.dart';
+import 'package:odiseea_sarcinii/SETTINGS/prePregnancyweight.dart';
+import 'package:odiseea_sarcinii/SETTINGS/recommendation.dart';
+import 'package:odiseea_sarcinii/SETTINGS/weeklyInformation.dart';
 import 'package:odiseea_sarcinii/Tabs/Baby_page.dart';
 import 'package:odiseea_sarcinii/Tabs/Community_page.dart';
 import 'package:odiseea_sarcinii/Tabs/Me_page.dart';
+import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
 
 import '../Tabs/Home_Page.dart';
 import '../Tabs/Profile_page.dart';
@@ -58,7 +64,6 @@ class page extends StatelessWidget {
   Widget showlastIcon(String title, BuildContext context) {
     if (title == "Home") {
       return PopupMenuButton<String>(
-        onSelected: handleClick,
         icon: Icon(Icons.settings_applications_outlined),
         itemBuilder: (BuildContext context) {
           return {
@@ -73,24 +78,33 @@ class page extends StatelessWidget {
               value: choice,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(choice),
-                  Container(
-                      height: 15,
-                      width: 15,
-                      child: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: Colors.white,
-                        size: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100.0),
-                        color: Theme.of(context).accentColor,
-                      )),
+                  arrowIcon(),
                 ],
               ),
             );
           }).toList();
+        },
+        onSelected: (page) {
+          if (page == "Name and Due Date") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => nameDuedate()));
+          } else if (page == "Weekly Information") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => weeklyInformation()));
+          } else if (page == "Pre-Pregnancy Weight") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => prePregnancyweight()));
+          } else if (page == "Recommendation") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => recommendation()));
+          } else if (page == "Remove advertisement") {
+          } else if (page == "Feedback") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => feedbackPage()));
+          }
         },
         color: Colors.orange[100],
       );
@@ -102,29 +116,6 @@ class page extends StatelessWidget {
       return Container();
     } else if (title == "Profile") {
       return Container();
-    }
-  }
-
-  void handleClick(String value) {
-    switch (value) {
-      case 'Name and Due Date':
-        print("Name and Due Date");
-        break;
-      case 'Weekly Information':
-        print("Weekly Information");
-        break;
-      case 'Pre-Pregnancy Weight':
-        print("Pre-Pregnancy Weight");
-        break;
-      case 'Recommendation':
-        print("Recommendation");
-        break;
-      case 'Remove advertisement':
-        print("Remove advertisement");
-        break;
-      case 'Feedback':
-        print("Feedback");
-        break;
     }
   }
 }

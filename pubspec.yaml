@@ -45,6 +45,8 @@ dependencies:
   flutter_xlider: ^3.4.0
   stop_watch_timer: ^1.0.0
   shared_preferences:
+  android_alarm_manager:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
