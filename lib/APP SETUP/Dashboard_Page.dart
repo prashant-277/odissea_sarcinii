@@ -66,7 +66,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
         unselectedFontSize: 10,
         elevation: 25,
         showSelectedLabels: true,
-        enableFeedback: true,
+
         type: BottomNavigationBarType.fixed,
         unselectedIconTheme: IconThemeData(color: Colors.black45, size: 25),
         selectedIconTheme:

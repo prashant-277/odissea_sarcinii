@@ -39,11 +39,12 @@ dependencies:
   flutter_datetime_picker:
   flutter_facebook_login: ^3.0.0
   flutter_facebook_auth:
-  android_alarm_manager:
   table_calendar:
   cupertino_tabbar:
-
-
+  numberpicker: ^2.0.1
+  flutter_xlider: ^3.4.0
+  stop_watch_timer: ^1.0.0
+  shared_preferences:
 dev_dependencies:
   flutter_test:
     sdk: flutter

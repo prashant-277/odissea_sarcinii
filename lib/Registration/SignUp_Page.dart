@@ -177,7 +177,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
                               ),
                             )
                           ],
-                        )),
+                        )), 
                     cursorColor: Theme.of(context).primaryColor,
                   ),
                   decoration: BoxDecoration(
