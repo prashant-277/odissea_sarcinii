@@ -46,7 +46,7 @@ dependencies:
   stop_watch_timer: ^1.0.0
   shared_preferences:
   android_alarm_manager:
-
+  modal_bottom_sheet:
 dev_dependencies:
   flutter_test:
     sdk: flutter
