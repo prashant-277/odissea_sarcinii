@@ -8,8 +8,8 @@
 
 
     <application
-        android:icon="@mipmap/ic_launcher"
-        android:label="odiseea_sarcinii">
+        android:icon="@mipmap/pregnany"
+        android:label="Odiseea Sarcinii">
 
         <activity
             android:name=".MainActivity"

@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class SignIn_Page extends StatefulWidget {
   @override
@@ -9,6 +12,19 @@ class SignIn_Page extends StatefulWidget {
 
 class _SignIn_PageState extends State<SignIn_Page> {
   bool rememberMe = false;
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _emailCtrl = TextEditingController();
+  TextEditingController _pswdCtrl = TextEditingController();
+  String email = '';
+
+  String password = '';
+  bool show = true;
+
+  void onTap() {
+    show = !show;
+    setState(() {});
+  }
 
   void _onRememberMeChanged(bool newValue) => setState(() {
         rememberMe = newValue;
@@ -21,137 +37,211 @@ class _SignIn_PageState extends State<SignIn_Page> {
 
   @override
   Widget build(BuildContext context) {
+    var query = MediaQuery.of(context).size;
+
     return Scaffold(
-      backgroundColor: Colors.orange[100],
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).accentColor,
-        title: Text("Sign In"),
-        centerTitle: true,
-        elevation: 0,
-        leading: IconButton(
-          color: Colors.transparent,
-          splashColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                height: 20,
-              ),
-              Image.network(
-                "https://play-lh.googleusercontent.com/Rud6GixIU_jQGGVaJm8Lsl1bas6hayDnTQRPg3mrXLFgQ0Cnl3MHM6XyltCctAB_iRM=s180-rw",
-              ),
-              Text(
-                "Odiseea Sarcinii",
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.4,
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Email ID / Username",
-                        hintStyle: TextStyle(color: Colors.black26),
-                        prefixIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.person_outline_rounded),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Container(
-                                width: 1,
-                                color: Colors.black26,
-                              ),
-                            )
-                          ],
-                        )),
-                    cursorColor: Theme.of(context).primaryColor,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    color: Colors.white38,
-                  ),
-                  padding: EdgeInsets.only(left: 5, right: 10)),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.4,
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Password",
-                        hintStyle: TextStyle(color: Colors.black26),
-                        prefixIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.vpn_key_outlined),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Container(
-                                width: 1,
-                                color: Colors.black26,
-                              ),
-                            )
-                          ],
-                        )),
-                    cursorColor: Theme.of(context).primaryColor,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    color: Colors.white38,
-                  ),
-                  padding: EdgeInsets.only(left: 5, right: 10)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Stack(
                 children: [
-                  Checkbox(
-                    value: rememberMe,
-                    onChanged: _onRememberMeChanged,
+                  Image.asset(
+                    "Assets/Images/background_crop.png",
+                    fit: BoxFit.fill,
                   ),
-                  Text("Remember Password"),
+                  Positioned(
+                    top: 40,
+                    left: 20,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Image.asset(
+                        "Assets/Icons/back.png",
+                        fit: BoxFit.fill,
+                        height: 15,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
               Container(
-                color: Theme.of(context).accentColor,
-                width: MediaQuery.of(context).size.width / 3,
-                height: 35,
-                child: FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Log In",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.purple[300],
+                width: MediaQuery.of(context).size.width / 1.15,
+                child: Row(
+                  children: [
+                    Text(
+                      "Sing In",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 ),
               ),
+              Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.15,
+                        child: TextFormField(
+                          textAlign: TextAlign.start,
+                          controller: _emailCtrl,
+                          validator: (value) =>
+                              value.isEmpty ? 'Please enter email' : null,
+                          onChanged: (value) {
+                            setState(() => email = value);
+                          },
+                          style: TextStyle(
+                              fontFamily: "OpenSans", color: Colors.black),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(new RegExp(r" "))
+                          ],
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: kGray, width: 1)),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: kGray, width: 1)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: kGray,
+                                width: 1.0,
+                              ),
+                            ),
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontFamily: "OpenSans",
+                            ),
+                            hintText: 'Email/User name',
+                            prefixIcon: new IconButton(
+                              icon: new Image.asset(
+                                'Assets/Icons/user.png',
+                                width: 20.0,
+                                height: 20.0,
+                              ),
+                              onPressed: null,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.15,
+                        child: TextFormField(
+                          controller: _pswdCtrl,
+                          textAlign: TextAlign.start,
+                          validator: (value) =>
+                              value.isEmpty ? 'Please enter password' : null,
+                          onChanged: (value) {
+                            setState(() => password = value);
+                          },
+                          style: TextStyle(
+                              fontFamily: "OpenSans", color: Colors.black),
+                          maxLines: 1,
+                          obscureText: show,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              color: Colors.grey,
+                              icon: !show
+                                  ? Image.asset(
+                                      'Assets/Icons/visible.png',
+                                      width: 25.0,
+                                      height: 25.0,
+                                    )
+                                  : Image.asset(
+                                      'Assets/Icons/invisible.png',
+                                      width: 25.0,
+                                      height: 25.0,
+                                    ),
+                              onPressed: () {
+                                onTap();
+                              },
+                            ),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: kGray, width: 1)),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: kGray, width: 1)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: kGray,
+                                width: 1.0,
+                              ),
+                            ),
+                            hintStyle: TextStyle(
+                              color: Colors.grey[500],
+                              fontFamily: "OpenSans",
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Password',
+                            prefixIcon: new IconButton(
+                              icon: new Image.asset(
+                                'Assets/Icons/password.png',
+                                width: 20.0,
+                                height: 20.0,
+                              ),
+                              onPressed: null,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.15,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              side: BorderSide(color: Colors.grey, width: 2),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              value: rememberMe,
+                              onChanged: _onRememberMeChanged,
+                              activeColor: buttonColor,
+                            ),
+                            Text(
+                              "Remember me",
+                              style: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey[700]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+              Container(
+                  width: MediaQuery.of(context).size.width / 1.15,
+                  child: primarybutton("Sign In", () {
+                    if (_formKey.currentState.validate()) {
+                      print("done");
+                    }
+                  })),
+              Text("")
             ],
           ),
         ),

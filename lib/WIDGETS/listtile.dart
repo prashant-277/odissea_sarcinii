@@ -5,38 +5,41 @@ class listtiles extends StatelessWidget {
   final Function onTapped;
   final IconData icon;
 
-  const listtiles({this.onTapped, this.text, this.icon});
+  final String imageName;
+
+  const listtiles({this.onTapped, this.text, this.icon, this.imageName});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          onTap: onTapped,
-          title: Text(text),
-          trailing: arrowIcon(),
-          leading: Container(
-              height: 60,
-              width: 60,
-              child: Icon(
-                icon,
-                color: Theme.of(context).accentColor,
-                size: 30,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Card(elevation: 5,
+
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15.0,right: 15.0,bottom: 15.0,top: 15.0),
+          child: ListTile(
+            focusColor: Colors.transparent,
+            selectedTileColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            tileColor: Colors.white,
+            contentPadding: EdgeInsets.zero,
+            onTap: onTapped,
+            title: Text(
+              text,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontFamily: "OpenSans",
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100.0),
-                border:
-                    Border.all(width: 1, color: Theme.of(context).accentColor),
-                color: Colors.white,
-              )),
+            ),
+            trailing: arrowIcon(),
+            leading: Image.asset(imageName),
+          ),
         ),
-        SizedBox(height: 5),
-        Divider(
-          color: Colors.black45,
-          indent: MediaQuery.of(context).size.width / 4.5,
-          height: 5,
-        ),
-      ],
+      ),
     );
   }
 }
@@ -44,17 +47,9 @@ class listtiles extends StatelessWidget {
 class arrowIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 20,
-        width: 20,
-        child: Icon(
-          Icons.arrow_forward_ios_outlined,
-          color: Colors.white,
-          size: 10,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          color: Theme.of(context).accentColor,
-        ));
+    return Image.asset(
+      "Assets/Icons/right_pink.png",
+      height: 18,
+    );
   }
 }

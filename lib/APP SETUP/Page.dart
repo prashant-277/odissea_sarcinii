@@ -24,13 +24,13 @@ class page extends StatelessWidget {
   Widget build(BuildContext context) {
     final text = Text(title);
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).accentColor,
         automaticallyImplyLeading: false,
         title: text,
         actions: <Widget>[showlastIcon(title, context)],
-      ),
+      ),*/
       body: Container(
         child: showPage(title.toString()),
       ),

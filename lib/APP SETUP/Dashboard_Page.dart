@@ -2,6 +2,7 @@ import 'package:custom_navigator/custom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:odiseea_sarcinii/APP%20SETUP/Page.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class Dashboard_Page extends StatefulWidget {
   @override
@@ -19,58 +20,78 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
   ];
 
   final _items = [
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.home_outlined,
-      ),
-      title: Text(
-        'Home',
-      ),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.account_circle_outlined,
-      ),
-      title: Text('Me'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.child_care_rounded,
-      ),
-      title: Text('Baby'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.all_inbox,
-      ),
-      title: Text('Community'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.person_outline_rounded,
-      ),
-      title: Text('Profile'),
-    ),
+
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        items: _items,
+        items: [
+          BottomNavigationBarItem(
+            icon: new IconButton(
+              icon: new Image.asset(_currentIndex == 0 ?
+                'Assets/Icons/home_act.png' : "Assets/Icons/home.png",
+                              ),
+              onPressed: null,
+              iconSize: 35,
+            ),
+            title: Text(
+              'Home',
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: new IconButton(
+              icon: new Image.asset(_currentIndex == 1?'Assets/Icons/challenge_act.png':
+                'Assets/Icons/challenge.png',
+              ),
+              onPressed: null,
+              iconSize: 35,
+            ),
+            title: Text('Me'),
+          ),
+          BottomNavigationBarItem(
+            icon: new IconButton(
+              icon: new Image.asset(_currentIndex == 2?
+                'Assets/Icons/baby_act.png':'Assets/Icons/baby.png',
+              ),
+              onPressed: null,
+              iconSize: 35,
+            ),
+            title: Text('Baby'),
+          ),
+          BottomNavigationBarItem(
+            icon: new IconButton(
+              icon: new Image.asset(_currentIndex==3?
+                'Assets/Icons/community_act.png':'Assets/Icons/community.png',
+              ),
+              onPressed: null,
+              iconSize: 35,
+            ),
+            title: Text('Community'),
+          ),
+          BottomNavigationBarItem(
+            icon: new IconButton(
+              icon: new Image.asset(_currentIndex==4?
+                'Assets/Icons/profile_act.png':'Assets/Icons/profile.png',
+              ),
+              onPressed: null,
+              iconSize: 35,
+            ),
+            title: Text('Profile'),
+          ),
+        ],
         showUnselectedLabels: true,
-        backgroundColor: Colors.orange[100],
-        unselectedItemColor: Colors.black45,
-        selectedItemColor: Theme.of(context).accentColor,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        elevation: 25,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.black,
+        selectedFontSize: 13,
+        unselectedFontSize: 13,
+        elevation: 10,
         showSelectedLabels: true,
-
         type: BottomNavigationBarType.fixed,
-        unselectedIconTheme: IconThemeData(color: Colors.black45, size: 25),
-        selectedIconTheme:
-            IconThemeData(color: Theme.of(context).accentColor, size: 25),
+        selectedLabelStyle: TextStyle(fontFamily: "OpenSans"),
+        unselectedLabelStyle: TextStyle(fontFamily: "OpenSans"),
+
         onTap: (index) {
           setState(() {
             _currentIndex = index;
@@ -88,6 +109,8 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
         ],
       ),
     );
+
+
   }
 
   Widget _buildPageOffstage(
@@ -95,6 +118,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
     return Offstage(
       offstage: _currentIndex != index,
       child: CustomNavigator(
+
         navigatorKey: key,
         home: page(title: '$s'),
         pageRoute: PageRoutes.materialPageRoute,

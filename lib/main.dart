@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primaryColor: Color(0xff4e2c82),
-            accentColor: Colors.purple[300],
-            backgroundColor: Colors.orange[100]),
+            primaryColor: Color(0xffF7785E),
+            accentColor: Color(0xffF7785E),
+            backgroundColor: Color(0xffF7785E)),
         home: MyHomePage());
   }
 }
@@ -37,15 +37,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Image.asset(
-            "Assets/Images/splash.jpeg",
-            fit: BoxFit.fill,
-          ),
+    return Scaffold(
+      body: Container(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              "Assets/Images/background.png",
+              fit: BoxFit.fill,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(""),
+                Image.asset(
+                  "Assets/Images/logo.png",
+                  height: 330,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Copyright © Desprecopii.com ",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontFamily: "OpenSans",
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Image.asset(
+                        "Assets/Images/icon.png",
+                        height: 25,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:odiseea_sarcinii/HOME%20TAB/weekSingle_page.dart';
+import 'package:odiseea_sarcinii/HOME%20TAB/myweekTimeline.dart';
+import 'package:odiseea_sarcinii/HOME%20TAB/weeksinfo_page.dart';
+import 'package:odiseea_sarcinii/ME%20TAB/weekSingle_page.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/doctorVisit_page.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/weight_tracker.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
@@ -15,116 +17,151 @@ class Me_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
-          child: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(00.0),
-            child: listtiles(
-              text: "My Week",
-              icon: Icons.calendar_today,
-              onTapped: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => weekSingle_page()));
-              },
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("Assets/Images/background_new_me.png"),
+              fit: BoxFit.fill,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: listtiles(
-              text: "My Journal",
-              icon: Icons.assignment_outlined,
-              onTapped: () {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: listtiles(
-              text: "My Questions",
-              icon: Icons.question_answer_outlined,
-              onTapped: () {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: listtiles(
-              text: "My Groups",
-              icon: Icons.group_rounded,
-              onTapped: () {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: listtiles(
-              onTapped: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => myPhotos_page()));
-              },
-              text: "My Photos",
-              icon: Icons.photo_library_outlined,
-            ),
-          ),
-          Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                onTapped: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => doctorVisit_page()));
-                },
-                text: "Doctor Visit",
-                icon: Icons.local_hospital_outlined,
-              )),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: listtiles(
-              onTapped: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => weight_tracker()));
-              },
-              text: "Weight Tracker",
-              icon: Icons.timelapse_outlined,
-            ),
-          ),
-          Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                text: "Plan Online Consultation",
-                icon: Icons.book_online,
-                onTapped: () {},
-              )),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: listtiles(
-              text: "My Points",
-              icon: Icons.point_of_sale,
-              onTapped: () {},
-            ),
-          ),
-          /*FlutterSlider(
-            values: [300],
-            max: 500,
-            min: 0,
-            onDragging: (handlerIndex, lowerValue, upperValue) {},
-            handler: FlutterSliderHandler(
-              decoration: BoxDecoration(),
-              child: Material(
-                type: MaterialType.canvas,
-                color: Colors.orange,
-                elevation: 3,
-                child: Container(
-                    padding: EdgeInsets.all(5),
-                    child: Image.network(
-                        "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80")),
+          child: Column(
+            children: [
+              Text(""),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Me",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            jump: true,
-            touchSize: 50,
-          )*/
-        ],
-      )),
+              Container(
+                height: MediaQuery.of(context).size.height / 1.37,
+                child: ListView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: listtiles(
+
+                        text: "My Week",
+                        imageName: "Assets/Icons/my_week.png",
+                        onTapped: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => weeksinfo_page()));
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: listtiles(
+                        text: "My Journal",
+                        imageName: "Assets/Icons/my_journal.png",
+                        onTapped: () {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: listtiles(
+                        text: "My Questions",
+                        imageName: "Assets/Icons/my_questions.png",
+                        onTapped: () {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: listtiles(
+                        text: "My Groups",
+                        imageName: "Assets/Icons/my_group.png",
+                        onTapped: () {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: listtiles(
+                        onTapped: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => myweekTimeline()));
+                        },
+                        text: "My Photos",
+                        imageName: "Assets/Icons/my_photos.png",
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: listtiles(
+                          onTapped: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => doctorVisit_page()));
+                          },
+                          text: "Doctor Visit",
+                          imageName: "Assets/Icons/doctor_visit.png",
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: listtiles(
+                        onTapped: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => weight_tracker()));
+                        },
+                        text: "Weight Tracker",
+                        imageName: "Assets/Icons/weight_tracker.png",
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: listtiles(
+                          text: "Plan Online Consultation",
+                          imageName: "Assets/Icons/my_points.png",
+                          onTapped: () {},
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: listtiles(
+                        text: "My Points",
+                        imageName: "Assets/Icons/plan_online.png",
+                        onTapped: () {},
+                      ),
+                    ),
+                    /*FlutterSlider(
+                  values: [300],
+                  max: 500,
+                  min: 0,
+                  onDragging: (handlerIndex, lowerValue, upperValue) {},
+                  handler: FlutterSliderHandler(
+                    decoration: BoxDecoration(),
+                    child: Material(
+                      type: MaterialType.canvas,
+                      color: Colors.orange,
+                      elevation: 3,
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          child: Image.network(
+                              "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80")),
+                    ),
+                  ),
+                  jump: true,
+                  touchSize: 50,
+                )*/
+                  ],
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

@@ -9,7 +9,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Week"),

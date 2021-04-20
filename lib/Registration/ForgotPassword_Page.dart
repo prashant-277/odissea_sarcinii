@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:odiseea_sarcinii/Registration/otpConfirmPage.dart';
+import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class ForgotPassword_Page extends StatefulWidget {
   @override
@@ -7,95 +11,129 @@ class ForgotPassword_Page extends StatefulWidget {
 }
 
 class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
+  TextEditingController _emailCtrl = TextEditingController();
+  String email = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: Text("Forgot Password"),
+        title: Text(""),
         leading: Center(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
+            padding: const EdgeInsets.only(left: 0.0),
             child: GestureDetector(
-              child: Text(
-                "Cancel",
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
               onTap: () {
                 Navigator.pop(context);
               },
+              child: Image.asset(
+                "Assets/Icons/back.png",
+                fit: BoxFit.fill,
+                color: Colors.black,
+                height: 15,
+              ),
             ),
           ),
         ),
         centerTitle: true,
         elevation: 0,
       ),
-      body: SingleChildScrollView (
+      body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                    width: MediaQuery.of(context).size.width / 1.4,
-                    child: Text(
-                      "Please Submit your email address related to account.",
-                      textAlign: TextAlign.center,
-                    )),
-              ),
-              Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Email",
-                        hintStyle: TextStyle(color: Colors.black26),
-                        prefixIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.email_outlined,
-                              color: Colors.black26,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Container(
-                                width: 1,
-                                color: Colors.black26,
-                              ),
-                            )
-                          ],
-                        )),
-                    cursorColor: Theme.of(context).primaryColor,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    color: Colors.white38,
-                  ),
-                  padding: EdgeInsets.only(left: 5, right: 10)),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                color: Colors.purple[300],
-                width: MediaQuery.of(context).size.width / 3,
-                height: 35,
-                child: FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.purple[300],
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Forgot password",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 28,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width / 1.15,
+                        child: Text(
+                          "Enter your email address below and we will send you a reset link.",
+                          style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.start,
+                        )),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.15,
+                child: TextFormField(
+                  textAlign: TextAlign.start,
+                  controller: _emailCtrl,
+                  validator: (value) =>
+                      value.isEmpty ? 'Please enter email' : null,
+                  style: TextStyle(fontFamily: "OpenSans", color: Colors.black),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(new RegExp(r" "))
+                  ],
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        borderSide: BorderSide(color: kGray, width: 1)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        borderSide: BorderSide(color: kGray, width: 1)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: kGray,
+                        width: 1.0,
+                      ),
+                    ),
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontFamily: "OpenSans",
+                    ),
+                    hintText: 'Email',
+                    prefixIcon: new IconButton(
+                      icon: new Image.asset(
+                        'Assets/Icons/email.png',
+                        color: buttonColor,
+                        width: 20.0,
+                        height: 20.0,
+                      ),
+                      onPressed: null,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                  width: MediaQuery.of(context).size.width / 1.15,
+                  child: primarybutton("Send", () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => otpConfirmPage()));
+                  })),
             ],
           ),
         ),

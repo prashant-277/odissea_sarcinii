@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:odiseea_sarcinii/Registration/SignIn_Page.dart';
+import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class SignUp_Page extends StatefulWidget {
   @override
@@ -9,320 +12,446 @@ class SignUp_Page extends StatefulWidget {
 
 class _SignUp_PageState extends State<SignUp_Page> {
   List<RadioModel> sampleData = new List<RadioModel>();
+
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController dob_controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    sampleData.add(new RadioModel(false, 'M', 'Male',Icon(Icons.arrow_back_ios_outlined)));
-    sampleData.add(new RadioModel(false, 'F', 'Female', Icon(Icons.arrow_forward_ios_outlined)));
+    sampleData.add(new RadioModel(
+        false, 'M', 'Male', Icon(Icons.arrow_back_ios_outlined)));
+    sampleData.add(new RadioModel(
+        false, 'F', 'Female', Icon(Icons.arrow_forward_ios_outlined)));
+  }
+
+  String password = '';
+  bool show = true;
+
+  void onTap() {
+    show = !show;
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[100],
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).accentColor,
-        title: Text("Sign Up"),
-        centerTitle: true,
-        elevation: 0,
-        leading: IconButton(
-          color: Colors.transparent,
-          splashColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("Assets/Images/background2.png"),
+              fit: BoxFit.fill,
+            ),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Text(""),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        "Assets/Icons/back.png",
+                        fit: BoxFit.fill,
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Row(
                   children: [
-                    Container(
-                        height: 75,
-                        width: 75,
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.photo_size_select_actual_outlined,
-                              size: 40,
-                            ),
-                            onPressed: () {}),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
-                          border: Border.all(width: 1),
-                          color: Colors.white38,
-                        )),
-                    SizedBox(
-                      width: 10,
+                    Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.w600),
                     ),
-                    Column(
-                      children: [
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width / 1.6,
-                          child: TextField(
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "First Name",
-                              hintStyle: TextStyle(color: Colors.black26),
-                            ),
-                            cursorColor: Theme.of(context).primaryColor,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black26),
-                            color: Colors.white38,
-                          ),
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width / 1.6,
-                          child: TextField(
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Last Name",
-                              hintStyle: TextStyle(color: Colors.black26),
-                            ),
-                            cursorColor: Theme.of(context).primaryColor,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black26),
-                            color: Colors.white38,
-                          ),
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                        )
-                      ],
-                    )
                   ],
                 ),
               ),
-              Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "User Name",
-                        hintStyle: TextStyle(color: Colors.black26),
-                        prefixIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.person_outline_rounded,
-                                color: Colors.black26),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Container(
-                                width: 1,
-                                color: Colors.black26,
-                              ),
-                            )
-                          ],
-                        )),
-                    cursorColor: Theme.of(context).primaryColor,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    color: Colors.white38,
-                  ),
-                  padding: EdgeInsets.only(left: 5, right: 10)),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Password",
-                        hintStyle: TextStyle(color: Colors.black26),
-                        prefixIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.lock_open_rounded,
-                              color: Colors.black26,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Container(
-                                width: 1,
-                                color: Colors.black26,
-                              ),
-                            )
-                          ],
-                        )), 
-                    cursorColor: Theme.of(context).primaryColor,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    color: Colors.white38,
-                  ),
-                  padding: EdgeInsets.only(left: 5, right: 10)),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Email",
-                        hintStyle: TextStyle(color: Colors.black26),
-                        prefixIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.email_outlined,
-                              color: Colors.black26,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Container(
-                                width: 1,
-                                color: Colors.black26,
-                              ),
-                            )
-                          ],
-                        )),
-                    cursorColor: Theme.of(context).primaryColor,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    color: Colors.white38,
-                  ),
-                  padding: EdgeInsets.only(left: 5, right: 10)),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: GestureDetector(
-                    onTap: () async {
-                      DateTime date = await
-
-                          /*showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1970),
-                        lastDate:
-                            new DateTime.now().add(new Duration(days: 30)),
-                        builder: (BuildContext context, Widget child) {
-                          return Theme(
-                            data: ThemeData.dark().copyWith(
-                              colorScheme: ColorScheme.dark(
-                                primary: Colors.purpleAccent,
-                                onPrimary: Colors.purple[00],
-                                surface: Colors.purple[200],
-                                onSurface: Colors.purple,
-                              ),
-                              dialogBackgroundColor: Colors.orange[100],
-                            ),
-                            child: child,
-                          );
-                        },
-                      );*/
-
-                          DatePicker.showDatePicker(
-                        context,
-                        showTitleActions: true,
-                        minTime: DateTime(1980, 3, 5),
-                        maxTime: DateTime.now(),
-                        onChanged: (date) {},
-                        onConfirm: (date) {},
-                        locale: LocaleType.en,
-                        theme: DatePickerTheme(
-                          backgroundColor: Colors.orange[100],
-                          headerColor: Theme.of(context).accentColor,
-                          containerHeight: 200,
-                          doneStyle: TextStyle(color: Colors.white),
-                          cancelStyle: TextStyle(color: Colors.white),
-                        ),
-                      );
-
-                      setState(() {
-                        date = date;
-                        dob_controller.text = date.day.toString() +
-                            "-" +
-                            date.month.toString() +
-                            "-" +
-                            date.year.toString();
-                      });
-                    },
-                    child: AbsorbPointer(
-                      child: TextField(
-                        controller: dob_controller,
-                        maxLines: 1,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Birth Date",
-                            hintStyle: TextStyle(color: Colors.black26),
-                            prefixIcon: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  width: MediaQuery.of(context).size.width / 1.0,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 0, right: 0, top: 5),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height / 6.0,
+                            child: Row(
                               children: [
-                                Icon(
-                                  Icons.date_range_outlined,
-                                  color: Colors.black26,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 5.0),
-                                  child: Container(
-                                    width: 1,
-                                    color: Colors.black26,
+                                IconButton(
+                                  icon: new Image.asset(
+                                    'Assets/Images/profile_pic.png',
                                   ),
+                                  iconSize: 90,
+                                  onPressed: null,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.7,
+                                      child: TextField(
+                                        maxLines: 1,
+                                        keyboardType: TextInputType.text,
+                                        style: TextStyle(
+                                            fontFamily: "OpenSans",
+                                            color: Colors.black),
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              15.0, 10.0, 20.0, 10.0),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                              borderSide: BorderSide(
+                                                  color: kGray, width: 1)),
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                              borderSide: BorderSide(
+                                                  color: kGray, width: 1)),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            borderSide: BorderSide(
+                                              color: kGray,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontFamily: "OpenSans",
+                                          ),
+                                          hintText: 'First name',
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.7,
+                                      child: TextField(
+                                        maxLines: 1,
+                                        keyboardType: TextInputType.text,
+                                        style: TextStyle(
+                                            fontFamily: "OpenSans",
+                                            color: Colors.black),
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              15.0, 10.0, 20.0, 10.0),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                              borderSide: BorderSide(
+                                                  color: kGray, width: 1)),
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                              borderSide: BorderSide(
+                                                  color: kGray, width: 1)),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            borderSide: BorderSide(
+                                              color: kGray,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontFamily: "OpenSans",
+                                          ),
+                                          hintText: 'Last name',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 )
                               ],
                             ),
-                            suffixIcon: Icon(
-                              Icons.date_range,
-                              color: Colors.black54,
-                            )),
-                        cursorColor: Theme.of(context).primaryColor,
-                      ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: TextField(
+                            maxLines: 1,
+                            keyboardType: TextInputType.text,
+                            style: TextStyle(
+                                fontFamily: "OpenSans", color: Colors.black),
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  borderSide:
+                                      BorderSide(color: kGray, width: 1)),
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  borderSide:
+                                      BorderSide(color: kGray, width: 1)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                  color: kGray,
+                                  width: 1.0,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: "OpenSans",
+                              ),
+                              hintText: 'User name',
+                              prefixIcon: new IconButton(
+                                icon: new Image.asset(
+                                  'Assets/Icons/user.png',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  color: buttonColor,
+                                ),
+                                onPressed: null,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: TextField(
+                            maxLines: 1,
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                                fontFamily: "OpenSans", color: Colors.black),
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  borderSide:
+                                      BorderSide(color: kGray, width: 1)),
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  borderSide:
+                                      BorderSide(color: kGray, width: 1)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                  color: kGray,
+                                  width: 1.0,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: "OpenSans",
+                              ),
+                              hintText: 'Email',
+                              prefixIcon: new IconButton(
+                                icon: new Image.asset(
+                                  'Assets/Icons/email.png',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  color: buttonColor,
+                                ),
+                                onPressed: null,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: TextField(
+                            maxLines: 1,
+                            keyboardType: TextInputType.text,
+                            style: TextStyle(
+                                fontFamily: "OpenSans", color: Colors.black),
+                            obscureText: show,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                color: Colors.grey,
+                                icon: !show
+                                    ? Image.asset(
+                                        'Assets/Icons/visible.png',
+                                        width: 25.0,
+                                        height: 25.0,
+                                      )
+                                    : Image.asset(
+                                        'Assets/Icons/invisible.png',
+                                        width: 25.0,
+                                        height: 25.0,
+                                      ),
+                                onPressed: () {
+                                  onTap();
+                                },
+                              ),
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  borderSide:
+                                      BorderSide(color: kGray, width: 1)),
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  borderSide:
+                                      BorderSide(color: kGray, width: 1)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                  color: kGray,
+                                  width: 1.0,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                color: Colors.grey[500],
+                                fontFamily: "OpenSans",
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Password',
+                              prefixIcon: new IconButton(
+                                icon: new Image.asset(
+                                  'Assets/Icons/password.png',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  color: buttonColor,
+                                ),
+                                onPressed: null,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: GestureDetector(
+                            onTap: () async {
+                              DateTime date = await DatePicker.showDatePicker(
+                                context,
+                                showTitleActions: true,
+                                minTime: DateTime(1980, 3, 5),
+                                maxTime: DateTime.now(),
+                                onChanged: (date) {},
+                                onConfirm: (date) {},
+                                locale: LocaleType.en,
+                                theme: DatePickerTheme(
+                                  backgroundColor: Colors.white,
+                                  headerColor: statusbarColor,
+                                  containerHeight: 150,
+                                  itemStyle: TextStyle(
+                                      fontFamily: "OpenSans", fontSize: 15),
+                                  doneStyle: TextStyle(
+                                      fontFamily: "OpenSans",
+                                      color: Colors.white),
+                                  cancelStyle: TextStyle(
+                                      fontFamily: "OpenSans",
+                                      color: Colors.white),
+                                ),
+                              );
+
+                              setState(() {
+                                date = date;
+                                dob_controller.text = date.day.toString() +
+                                    "-" +
+                                    date.month.toString() +
+                                    "-" +
+                                    date.year.toString();
+                              });
+                            },
+                            child: AbsorbPointer(
+                              child: TextField(
+                                controller: dob_controller,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(
+                                    fontFamily: "OpenSans",
+                                    color: Colors.black),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      15.0, 10.0, 20.0, 10.0),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0)),
+                                      borderSide:
+                                          BorderSide(color: kGray, width: 1)),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0)),
+                                      borderSide:
+                                          BorderSide(color: kGray, width: 1)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(
+                                      color: kGray,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontFamily: "OpenSans",
+                                  ),
+                                  hintText: 'Birth Date',
+                                  prefixIcon: new IconButton(
+                                    icon: new Image.asset(
+                                      'Assets/Icons/birthday.png',
+                                      width: 20.0,
+                                      height: 20.0,
+                                      color: buttonColor,
+                                    ),
+                                    onPressed: null,
+                                  ),
+                                  suffixIcon: new IconButton(
+                                    icon: new Image.asset(
+                                      'Assets/Icons/calender.png',
+                                      width: 20.0,
+                                      height: 20.0,
+                                    ),
+                                    onPressed: null,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            child: primarybutton("Sign Up", () {})),
+                      ],
                     ),
                   ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    color: Colors.white38,
-                  ),
-                  padding: EdgeInsets.only(left: 5, right: 10)),
-              SizedBox(
-                height: 5,
+                ),
               ),
-              Padding(
+              /*Padding(
                   padding: const EdgeInsets.only(top: 7.0, bottom: 0),
                   child: Container(
                     height: 70,
@@ -353,19 +482,39 @@ class _SignUp_PageState extends State<SignUp_Page> {
                   )),
               SizedBox(
                 height: 20,
-              ),
-              Container(
-                color: Colors.purple[300],
-                width: MediaQuery.of(context).size.width / 3,
-                height: 35,
-                child: FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Sign Up",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.purple[300],
-                ),
+              ),*/
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: Container(
+                    child: Column(
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.w500),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignIn_Page()));
+                      },
+                      child: Text(
+                        "Sing In",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            decoration: TextDecoration.underline,
+                            fontFamily: "OpenSans",
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                )),
               ),
             ],
           ),
@@ -418,5 +567,6 @@ class RadioModel {
   final String buttonText;
   final String text;
   final Widget icon;
-  RadioModel(this.isSelected, this.buttonText, this.text,this.icon);
+
+  RadioModel(this.isSelected, this.buttonText, this.text, this.icon);
 }
