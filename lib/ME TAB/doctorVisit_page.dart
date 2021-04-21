@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/day_Doctorvisit.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/list_Doctorvisit.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/month_Doctorvisit.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class doctorVisit_page extends StatefulWidget {
@@ -38,42 +39,77 @@ class _doctorVisit_pageState extends State<doctorVisit_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: bodies[theriGroupVakue],
       appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_rounded),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.email_outlined),
-              onPressed: () {},
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-            )
-          ],
-          title: Container(
-            width: MediaQuery.of(context).size.width / 1.8,
-            child: CupertinoSegmentedControl(
-              borderColor: Colors.white,
-              pressedColor: Colors.white,
-              selectedColor: Colors.white70,
-              unselectedColor: Colors.transparent,
-              groupValue: theriGroupVakue,
-              onValueChanged: (changeFromGroupValue) {
-                setState(() {
-                  theriGroupVakue = changeFromGroupValue;
-                  print(changeFromGroupValue);
-                });
-              },
-              children: logoWidgets,
-            ),
+        automaticallyImplyLeading: false,
+        title: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                "Assets/Icons/back.png",
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  "Doctor visit",
+                  style: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      fontSize: 15),
+                ),
+              ),
+            ],
           ),
-          elevation: 0,
-          backgroundColor: Theme.of(context).accentColor,
-          centerTitle: true),
+        ),
+        elevation: 0,
+        backgroundColor: statusbarColor,
+      ),
+      body: DefaultTabController(
+        length: 2,
+        child: Column(
+          children: <Widget>[
+            Container(
+              constraints: BoxConstraints(maxHeight: 150.0),
+              child: Material(
+                color: Colors.white,
+                child: TabBar(
+                  labelStyle: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      fontSize: 15),
+                  labelColor: buttonColor,
+                  unselectedLabelColor: Colors.black54,
+                  indicatorColor: buttonColor,
+                  tabs: [
+                    Tab(
+                      text: "Month",
+                    ),
+                    Tab(
+                      text: "List",
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  Container(child: month_Doctorvisit()),
+                  Container(child: list_Doctorvisit()),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
