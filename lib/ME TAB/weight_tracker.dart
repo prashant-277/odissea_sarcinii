@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/addweightDetail.dart';
+import 'package:odiseea_sarcinii/ME%20TAB/weightChartpage.dart';
+import 'package:odiseea_sarcinii/ME%20TAB/weightListpage.dart';
+import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class weight_tracker extends StatefulWidget {
   @override
@@ -28,47 +32,54 @@ class _weight_trackerState extends State<weight_tracker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: bodies[theriGroupVakue],
-      appBar: AppBar(
-        centerTitle: true,
-        title: Container(
-          width: MediaQuery.of(context).size.width / 3.0,
-          child: CupertinoSegmentedControl(
-            borderColor: Colors.white,
-            pressedColor: Colors.white,
-            selectedColor: Colors.white,
-            unselectedColor: Theme.of(context).accentColor,
-            groupValue: theriGroupVakue,
-            onValueChanged: (changeFromGroupValue) {
-              setState(() {
-                theriGroupVakue = changeFromGroupValue;
-                print(changeFromGroupValue);
-              });
-            },
-            children: logoWidgets,
-          ),
-        ),
-        elevation: 0,
-        backgroundColor: Theme.of(context).accentColor,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        actions: [
-          Icon(Icons.info_outline_rounded),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: GestureDetector(
-              child: Icon(Icons.add_circle_outline_outlined),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => addweightDetail()));
-              },
+      backgroundColor: kwhite,
+      appBar: BaseAppBar(
+        appbartext: "Weight tracker",
+        appBar: AppBar(),
+        widgets: [],
+      ),
+
+      body: DefaultTabController(
+        length: 2,
+        child: Column(
+          children: <Widget>[
+            Container(
+              constraints: BoxConstraints(maxHeight: 150.0),
+              child: Material(
+                color: kwhite,
+                child: TabBar(
+                  labelStyle: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.w600,
+                      color: kwhite,
+                      fontSize: 15),
+                  labelColor: buttonColor,
+                  unselectedLabelColor: Colors.black54,
+                  indicatorColor: buttonColor,
+                  indicatorWeight: 3,
+                  tabs: [
+                    Tab(
+                      text: "List",
+                    ),
+                    Tab(
+                      text: "Chart",
+                    ),
+                  ],
+                ),
+              ),
             ),
-          )
-        ],
+            Expanded(
+              child: TabBarView(
+
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  Container(child: weightListpage()),
+                  Container(child: weightChartpage()),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

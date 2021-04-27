@@ -15,7 +15,7 @@ class primarybutton extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-            color: Colors.white,
+            color: kwhite,
             fontSize: 15,
             fontFamily: "OpenSans",
             fontWeight: FontWeight.w600),

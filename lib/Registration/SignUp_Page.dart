@@ -3,6 +3,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:odiseea_sarcinii/Registration/SignIn_Page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 
 class SignUp_Page extends StatefulWidget {
@@ -15,6 +16,11 @@ class _SignUp_PageState extends State<SignUp_Page> {
 
   final _formKey = GlobalKey<FormState>();
 
+  TextEditingController fname_controller = TextEditingController();
+  TextEditingController lname_controller = TextEditingController();
+  TextEditingController username_controller = TextEditingController();
+  TextEditingController email_controller = TextEditingController();
+  TextEditingController password_controller = TextEditingController();
   TextEditingController dob_controller = TextEditingController();
 
   @override
@@ -38,6 +44,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kwhite,
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -76,7 +83,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
                     Text(
                       "Sign Up",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 25,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600),
@@ -87,366 +94,233 @@ class _SignUp_PageState extends State<SignUp_Page> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 1.5,
+                  height: MediaQuery.of(context).size.height / 1.45,
                   width: MediaQuery.of(context).size.width / 1.0,
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 0, right: 0, top: 5),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height / 6.0,
-                            child: Row(
-                              children: [
-                                IconButton(
+                    color: kwhite,
+                    child: Form(
+                      key: _formKey,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 0, right: 0, top: 15),
+                              child: Container(
+
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      icon: new Image.asset(
+                                        'Assets/Images/profile_pic.png',
+                                      ),
+                                      iconSize: 90,
+                                      onPressed: null,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          textfield(
+                                            controller: fname_controller,
+                                            obscureText: false,
+                                            hintText: "First Name",
+                                            functionValidate: commonValidation,
+                                            suffixIcon: null,
+                                            prefixIcon: null,
+                                            parametersValidate:
+                                                "Please enter First Name",
+                                            textInputType: TextInputType.name,
+                                          ),
+                                          SizedBox(height: 10),
+                                          textfield(
+                                            controller: lname_controller,
+                                            obscureText: false,
+                                            hintText: "Last Name",
+                                            functionValidate: commonValidation,
+                                            suffixIcon: null,
+                                            prefixIcon: null,
+                                            parametersValidate: "Please enter Last Name",
+                                            textInputType: TextInputType.name,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              child: textfield(
+                                controller: username_controller,
+                                obscureText: false,
+                                hintText: "User Name",
+                                functionValidate: commonValidation,
+                                suffixIcon: null,
+                                prefixIcon: new IconButton(
                                   icon: new Image.asset(
-                                    'Assets/Images/profile_pic.png',
+                                    'Assets/Icons/user.png',
+                                    width: 20.0,
+                                    height: 20.0,
+                                    color: buttonColor,
                                   ),
-                                  iconSize: 90,
                                   onPressed: null,
                                 ),
-                                SizedBox(
-                                  width: 5,
+                                parametersValidate: "Please enter User Name",
+                                textInputType: TextInputType.name,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              child: textfield(
+                                controller: email_controller,
+                                obscureText: false,
+                                hintText: "Email",
+                                functionValidate: commonValidation,
+                                suffixIcon: null,
+                                prefixIcon: new IconButton(
+                                  icon: new Image.asset(
+                                    'Assets/Icons/email.png',
+                                    width: 20.0,
+                                    height: 20.0,
+                                    color: buttonColor,
+                                  ),
+                                  onPressed: null,
                                 ),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width /
-                                          1.7,
-                                      child: TextField(
-                                        maxLines: 1,
-                                        keyboardType: TextInputType.text,
-                                        style: TextStyle(
-                                            fontFamily: "OpenSans",
-                                            color: Colors.black),
-                                        decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              15.0, 10.0, 20.0, 10.0),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8.0)),
-                                              borderSide: BorderSide(
-                                                  color: kGray, width: 1)),
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8.0)),
-                                              borderSide: BorderSide(
-                                                  color: kGray, width: 1)),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            borderSide: BorderSide(
-                                              color: kGray,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                            fontFamily: "OpenSans",
-                                          ),
-                                          hintText: 'First name',
+                                parametersValidate: "Please enter Email",
+                                textInputType: TextInputType.name,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              child: textfield(
+                                controller: password_controller,
+                                obscureText: show,
+                                hintText: "Password",
+                                functionValidate: commonValidation,
+                                suffixIcon: IconButton(
+                                  color: Colors.grey,
+                                  icon: !show
+                                      ? Image.asset(
+                                          'Assets/Icons/visible.png',
+                                          width: 25.0,
+                                          height: 25.0,
+                                        )
+                                      : Image.asset(
+                                          'Assets/Icons/invisible.png',
+                                          width: 25.0,
+                                          height: 25.0,
                                         ),
-                                      ),
+                                  onPressed: () {
+                                    onTap();
+                                  },
+                                ),
+                                prefixIcon: IconButton(
+                                  icon: new Image.asset(
+                                    'Assets/Icons/password.png',
+                                    width: 20.0,
+                                    height: 20.0,
+                                    color: buttonColor,
+                                  ),
+                                  onPressed: null,
+                                ),
+                                parametersValidate: "Please enter Password",
+                                textInputType: TextInputType.name,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  DateTime date =
+                                      await DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(1980, 3, 5),
+                                    maxTime: DateTime.now(),
+                                    onChanged: (date) {},
+                                    onConfirm: (date) {},
+                                    locale: LocaleType.en,
+                                    theme: DatePickerTheme(
+                                      backgroundColor: kwhite,
+                                      headerColor: statusbarColor,
+                                      containerHeight: 150,
+                                      itemStyle: TextStyle(
+                                          fontFamily: "OpenSans", fontSize: 15),
+                                      doneStyle: TextStyle(
+                                          fontFamily: "OpenSans",
+                                          color: kwhite),
+                                      cancelStyle: TextStyle(
+                                          fontFamily: "OpenSans",
+                                          color: kwhite),
                                     ),
-                                    SizedBox(height: 10),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width /
-                                          1.7,
-                                      child: TextField(
-                                        maxLines: 1,
-                                        keyboardType: TextInputType.text,
-                                        style: TextStyle(
-                                            fontFamily: "OpenSans",
-                                            color: Colors.black),
-                                        decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              15.0, 10.0, 20.0, 10.0),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8.0)),
-                                              borderSide: BorderSide(
-                                                  color: kGray, width: 1)),
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8.0)),
-                                              borderSide: BorderSide(
-                                                  color: kGray, width: 1)),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            borderSide: BorderSide(
-                                              color: kGray,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                            fontFamily: "OpenSans",
-                                          ),
-                                          hintText: 'Last name',
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          child: TextField(
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            style: TextStyle(
-                                fontFamily: "OpenSans", color: Colors.black),
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0)),
-                                  borderSide:
-                                      BorderSide(color: kGray, width: 1)),
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0)),
-                                  borderSide:
-                                      BorderSide(color: kGray, width: 1)),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide(
-                                  color: kGray,
-                                  width: 1.0,
-                                ),
-                              ),
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: "OpenSans",
-                              ),
-                              hintText: 'User name',
-                              prefixIcon: new IconButton(
-                                icon: new Image.asset(
-                                  'Assets/Icons/user.png',
-                                  width: 20.0,
-                                  height: 20.0,
-                                  color: buttonColor,
-                                ),
-                                onPressed: null,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          child: TextField(
-                            maxLines: 1,
-                            keyboardType: TextInputType.emailAddress,
-                            style: TextStyle(
-                                fontFamily: "OpenSans", color: Colors.black),
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0)),
-                                  borderSide:
-                                      BorderSide(color: kGray, width: 1)),
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0)),
-                                  borderSide:
-                                      BorderSide(color: kGray, width: 1)),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide(
-                                  color: kGray,
-                                  width: 1.0,
-                                ),
-                              ),
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: "OpenSans",
-                              ),
-                              hintText: 'Email',
-                              prefixIcon: new IconButton(
-                                icon: new Image.asset(
-                                  'Assets/Icons/email.png',
-                                  width: 20.0,
-                                  height: 20.0,
-                                  color: buttonColor,
-                                ),
-                                onPressed: null,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          child: TextField(
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            style: TextStyle(
-                                fontFamily: "OpenSans", color: Colors.black),
-                            obscureText: show,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                color: Colors.grey,
-                                icon: !show
-                                    ? Image.asset(
-                                        'Assets/Icons/visible.png',
-                                        width: 25.0,
-                                        height: 25.0,
-                                      )
-                                    : Image.asset(
-                                        'Assets/Icons/invisible.png',
-                                        width: 25.0,
-                                        height: 25.0,
-                                      ),
-                                onPressed: () {
-                                  onTap();
-                                },
-                              ),
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0)),
-                                  borderSide:
-                                      BorderSide(color: kGray, width: 1)),
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0)),
-                                  borderSide:
-                                      BorderSide(color: kGray, width: 1)),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide(
-                                  color: kGray,
-                                  width: 1.0,
-                                ),
-                              ),
-                              hintStyle: TextStyle(
-                                color: Colors.grey[500],
-                                fontFamily: "OpenSans",
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Password',
-                              prefixIcon: new IconButton(
-                                icon: new Image.asset(
-                                  'Assets/Icons/password.png',
-                                  width: 20.0,
-                                  height: 20.0,
-                                  color: buttonColor,
-                                ),
-                                onPressed: null,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          child: GestureDetector(
-                            onTap: () async {
-                              DateTime date = await DatePicker.showDatePicker(
-                                context,
-                                showTitleActions: true,
-                                minTime: DateTime(1980, 3, 5),
-                                maxTime: DateTime.now(),
-                                onChanged: (date) {},
-                                onConfirm: (date) {},
-                                locale: LocaleType.en,
-                                theme: DatePickerTheme(
-                                  backgroundColor: Colors.white,
-                                  headerColor: statusbarColor,
-                                  containerHeight: 150,
-                                  itemStyle: TextStyle(
-                                      fontFamily: "OpenSans", fontSize: 15),
-                                  doneStyle: TextStyle(
-                                      fontFamily: "OpenSans",
-                                      color: Colors.white),
-                                  cancelStyle: TextStyle(
-                                      fontFamily: "OpenSans",
-                                      color: Colors.white),
-                                ),
-                              );
+                                  );
 
-                              setState(() {
-                                date = date;
-                                dob_controller.text = date.day.toString() +
-                                    "-" +
-                                    date.month.toString() +
-                                    "-" +
-                                    date.year.toString();
-                              });
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                controller: dob_controller,
-                                maxLines: 1,
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      15.0, 10.0, 20.0, 10.0),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0)),
-                                      borderSide:
-                                          BorderSide(color: kGray, width: 1)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0)),
-                                      borderSide:
-                                          BorderSide(color: kGray, width: 1)),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    borderSide: BorderSide(
-                                      color: kGray,
-                                      width: 1.0,
+                                  setState(() {
+                                    date = date;
+                                    dob_controller.text = date.day.toString() +
+                                        "-" +
+                                        date.month.toString() +
+                                        "-" +
+                                        date.year.toString();
+                                  });
+                                },
+                                child: AbsorbPointer(
+                                  child: textfield(
+                                    controller: dob_controller,
+
+                                    obscureText: false,
+                                    hintText: "EDOB",
+                                    functionValidate: commonValidation,
+                                    suffixIcon: new IconButton(
+                                      icon: new Image.asset(
+                                        'Assets/Icons/calender.png',
+                                        width: 20.0,
+                                        height: 20.0,
+                                      ),
+                                      onPressed: null,
                                     ),
-                                  ),
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: "OpenSans",
-                                  ),
-                                  hintText: 'Birth Date',
-                                  prefixIcon: new IconButton(
-                                    icon: new Image.asset(
-                                      'Assets/Icons/birthday.png',
-                                      width: 20.0,
-                                      height: 20.0,
-                                      color: buttonColor,
+                                    prefixIcon: new IconButton(
+                                      icon: new Image.asset(
+                                        'Assets/Icons/birthday.png',
+                                        width: 20.0,
+                                        height: 20.0,
+                                        color: buttonColor,
+                                      ),
+                                      onPressed: null,
                                     ),
-                                    onPressed: null,
-                                  ),
-                                  suffixIcon: new IconButton(
-                                    icon: new Image.asset(
-                                      'Assets/Icons/calender.png',
-                                      width: 20.0,
-                                      height: 20.0,
-                                    ),
-                                    onPressed: null,
+                                    parametersValidate: "Please select EDOB",
+                                    textInputType: TextInputType.number,
+
                                   ),
                                 ),
                               ),
                             ),
-                          ),
+                            SizedBox(height: 10),
+                            Container(
+                                width: MediaQuery.of(context).size.width / 1.2,
+                                child: primarybutton("Sign Up", () {
+                                  if (_formKey.currentState.validate()) {
+                                    print("done");
+                                  }
+                                })),
+                            SizedBox(height: 10),
+
+                          ],
                         ),
-                        Container(
-                            width: MediaQuery.of(context).size.width / 1.2,
-                            child: primarybutton("Sign Up", () {})),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -476,8 +350,8 @@ class _SignUp_PageState extends State<SignUp_Page> {
                       },
                     ),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black26),
-                      color: Colors.white38,
+                      border: Border.all(color: kblack26),
+                      color: kwhite,
                     ),
                   )),
               SizedBox(
@@ -491,12 +365,12 @@ class _SignUp_PageState extends State<SignUp_Page> {
                     Text(
                       "Already have an account?",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 18,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w500),
                     ),
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         Navigator.pushReplacement(
                             context,
@@ -504,9 +378,9 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 builder: (context) => SignIn_Page()));
                       },
                       child: Text(
-                        "Sing In",
+                        "Sign In",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: kwhite,
                             fontSize: 18,
                             decoration: TextDecoration.underline,
                             fontFamily: "OpenSans",
@@ -541,7 +415,7 @@ class RadioItem extends StatelessWidget {
             child: new Center(
               child: new Text(_item.buttonText,
                   style: new TextStyle(
-                      color: _item.isSelected ? Colors.white : Colors.black,
+                      color: _item.isSelected ? kwhite : kblack,
                       fontSize: 18.0)),
             ),
             decoration: new BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class myPhotos_page extends StatefulWidget {
   @override
@@ -38,13 +39,13 @@ class _myPhotos_pageState extends State<myPhotos_page> {
                     width: 90,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100.0),
-                      border: Border.all(color: Colors.white, width: 1),
+                      border: Border.all(color: kwhite, width: 1),
                       color: Colors.black38,
                     ),
                     child: Icon(
                       Icons.add,
                       size: 30,
-                      color: Colors.white,
+                      color: kwhite,
                     ),
                   ),
                 ),

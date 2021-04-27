@@ -15,9 +15,9 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kwhite,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: kwhite,
         automaticallyImplyLeading: false,
         title: Text(""),
         leading: Center(
@@ -30,7 +30,7 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
               child: Image.asset(
                 "Assets/Icons/back.png",
                 fit: BoxFit.fill,
-                color: Colors.black,
+                color: kblack,
                 height: 15,
               ),
             ),
@@ -49,10 +49,10 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
                 child: Row(
                   children: [
                     Text(
-                      "Confirm password",
+                      "Confirm Account",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 28,
+                          color: kblack,
+                          fontSize: 24,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600),
                     ),
@@ -66,7 +66,7 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
                     Container(
                         width: MediaQuery.of(context).size.width / 1.15,
                         child: Text(
-                          "We will sent an email with 4-digit code to prashant.theappideas@gmail.com",
+                          "We'll sent an email with 4-digit code to prashant.theappideas@gmail.com",
                           style: TextStyle(
                               fontFamily: "OpenSans",
                               fontSize: 15,
@@ -80,19 +80,18 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
                 height: 25,
               ),
               Container(
-                width: 200,
+                width: MediaQuery.of(context).size.width / 1.75,
+                height: MediaQuery.of(context).size.height / 13,
                 child: OTPTextField(
                   length: 4,
                   width: MediaQuery.of(context).size.width,
-
-                  fieldWidth: 45,
-                  style: TextStyle(fontSize: 20),
+                  fieldWidth: 40,
+                  style: TextStyle(fontSize: 20,fontFamily: "OpenSans",fontWeight: FontWeight.w500),
                   textFieldAlignment: MainAxisAlignment.spaceBetween,
                   fieldStyle: FieldStyle.box,
                   keyboardType: TextInputType.number,
                   onCompleted: (pin) {
                     print("Completed: " + pin);
-
                   },
                 ),
               ),
@@ -116,10 +115,10 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
                   children: [
                     TextSpan(
                       style: TextStyle(
-                          color: Colors.black,
+                          color: kblack,
                           fontFamily: "OpenSans",
                           fontSize: 15,
-                          fontWeight: FontWeight.w600),
+                          fontWeight: FontWeight.w500),
                       text: "Don't get code? ",
                     ),
                     TextSpan(
@@ -128,7 +127,7 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
                           fontFamily: "OpenSans",
                           fontSize: 17,
                           decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w600),
+                          fontWeight: FontWeight.w500),
                       text: "Resend",
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {

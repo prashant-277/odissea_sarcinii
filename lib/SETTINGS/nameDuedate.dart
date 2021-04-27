@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class nameDuedate extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _nameDuedateState extends State<nameDuedate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kwhite,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Name & Due Date"),
@@ -69,7 +70,7 @@ class _nameDuedateState extends State<nameDuedate> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100.0),
-                    color: Colors.white,
+                    color: kwhite,
                   ),
                 ),
               ),
@@ -103,7 +104,7 @@ class _nameDuedateState extends State<nameDuedate> {
                   ),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.transparent),
-                    color: Colors.white,
+                    color: kwhite,
                   ),
                   padding: EdgeInsets.only(left: 5, right: 10)),
               Padding(
@@ -115,7 +116,7 @@ class _nameDuedateState extends State<nameDuedate> {
                       value: notpregnant,
                       onChanged: _onRememberMeChanged,
                       checkColor: Theme.of(context).accentColor,
-                      activeColor: Colors.white,
+                      activeColor: kwhite,
                     ),
                     Text(
                       "Not Pregnant",
@@ -134,7 +135,7 @@ class _nameDuedateState extends State<nameDuedate> {
                         children: [
                           Container(
                             height: MediaQuery.of(context).size.height / 7.5,
-                            color: Colors.white,
+                            color: kwhite,
                             child: Column(
                               children: [
                                 Container(
@@ -145,7 +146,7 @@ class _nameDuedateState extends State<nameDuedate> {
                                       "Due Date",
                                       style: TextStyle(
                                           color: _groupValue == 0
-                                              ? Colors.black
+                                              ? kblack
                                               : Colors.black26),
                                     ),
                                     value: 0,
@@ -164,7 +165,7 @@ class _nameDuedateState extends State<nameDuedate> {
                                         "LMP",
                                         style: TextStyle(
                                             color: _groupValue == 1
-                                                ? Colors.black
+                                                ? kblack
                                                 : Colors.black26),
                                       ),
                                       value: 1,
@@ -201,7 +202,7 @@ class _nameDuedateState extends State<nameDuedate> {
                                 onPressed: () {},
                                 child: Text(
                                   "Show Detail",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: kwhite),
                                 ),
                                 color: Colors.purple[300],
                               ),

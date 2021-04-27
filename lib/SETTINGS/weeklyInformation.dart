@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class weeklyInformation extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class _weeklyInformationState extends State<weeklyInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kwhite,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Weekly Information"),
@@ -22,6 +23,7 @@ class _weeklyInformationState extends State<weeklyInformation> {
             }),
       ),
       body: Container(
+
         child: ListView.builder(
             itemCount: 40,
             itemBuilder: (context, index) {
@@ -37,7 +39,7 @@ class _weeklyInformationState extends State<weeklyInformation> {
                       child: Center(
                           child: Text(
                         "week $index",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: kwhite),
                       )),
                     ),
                     Container(

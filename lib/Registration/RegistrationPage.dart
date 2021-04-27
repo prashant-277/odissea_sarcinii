@@ -31,6 +31,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: kwhite,
         body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -64,7 +65,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                         child: FlatButton(
                           padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
-                          color: Colors.white,
+                          color: kwhite,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                               side: BorderSide(
@@ -80,7 +81,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           child: Text(
                             "Sign In",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: kblack,
                                 fontSize: 16,
                                 fontFamily: "OpenSans",
                                 fontWeight: FontWeight.w600),
@@ -104,7 +105,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: Text(
                       "Log In with Facebook",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 16,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600),
@@ -128,7 +129,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: Text(
                       "Forgot Password?",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 16,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600),
@@ -149,14 +150,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Text(
                         "Skip  ",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: kblack,
                             fontSize: 18,
                             fontFamily: "OpenSans",
                             fontWeight: FontWeight.w600),
                       ),
                       Icon(
                         Icons.arrow_forward_ios_outlined,
-                        color: Colors.black,
+                        color: kblack,
                         size: 18,
                       ),
                     ],

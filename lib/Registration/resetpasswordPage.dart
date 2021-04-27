@@ -33,9 +33,9 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kwhite,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: kwhite,
         automaticallyImplyLeading: false,
         title: Text(""),
         leading: Center(
@@ -48,7 +48,7 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
               child: Image.asset(
                 "Assets/Icons/back.png",
                 fit: BoxFit.fill,
-                color: Colors.black,
+                color: kblack,
                 height: 15,
               ),
             ),
@@ -69,7 +69,7 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                     Text(
                       "Reset password",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: kblack,
                           fontSize: 28,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600),
@@ -99,7 +99,7 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                             setState(() => password = value);
                           },
                           style: TextStyle(
-                              fontFamily: "OpenSans", color: Colors.black),
+                              fontFamily: "OpenSans", color: kblack),
                           maxLines: 1,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
@@ -141,7 +141,7 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                               fontFamily: "OpenSans",
                             ),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: kwhite,
                             hintText: 'New password',
                             prefixIcon: new IconButton(
                               icon: new Image.asset(
@@ -171,7 +171,7 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                             setState(() => conffirmpassword = value);
                           },
                           style: TextStyle(
-                              fontFamily: "OpenSans", color: Colors.black),
+                              fontFamily: "OpenSans", color: kblack),
                           maxLines: 1,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
@@ -213,7 +213,7 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                               fontFamily: "OpenSans",
                             ),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: kwhite,
                             hintText: 'Confirm password',
                             prefixIcon: new IconButton(
                               icon: new Image.asset(

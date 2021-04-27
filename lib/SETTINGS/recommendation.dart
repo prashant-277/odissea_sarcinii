@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class recommendation extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class _recommendationState extends State<recommendation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kwhite,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Recommendation"),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class feedbackPage extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _feedbackPageState extends State<feedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kwhite,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Feedback"),
@@ -168,7 +169,7 @@ class _feedbackPageState extends State<feedbackPage> {
                 onPressed: () {},
                 child: Text(
                   "Send",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: kwhite),
                 ),
                 color: Colors.purple[300],
               ),

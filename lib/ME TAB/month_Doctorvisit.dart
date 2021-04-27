@@ -4,6 +4,7 @@ import 'package:dropdown_date_picker/dropdown_date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/doctorVisit_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,6 +17,13 @@ class month_Doctorvisit extends StatefulWidget {
 
 class _month_DoctorvisitState extends State<month_Doctorvisit> {
   CalendarController _controller;
+
+  TextEditingController moodCtrl = TextEditingController();
+  TextEditingController energyCtrl = TextEditingController();
+  TextEditingController appetiteCtrl = TextEditingController();
+  TextEditingController cravingsCtrl = TextEditingController();
+  TextEditingController morningsicknessCtrl = TextEditingController();
+  TextEditingController notesCtrl = TextEditingController();
 
   String saveDate;
   String data;
@@ -32,7 +40,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
     firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
     lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
     textStyle: TextStyle(fontWeight: FontWeight.w600, fontFamily: "OpenSans"),
-    dropdownColor: Colors.white,
+    dropdownColor: kwhite,
     dateHint: DateHint(year: 'Format', month: 'Min', day: 'Hour'),
     ascending: false,
     underLine: Text(""),
@@ -47,7 +55,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
           TableCalendar(
             initialCalendarFormat: CalendarFormat.month,
             initialSelectedDay: DateTime.now(),
-            rowHeight: 33,
+            rowHeight: MediaQuery.of(context).size.height / 18,
             calendarStyle: CalendarStyle(
                 todayColor: buttonColor,
                 selectedColor: buttonColor,
@@ -55,21 +63,24 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                     fontWeight: FontWeight.bold,
                     fontFamily: "OpenSans",
                     fontSize: 15.0,
-                    color: Colors.white)),
+                    color: kwhite)),
             headerStyle: HeaderStyle(
-              centerHeaderTitle: true,
-              formatButtonDecoration: BoxDecoration(
-                color: buttonColor,
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              formatButtonTextStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontFamily: "OpenSans",
-              ),
-              formatButtonShowsNext: false,
-              formatButtonVisible: false,
-            ),
+                centerHeaderTitle: true,
+                formatButtonDecoration: BoxDecoration(
+                  color: buttonColor,
+                  borderRadius: BorderRadius.circular(50.0),
+                ),
+                formatButtonTextStyle: TextStyle(
+                  color: kwhite,
+                  fontSize: 18.0,
+                  fontFamily: "OpenSans",
+                ),
+                formatButtonShowsNext: false,
+                formatButtonVisible: false,
+                titleTextStyle: TextStyle(
+                    fontSize: 15.0,
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w700)),
             startingDayOfWeek: StartingDayOfWeek.sunday,
             onDaySelected: (day, events, holidays) {
               print(day.toUtc());
@@ -90,7 +101,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                   child: Text(
                     date.day.toString(),
                     style: TextStyle(
-                      color: Colors.white,
+                      color: kwhite,
                       fontFamily: "OpenSans",
                     ),
                   )),
@@ -103,7 +114,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                   child: Text(
                     date.day.toString(),
                     style: TextStyle(
-                      color: Colors.white,
+                      color: kwhite,
                       fontFamily: "OpenSans",
                     ),
                   )),
@@ -112,10 +123,12 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Divider(),
+            child: Divider(
+              thickness: 2.0,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: Container(
               color: statusbarColor,
               height: MediaQuery.of(context).size.height / 15,
@@ -131,7 +144,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                       style: TextStyle(
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 16),
                     ),
                   ),
@@ -146,7 +159,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                 Text(
                   "Time",
                   style: TextStyle(
-                      color: Colors.black,
+                      color: kblack,
                       fontFamily: "OpenSans",
                       fontSize: 18,
                       fontWeight: FontWeight.w600),
@@ -165,14 +178,14 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 30.0, top: 10),
+            padding: const EdgeInsets.only(left: 20.0, top: 10),
             child: Row(
               children: [
                 Container(
                   height: 45,
-                  width: MediaQuery.of(context).size.width / 1.2,
+                  width: MediaQuery.of(context).size.width / 1.13,
                   decoration: new BoxDecoration(
-                    color: Colors.white,
+                    color: kwhite,
                     border: new Border.all(width: 1.0, color: Colors.black12),
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(10.0)),
@@ -181,18 +194,20 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                   child: DropdownButton<String>(
                     isExpanded: true,
                     hint: Text(
-                      "Reminder me",
+                      "Remind me",
                       style: TextStyle(
-                          fontFamily: "OpenSans", fontWeight: FontWeight.w600),
+                          fontFamily: "OpenSans",
+                          color: kblack,
+                          fontWeight: FontWeight.w600),
                     ),
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontWeight: FontWeight.w600,
-                        color: Colors.black),
+                        color: kblack),
                     icon: Icon(
                       Icons.keyboard_arrow_down,
                       size: 25,
-                      color: Colors.black,
+                      color: kblack,
                     ),
                     underline: Text(""),
                     elevation: 0,
@@ -232,7 +247,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                       style: TextStyle(
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 16),
                     ),
                   ),
@@ -246,48 +261,27 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
               children: [
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        "Mood",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "OpenSans",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Text(
+                      "Mood",
+                      style: TextStyle(
+                          color: kblack,
+                          fontFamily: "OpenSans",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.0,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    style:
-                        TextStyle(fontFamily: "OpenSans", color: Colors.black),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(
-                          color: kGray,
-                          width: 1.0,
-                        ),
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "OpenSans",
-                      ),
-                      hintText: 'Enter your mood',
-                    ),
+                  child: textfield(
+                    controller: moodCtrl,
+                    prefixIcon: null,
+                    suffixIcon: null,
+                    textInputType: TextInputType.text,
+                    parametersValidate: null,
+                    functionValidate: null,
+                    hintText: "Enter your mood",
+                    obscureText: false,
                   ),
                 ),
               ],
@@ -299,48 +293,27 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
               children: [
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        "Energy",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "OpenSans",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Text(
+                      "Energy",
+                      style: TextStyle(
+                          color: kblack,
+                          fontFamily: "OpenSans",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.0,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    style:
-                        TextStyle(fontFamily: "OpenSans", color: Colors.black),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(
-                          color: kGray,
-                          width: 1.0,
-                        ),
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "OpenSans",
-                      ),
-                      hintText: 'Enter your energy',
-                    ),
+                  child: textfield(
+                    controller: energyCtrl,
+                    prefixIcon: null,
+                    suffixIcon: null,
+                    textInputType: TextInputType.text,
+                    parametersValidate: null,
+                    functionValidate: null,
+                    hintText: "Enter your energy",
+                    obscureText: false,
                   ),
                 ),
               ],
@@ -352,48 +325,27 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
               children: [
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        "Appetite",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "OpenSans",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Text(
+                      "Appetite",
+                      style: TextStyle(
+                          color: kblack,
+                          fontFamily: "OpenSans",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.0,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    style:
-                        TextStyle(fontFamily: "OpenSans", color: Colors.black),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(
-                          color: kGray,
-                          width: 1.0,
-                        ),
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "OpenSans",
-                      ),
-                      hintText: 'Enter your appetite',
-                    ),
+                  child: textfield(
+                    controller: appetiteCtrl,
+                    prefixIcon: null,
+                    suffixIcon: null,
+                    textInputType: TextInputType.text,
+                    parametersValidate: null,
+                    functionValidate: null,
+                    hintText: "Enter your appetite",
+                    obscureText: false,
                   ),
                 ),
               ],
@@ -405,48 +357,27 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
               children: [
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        "Cravings",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "OpenSans",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Text(
+                      "Cravings",
+                      style: TextStyle(
+                          color: kblack,
+                          fontFamily: "OpenSans",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.0,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    style:
-                        TextStyle(fontFamily: "OpenSans", color: Colors.black),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(
-                          color: kGray,
-                          width: 1.0,
-                        ),
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "OpenSans",
-                      ),
-                      hintText: 'Enter your cravings',
-                    ),
+                  child: textfield(
+                    controller: cravingsCtrl,
+                    prefixIcon: null,
+                    suffixIcon: null,
+                    textInputType: TextInputType.text,
+                    parametersValidate: null,
+                    functionValidate: null,
+                    hintText: "Enter your cravings",
+                    obscureText: false,
                   ),
                 ),
               ],
@@ -458,48 +389,27 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
               children: [
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        "Morning Sickness",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "OpenSans",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Text(
+                      "Morning Sickness",
+                      style: TextStyle(
+                          color: kblack,
+                          fontFamily: "OpenSans",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.0,
-                  child: TextField(
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    style:
-                        TextStyle(fontFamily: "OpenSans", color: Colors.black),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: kGray, width: 1)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(
-                          color: kGray,
-                          width: 1.0,
-                        ),
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "OpenSans",
-                      ),
-                      hintText: 'Enter your sickness',
-                    ),
+                  child: textfield(
+                    controller: morningsicknessCtrl,
+                    prefixIcon: null,
+                    suffixIcon: null,
+                    textInputType: TextInputType.text,
+                    parametersValidate: null,
+                    functionValidate: null,
+                    hintText: "Enter your sickness",
+                    obscureText: false,
                   ),
                 ),
               ],
@@ -522,7 +432,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                       style: TextStyle(
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 16),
                     ),
                   ),
@@ -536,8 +446,9 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                 height: MediaQuery.of(context).size.height / 5,
                 width: MediaQuery.of(context).size.width / 1.1,
                 child: TextField(
+                  controller: notesCtrl,
                   keyboardType: TextInputType.text,
-                  style: TextStyle(fontFamily: "OpenSans", color: Colors.black),
+                  style: TextStyle(fontFamily: "OpenSans", color: kblack),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintStyle: TextStyle(

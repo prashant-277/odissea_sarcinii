@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/day_Doctorvisit.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/list_Doctorvisit.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/month_Doctorvisit.dart';
+import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -39,36 +40,11 @@ class _doctorVisit_pageState extends State<doctorVisit_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                "Assets/Icons/back.png",
-                height: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  "Doctor visit",
-                  style: TextStyle(
-                      fontFamily: "OpenSans",
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                      fontSize: 15),
-                ),
-              ),
-            ],
-          ),
-        ),
-        elevation: 0,
-        backgroundColor: statusbarColor,
+      backgroundColor: kwhite,
+      appBar: BaseAppBar(
+        appbartext: "Doctor visit",
+        appBar: AppBar(),
+        widgets: [],
       ),
       body: DefaultTabController(
         length: 2,
@@ -87,6 +63,7 @@ class _doctorVisit_pageState extends State<doctorVisit_page> {
                   labelColor: buttonColor,
                   unselectedLabelColor: Colors.black54,
                   indicatorColor: buttonColor,
+                  indicatorWeight: 3,
                   tabs: [
                     Tab(
                       text: "Month",

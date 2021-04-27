@@ -9,6 +9,7 @@ import 'package:odiseea_sarcinii/Tabs/Baby_page.dart';
 import 'package:odiseea_sarcinii/Tabs/Community_page.dart';
 import 'package:odiseea_sarcinii/Tabs/Me_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 import '../Tabs/Home_Page.dart';
 import '../Tabs/Profile_page.dart';
@@ -106,7 +107,7 @@ class page extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => feedbackPage()));
           }
         },
-        color: Colors.orange[100],
+        color: statusbarColor,
       );
     } else if (title == "Me") {
       return Container();

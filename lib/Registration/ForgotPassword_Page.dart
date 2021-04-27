@@ -17,9 +17,9 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kwhite,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: kwhite,
         automaticallyImplyLeading: false,
         title: Text(""),
         leading: Center(
@@ -32,7 +32,7 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
               child: Image.asset(
                 "Assets/Icons/back.png",
                 fit: BoxFit.fill,
-                color: Colors.black,
+                color: kblack,
                 height: 15,
               ),
             ),
@@ -53,8 +53,8 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
                     Text(
                       "Forgot password",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 28,
+                          color: kblack,
+                          fontSize: 24,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600),
                     ),
@@ -71,7 +71,7 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
                           "Enter your email address below and we will send you a reset link.",
                           style: TextStyle(
                               fontFamily: "OpenSans",
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500),
                           textAlign: TextAlign.start,
                         )),
@@ -86,7 +86,7 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
                   controller: _emailCtrl,
                   validator: (value) =>
                       value.isEmpty ? 'Please enter email' : null,
-                  style: TextStyle(fontFamily: "OpenSans", color: Colors.black),
+                  style: TextStyle(fontFamily: "OpenSans", color: kblack),
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(new RegExp(r" "))
                   ],

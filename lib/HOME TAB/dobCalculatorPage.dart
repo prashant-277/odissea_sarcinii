@@ -33,10 +33,11 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
     firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
     lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
     textStyle: TextStyle(fontWeight: FontWeight.w600, fontFamily: "OpenSans"),
-    dropdownColor: Colors.white,
+    dropdownColor: kwhite,
     dateHint: DateHint(year: 'year', month: 'month', day: 'day'),
     ascending: false,
     underLine: Text(""),
+
   );
 
   @override
@@ -59,7 +60,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(""),
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
@@ -75,7 +76,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                           child: Text(
                             "EDOB Calculator",
                             style: TextStyle(
-                                color: Colors.white,
+                                color: kwhite,
                                 fontFamily: "OpenSans",
                                 fontWeight: FontWeight.w500),
                           ),
@@ -91,7 +92,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100.0),
-                      color: Colors.white,
+                      color: kwhite,
                     ),
                   ),
                   Padding(
@@ -99,7 +100,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                     child: Text(
                       "Cosmina stratan",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: kwhite,
                           fontFamily: "OpenSans",
                           fontSize: 18,
                           fontWeight: FontWeight.w500),
@@ -109,8 +110,9 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                 ],
               ),
             ),
+            SizedBox(height: 20),
             Container(
-              height: 80,
+              height: 55,
               width: MediaQuery.of(context).size.width / 1.2,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -131,13 +133,15 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                         count = 0;
                       }
                     },
-                    child: new RadioItem(sampleData[index]),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: new RadioItem(sampleData[index]),
+                    ),
                   );
                 },
               ),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.transparent),
-                color: Colors.white38,
               ),
             ),
             Padding(
@@ -147,7 +151,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                   Text(
                     "Date",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: kblack,
                         fontFamily: "OpenSans",
                         fontWeight: FontWeight.w700),
                   ),
@@ -171,7 +175,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                   Text(
                     "Cycle Length",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: kblack,
                         fontFamily: "OpenSans",
                         fontWeight: FontWeight.w700),
                   ),
@@ -184,7 +188,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                 height: 40,
                 width: MediaQuery.of(context).size.width / 1.2,
                 decoration: new BoxDecoration(
-                  color: Colors.white,
+                  color: kwhite,
                   border: new Border.all(width: 1.0, color: Colors.black12),
                   borderRadius:
                       const BorderRadius.all(const Radius.circular(10.0)),
@@ -200,11 +204,11 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                   style: TextStyle(
                       fontFamily: "OpenSans",
                       fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                      color: kblack),
                   icon: Icon(
                     Icons.keyboard_arrow_down,
                     size: 25,
-                    color: Colors.black,
+                    color: kblack,
                   ),
                   underline: Text(""),
                   elevation: 0,
@@ -212,7 +216,11 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                       .map((String value) {
                     return new DropdownMenuItem<String>(
                       value: value,
-                      child: new Text(value),
+                      child: new Text(value,
+                          style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontWeight: FontWeight.w500,
+                              color: kblack)),
                     );
                   }).toList(),
                   value: data,
@@ -225,6 +233,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -251,43 +260,31 @@ class RadioItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      margin: new EdgeInsets.all(15.0),
-      child: new Row(
-        children: <Widget>[
-          Stack(
-            children: [
-              Container(
-                //height: 45.0,
-                width: MediaQuery.of(context).size.width / 3.2,
-                child: new Center(
-                  child: new Text(_item.buttonText,
-                      style: new TextStyle(
-                          color: _item.isSelected ? Colors.white : Colors.black,
-                          fontFamily: "OpenSans",
-                          fontSize: 15.0)),
-                ),
-                decoration: new BoxDecoration(
-                  color: _item.isSelected ? buttonColor : Colors.transparent,
-                  border: new Border.all(
-                      width: 0.0,
-                      color: _item.isSelected ? buttonColor : Colors.grey),
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(50.0)),
-                ),
-              ),
-              Positioned(
-                  top: 25,
-                  child: Image.asset("Assets/Icons/select.png",
-                      height: _item.isSelected ? 25 : 0)),
-            ],
+    return new Stack(
+      children: [
+        Container(
+          height: 40.0,
+          width: MediaQuery.of(context).size.width / 3.0,
+          child: new Center(
+            child: new Text(_item.buttonText,
+                style: new TextStyle(
+                    color: _item.isSelected ? kwhite : kblack,
+                    fontFamily: "OpenSans",
+                    fontSize: 15.0)),
           ),
-          new Container(
-            margin: new EdgeInsets.only(left: 0.0),
-            child: new Text(_item.text),
-          )
-        ],
-      ),
+          decoration: new BoxDecoration(
+            color: _item.isSelected ? buttonColor : kwhite,
+            border: new Border.all(
+                width: 0.0,
+                color: _item.isSelected ? buttonColor : Colors.grey),
+            borderRadius: const BorderRadius.all(const Radius.circular(50.0)),
+          ),
+        ),
+        Positioned(
+            top: 25,
+            child: Image.asset("Assets/Icons/select.png",
+                height: _item.isSelected ? 25 : 0)),
+      ],
     );
   }
 }

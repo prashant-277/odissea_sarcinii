@@ -31,8 +31,8 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
           BottomNavigationBarItem(
             icon: new IconButton(
               icon: new Image.asset(_currentIndex == 0 ?
-                'Assets/Icons/home_act.png' : "Assets/Icons/home.png",
-                              ),
+              'Assets/Icons/home_act.png' : "Assets/Icons/home.png",
+              ),
               onPressed: null,
               iconSize: 35,
             ),
@@ -43,7 +43,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
           BottomNavigationBarItem(
             icon: new IconButton(
               icon: new Image.asset(_currentIndex == 1?'Assets/Icons/challenge_act.png':
-                'Assets/Icons/challenge.png',
+              'Assets/Icons/challenge.png',
               ),
               onPressed: null,
               iconSize: 35,
@@ -53,7 +53,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
           BottomNavigationBarItem(
             icon: new IconButton(
               icon: new Image.asset(_currentIndex == 2?
-                'Assets/Icons/baby_act.png':'Assets/Icons/baby.png',
+              'Assets/Icons/baby_act.png':'Assets/Icons/baby.png',
               ),
               onPressed: null,
               iconSize: 35,
@@ -63,7 +63,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
           BottomNavigationBarItem(
             icon: new IconButton(
               icon: new Image.asset(_currentIndex==3?
-                'Assets/Icons/community_act.png':'Assets/Icons/community.png',
+              'Assets/Icons/community_act.png':'Assets/Icons/community.png',
               ),
               onPressed: null,
               iconSize: 35,
@@ -73,7 +73,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
           BottomNavigationBarItem(
             icon: new IconButton(
               icon: new Image.asset(_currentIndex==4?
-                'Assets/Icons/profile_act.png':'Assets/Icons/profile.png',
+              'Assets/Icons/profile_act.png':'Assets/Icons/profile.png',
               ),
               onPressed: null,
               iconSize: 35,
@@ -109,7 +109,6 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
         ],
       ),
     );
-
 
   }
 

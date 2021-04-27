@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class weekSingle_page extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kwhite,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Week"),
@@ -31,7 +32,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      color: Colors.white,
+                      color: kwhite,
                       height: 150,
                       width: 150,
                       child: Container(
@@ -43,7 +44,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                                 width: 25,
                                 color: Colors.purple[200],
                                 child: Icon(Icons.search,
-                                    color: Colors.white, size: 20)),
+                                    color: kwhite, size: 20)),
                             onPressed: () {}),
                       ),
                     ),
@@ -56,7 +57,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                               text: 'Baby Size',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                  color: kblack),
                               children: [
                                 TextSpan(
                                     text: '\n0 mm',
@@ -71,7 +72,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                               text: 'Baby Weight',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                  color: kblack),
                               children: [
                                 TextSpan(
                                     text: '\n0 g',
@@ -123,7 +124,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
               ),
             ),
             Card(
-              color: Colors.white,
+              color: kwhite,
               margin: EdgeInsets.all(0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -145,7 +146,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                             "Dear testhhhhy",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: kwhite,
                                 fontSize: 15),
                           ),
                         ),
@@ -168,7 +169,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                             "Week Video",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: kwhite,
                                 fontSize: 15),
                           ),
                         ),
@@ -192,7 +193,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                             "Baby Information",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: kwhite,
                                 fontSize: 15),
                           ),
                         ),
@@ -215,7 +216,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                             "Mother Information",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: kwhite,
                                 fontSize: 15),
                           ),
                         ),
@@ -238,7 +239,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                             "Extra Information",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: kwhite,
                                 fontSize: 15),
                           ),
                         ),
@@ -271,7 +272,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                             "Tips",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: kwhite,
                                 fontSize: 15),
                           ),
                         ),
@@ -306,7 +307,7 @@ class _weekSingle_pageState extends State<weekSingle_page> {
                             "Symptoms",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: kwhite,
                                 fontSize: 15),
                           ),
                         ),

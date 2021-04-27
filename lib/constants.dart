@@ -6,9 +6,11 @@ final kBackgroundColor = Colors.orange.shade200;
 const kPrimaryColor = Color(0xff4e2c82);
 final kAccentColor = Colors.purple[300];
 final buttonColor = Color(0xffE72E68);
-final statusbarColor= Color(0xffF7785E);
-final kGray= Color(0xffDFDFDF);
-
+final statusbarColor = Color(0xffF7785E);
+final kGray = Color(0xffDFDFDF);
+final kwhite = Colors.white;
+final kblack = Colors.black;
+final kGreen = Color(0xff00BB0C);
 
 /*
 const int kTabNotes = 0;
@@ -22,5 +24,3 @@ const int kActionBooks = 2;
 const int kActionDelete = 3;
 */
 
-
-const double kDrawerItemSize = 16;

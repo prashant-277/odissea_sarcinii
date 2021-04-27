@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/BABY%20TAB/nameFilter_page.dart';
+import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 import 'nameDetail_page.dart';
 
@@ -28,74 +31,52 @@ class _namesPageState extends State<namesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.name.toString()),
-        elevation: 0,
-        backgroundColor: Theme.of(context).accentColor,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        actions: [
-          CupertinoSegmentedControl(
-            borderColor: Colors.white,
-            pressedColor: Colors.white,
-            selectedColor: Colors.white,
-            unselectedColor: Theme.of(context).accentColor,
-            groupValue: theriGroupValue,
-            onValueChanged: (changeFromGroupValue) {
-              setState(() {
-                theriGroupValue = changeFromGroupValue;
-                print(changeFromGroupValue);
-              });
-            },
-            children: logoWidgets,
-          ),
+      backgroundColor: kwhite,
+      appBar: BaseAppBar(
+        appbartext: "Name",
+        appBar: AppBar(),
+        widgets: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).push(
+                    MaterialPageRoute(builder: (context) => nameFilter_page()));
+              },
+              icon: Image.asset(
+                "Assets/Icons/filter.png",
+                height: 15,
+              ))
         ],
       ),
       body: Container(
+        color: kwhite,
         child: ListView.builder(
           itemCount: 200,
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 15),
-                  child: GestureDetector(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("$index"),
-                        Container(
-                            height: 20,
-                            width: 20,
-                            child: Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              color: Colors.white,
-                              size: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100.0),
-                              color: Theme.of(context).accentColor,
-                            )),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => nameDetail_page()));
-                    },
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(color: kGray, width: 1)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.name.toString() + " $index",
+                        style: TextStyle(
+                            color: kblack,
+                            fontSize: 15,
+                            fontFamily: "OpenSans",
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
                 ),
-                Divider(
-                  indent: 30.0,
-                )
-              ],
+              ),
             );
           },
         ),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/babyNames_page.dart';
+import 'package:odiseea_sarcinii/BABY%20TAB/birthPlanner_page.dart';
+import 'package:odiseea_sarcinii/BABY%20TAB/contractionCounter_page.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/kickCounter_page.dart';
+import 'package:odiseea_sarcinii/BABY%20TAB/newbornEssentials_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class Baby_page extends StatefulWidget {
   @override
@@ -12,69 +16,107 @@ class _Baby_pageState extends State<Baby_page> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orange[100],
-      child: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                  text: "Baby Names",
-                  icon: Icons.text_fields_rounded,
-                  onTapped: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => babyNames_page()));
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                  onTapped: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => kickCounter_page()));
-                  },
-                  text: "Kick Counters",
-                  icon: Icons.assignment_outlined),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                text: "Contraction Counters",
-                icon: Icons.timer,
-                onTapped: () {},
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                text: "Birth Planner",
-                icon: Icons.assignment_outlined,
-                onTapped: () {},
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                text: "New Born Essentials",
-                icon: Icons.shopping_cart_outlined,
-                onTapped: () {},
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: listtiles(
-                text: "Birth Announcement",
-                onTapped: () {},
-                icon: Icons.announcement_outlined,
-              ),
-            ),
-          ],
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("Assets/Images/background_new_me.png"),
+          fit: BoxFit.fill,
         ),
+      ),
+      child: Column(
+        children: [
+          Text(""),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              children: [
+                Text(
+                  "Baby",
+                  style: TextStyle(
+                      color: kwhite,
+                      fontSize: 25,
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+          Container(
+              height: MediaQuery.of(context).size.height / 1.37,
+              child: ListView(padding: EdgeInsets.zero, children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: listtiles(
+                      text: "Baby Names",
+                      imageName: "Assets/Icons/baby_name.png",
+                      onTapped: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => babyNames_page()));
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: listtiles(
+                    onTapped: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => kickCounter_page()));
+                    },
+                    text: "Kick Counters",
+                    imageName: "Assets/Icons/kick_counter.png",
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: listtiles(
+                    text: "Contraction Counters",
+                    imageName: "Assets/Icons/contraction.png",
+                    onTapped: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => contractionCounter_page()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: listtiles(
+                    text: "Birth Planner",
+                    imageName: "Assets/Icons/birth_planner.png",
+                    onTapped: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => birthPlanner_page()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: listtiles(
+                    text: "New Born Essentials",
+                    imageName: "Assets/Icons/new_born.png",
+                    onTapped: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => newbornEssentials_page()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: listtiles(
+                    text: "Birth Announcement",
+                    onTapped: () {},
+                    imageName: "Assets/Icons/my_week.png",
+                  ),
+                ),
+              ])),
+        ],
       ),
     );
   }

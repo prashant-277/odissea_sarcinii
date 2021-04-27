@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/Tabs/Home_Page.dart';
+import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 
@@ -21,38 +23,11 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "Assets/Icons/back.png",
-                  height: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "Week $newvalue",
-                    style: TextStyle(
-                        fontFamily: "OpenSans",
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 15),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          elevation: 0,
-          backgroundColor: statusbarColor,
-          actions: [
+        backgroundColor: kwhite,
+        appBar: BaseAppBar(
+          appbartext: "Week $newvalue",
+          appBar: AppBar(),
+          widgets: [
             IconButton(
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
@@ -111,85 +86,156 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                       width: MediaQuery.of(context).size.width / 1.10,
                       child: Column(
                         children: [
-                          SizedBox(height: 40),
-                          RangeSlider(
-                            values: _currentRangeValues,
-                            min: 0,
-                            max: 270,
-                            divisions: 270,
-                            activeColor: buttonColor,
-                            inactiveColor: Colors.redAccent[200],
-                            labels: labels,
-                            onChanged: (RangeValues values) {
-                              setState(() {
-                                _currentRangeValues = values;
-                                labels = RangeLabels(
-                                    _currentRangeValues.start.toString(),
-                                    _currentRangeValues.end.toString());
-                              });
-                            },
+                          SizedBox(height: 30),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 1.19,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.zero,
+                                      margin: EdgeInsets.zero,
+                                      height: 24,
+                                      width: 24,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(50)),
+                                          color: kwhite,
+                                          border: Border.all(
+                                              color: buttonColor, width: 4)),
+                                    ),
+                                    SliderTheme(
+                                        data: SliderThemeData(
+                                            trackHeight: 6,
+                                            thumbShape: RoundSliderThumbShape(
+                                                enabledThumbRadius: 3.0,
+                                                elevation: 0),
+                                            thumbColor: buttonColor,
+                                            showValueIndicator:
+                                            ShowValueIndicator.always,
+                                            activeTrackColor: kwhite,
+                                            inactiveTrackColor: Colors.red,
+                                            valueIndicatorColor: kwhite,
+                                            valueIndicatorTextStyle: TextStyle(
+                                                color: kwhite,
+                                                fontFamily: "OpenSans",
+                                                fontWeight: FontWeight.w600),
+                                            valueIndicatorShape:
+                                            PaddleSliderValueIndicatorShape(),
+                                            trackShape: CustomTrackShape(),
+                                            overlayColor: Colors.transparent),
+                                        child: Container(
+                                          width:
+                                          MediaQuery.of(context).size.width /
+                                              1.50,
+                                          child: Slider(
+                                              value: sliderValue.toDouble(),
+                                              min: 1,
+                                              max: 270,
+                                              divisions: 270,
+                                              activeColor: buttonColor,
+                                              inactiveColor: Colors.red[100],
+                                              label: 'Day ' +
+                                                  '${sliderValue.round()}',
+                                              onChanged: (double newValue) {
+                                                setState(() {
+                                                  sliderValue= newValue.round();
+                                                });
+                                              },
+                                              semanticFormatterCallback:
+                                                  (double newValue) {
+                                                return '${newValue.round()}';
+                                              }),
+                                        )),
+
+
+                                    Container(
+                                      height: 24,
+                                      width: 24,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(50)),
+                                          color: kwhite,
+                                          border: Border.all(
+                                              color: Colors.red[100], width: 4)),
+                                    ),
+
+                                  ],
+                                ),
+
+
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "Baby size",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: "OpenSans",
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      "350mm",
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Baby size",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: kblack,
                                           fontFamily: "OpenSans",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                height: 30,
-                                width: 1,
-                                color: Colors.black12,
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    "Baby Weight",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: "OpenSans",
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      "1200 g",
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "350mm",
+                                        style: TextStyle(
+                                            color: kblack,
+                                            fontFamily: "OpenSans",
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 1,
+                                  color: Colors.black12,
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Baby Weight",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: kblack,
                                           fontFamily: "OpenSans",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "1200 g",
+                                        style: TextStyle(
+                                            color: kblack,
+                                            fontFamily: "OpenSans",
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 10),
+                      padding: const EdgeInsets.only(top: 20, bottom: 15),
                       child: Container(
                           width: MediaQuery.of(context).size.width / 1.2,
                           child: primarybutton(
@@ -213,7 +259,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Image.asset(
                                       "Assets/Icons/dear_cosmina.png",
-                                      height: 15,
+                                      height: 20,
                                     ),
                                   ),
                                   Padding(
@@ -224,7 +270,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                       style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: kwhite,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -235,7 +281,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontSize: 15,
-                                    color: Colors.white),
+                                    color: kwhite),
                               ),
                             ],
                           )),
@@ -259,7 +305,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Image.asset(
                                       "Assets/Icons/video.png",
-                                      height: 15,
+                                      height: 20,
                                     ),
                                   ),
                                   Padding(
@@ -270,7 +316,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                       style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: kwhite,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -317,7 +363,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Image.asset(
                                       "Assets/Icons/baby_bw.png",
-                                      height: 15,
+                                      height: 20,
                                     ),
                                   ),
                                   Padding(
@@ -328,7 +374,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                       style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: kwhite,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -339,7 +385,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontSize: 15,
-                                    color: Colors.white),
+                                    color: kwhite),
                               ),
                             ],
                           )),
@@ -363,7 +409,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Image.asset(
                                       "Assets/Icons/mother.png",
-                                      height: 15,
+                                      height: 20,
                                     ),
                                   ),
                                   Padding(
@@ -374,7 +420,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                       style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: kwhite,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -385,7 +431,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontSize: 15,
-                                    color: Colors.white),
+                                    color: kwhite),
                               ),
                             ],
                           )),
@@ -409,7 +455,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Image.asset(
                                       "Assets/Icons/info.png",
-                                      height: 15,
+                                      height: 20,
                                     ),
                                   ),
                                   Padding(
@@ -420,7 +466,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                       style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: kwhite,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -431,7 +477,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontSize: 15,
-                                    color: Colors.white),
+                                    color: kwhite),
                               ),
                             ],
                           )),
@@ -455,7 +501,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Image.asset(
                                       "Assets/Icons/tips.png",
-                                      height: 15,
+                                      height: 20,
                                     ),
                                   ),
                                   Padding(
@@ -466,7 +512,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                       style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: kwhite,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -477,7 +523,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontSize: 15,
-                                    color: Colors.white),
+                                    color: kwhite),
                               ),
                             ],
                           )),
@@ -501,7 +547,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Image.asset(
                                       "Assets/Icons/symptoms.png",
-                                      height: 15,
+                                      height: 20,
                                     ),
                                   ),
                                   Padding(
@@ -512,7 +558,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                       style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: kwhite,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -523,7 +569,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontSize: 15,
-                                    color: Colors.white),
+                                    color: kwhite),
                               ),
                             ],
                           )),

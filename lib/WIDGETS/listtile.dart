@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class listtiles extends StatelessWidget {
   final String text;
@@ -18,14 +19,14 @@ class listtiles extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        color: Colors.white,
+        color: kwhite,
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0,right: 15.0,bottom: 15.0,top: 15.0),
           child: ListTile(
             focusColor: Colors.transparent,
             selectedTileColor: Colors.transparent,
             hoverColor: Colors.transparent,
-            tileColor: Colors.white,
+            tileColor: kwhite,
             contentPadding: EdgeInsets.zero,
             onTap: onTapped,
             title: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class day_Doctorvisit extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kwhite,
         appBar: PreferredSize(
           preferredSize: Size(0, 40),
           child: SafeArea(
@@ -84,7 +86,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                           "Measurements",
                           style: TextStyle(
                               fontSize: 17,
-                              color: Colors.white,
+                              color: kwhite,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -174,7 +176,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                         onPressed: () {},
                         child: Text(
                           "View Chart",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: kwhite),
                         ),
                       ),
                       decoration: BoxDecoration(
@@ -203,7 +205,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                           "Dr. Appointment",
                           style: TextStyle(
                               fontSize: 17,
-                              color: Colors.white,
+                              color: kwhite,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -237,7 +239,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                                 child: Text(
                                   "Set Time",
                                   softWrap: true,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: kwhite),
                                 ),
                               ),
                               decoration: BoxDecoration(
@@ -269,7 +271,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                                 onPressed: () {},
                                 child: Text(
                                   "Never",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: kwhite),
                                 ),
                               ),
                               decoration: BoxDecoration(
@@ -302,7 +304,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                           "Feelings",
                           style: TextStyle(
                               fontSize: 17,
-                              color: Colors.white,
+                              color: kwhite,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -522,7 +524,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                           "Other Notes & Questi...",
                           style: TextStyle(
                               fontSize: 17,
-                              color: Colors.white,
+                              color: kwhite,
                               fontWeight: FontWeight.bold),
                         ),
                       ),

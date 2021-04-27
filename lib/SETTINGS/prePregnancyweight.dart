@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class prePregnancyweight extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _prePregnancyweightState extends State<prePregnancyweight> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kwhite,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Pre-Pregnancy Weight"),
@@ -91,7 +92,7 @@ class _prePregnancyweightState extends State<prePregnancyweight> {
                 onPressed: () {},
                 child: Text(
                   "Save",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: kwhite),
                 ),
                 color: Colors.purple[300],
               ),

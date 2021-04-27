@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 import 'Registration/RegistrationPage.dart';
 
 void main() async {
@@ -14,9 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primaryColor: Color(0xffF7785E),
-            accentColor: Color(0xffF7785E),
-            backgroundColor: Color(0xffF7785E)),
+          primaryColor: Color(0xffF7785E),
+          accentColor: Color(0xffF7785E),
+          backgroundColor: Color(0xffF7785E),
+        ),
         home: MyHomePage());
   }
 }
@@ -38,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kwhite,
       body: Container(
         child: Stack(
           fit: StackFit.expand,
@@ -62,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(
                         "Copyright © Desprecopii.com ",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: kwhite,
                             fontSize: 13,
                             fontFamily: "OpenSans",
                             fontWeight: FontWeight.w500),

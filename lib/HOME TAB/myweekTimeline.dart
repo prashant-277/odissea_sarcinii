@@ -11,6 +11,7 @@ class _myweekTimelineState extends State<myweekTimeline> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kwhite,
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -28,7 +29,7 @@ class _myweekTimelineState extends State<myweekTimeline> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(""),
-                    InkWell(
+                    GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
                         },
@@ -37,7 +38,7 @@ class _myweekTimelineState extends State<myweekTimeline> {
                     Container(
                       height: MediaQuery.of(context).size.height,
                       child: ListView.builder(
-                        itemCount: 270,
+                        itemCount: 10,
                         itemBuilder: (context, index) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,24 +49,25 @@ class _myweekTimelineState extends State<myweekTimeline> {
                                   Text(
                                     "Week",
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: kwhite,
                                         fontFamily: "OpenSans",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Text(
-                                    "$index\n",
+                                    (index + 1).toString(),
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: kwhite,
                                         fontFamily: "OpenSans",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Container(
                                     width: 0.2,
-                                    color: Colors.white,
+                                    color: kwhite,
                                     height: 100,
-                                  )
+                                  ),
+                                  SizedBox(height: 10)
                                 ],
                               ),
                               GestureDetector(
@@ -92,18 +94,23 @@ class _myweekTimelineState extends State<myweekTimeline> {
                         },
                       ),
                     ),
+
                   ],
-                )),
+
+                )
+            ),
           ),
         ),
       ),
+      
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.transparent,
         onPressed: () {
           showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                  backgroundColor: Colors.white, content: uploadDialog()));
+                contentPadding: EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 15),
+                  backgroundColor: kwhite, content: uploadDialog()));
         },
         child: Image.asset("Assets/Icons/add.png"),
       ),
@@ -121,7 +128,7 @@ class _myweekTimelineState extends State<myweekTimeline> {
               Text(
                 "Add new image",
                 style: TextStyle(
-                    color: Colors.black,
+                    color: kblack,
                     fontFamily: "OpenSans",
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
@@ -138,7 +145,7 @@ class _myweekTimelineState extends State<myweekTimeline> {
           ),
           Container(
             height: MediaQuery.of(context).size.height / 4.0,
-            width: MediaQuery.of(context).size.width / 1.3,
+            width: MediaQuery.of(context).size.width / 1.5,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black26, width: 0.5)),
@@ -168,7 +175,7 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: InkWell(
+        title: GestureDetector(
           onTap: () {
             Navigator.pop(context);
           },
@@ -187,7 +194,7 @@ class DetailScreen extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: "OpenSans",
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: kwhite,
                       fontSize: 15),
                 ),
               ),
@@ -230,7 +237,7 @@ class DetailScreen extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (_) => AlertDialog(
-                      backgroundColor: Colors.white,
+                      backgroundColor: kwhite,
                       content: Container(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -241,7 +248,7 @@ class DetailScreen extends StatelessWidget {
                                 Text(
                                   "Add new image",
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: kblack,
                                       fontFamily: "OpenSans",
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600),
@@ -280,7 +287,8 @@ class DetailScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                      )));
+                      )
+                  ));
             },
             child: Image.asset("Assets/Icons/add.png"),
           ),

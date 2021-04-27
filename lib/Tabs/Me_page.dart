@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/myweekTimeline.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/weeksinfo_page.dart';
+import 'package:odiseea_sarcinii/ME%20TAB/mypoints_page.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/weekSingle_page.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/doctorVisit_page.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/weight_tracker.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 import '../ME TAB/myPhotos_page.dart';
 
@@ -17,12 +19,14 @@ class Me_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kwhite,
       body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("Assets/Images/background_new_me.png"),
               fit: BoxFit.fill,
             ),
+
           ),
           child: Column(
             children: [
@@ -34,7 +38,7 @@ class Me_page extends StatelessWidget {
                     Text(
                       "Me",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: kwhite,
                           fontSize: 25,
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600),
@@ -45,11 +49,11 @@ class Me_page extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.height / 1.37,
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: listtiles(
-
                         text: "My Week",
                         imageName: "Assets/Icons/my_week.png",
                         onTapped: () {
@@ -134,9 +138,15 @@ class Me_page extends StatelessWidget {
                       child: listtiles(
                         text: "My Points",
                         imageName: "Assets/Icons/plan_online.png",
-                        onTapped: () {},
+                        onTapped: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => mypoints_page()));
+                        },
                       ),
                     ),
+
                     /*FlutterSlider(
                   values: [300],
                   max: 500,

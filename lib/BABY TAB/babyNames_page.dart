@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/namesPage.dart';
+import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
+import 'package:odiseea_sarcinii/constants.dart';
 
 class babyNames_page extends StatefulWidget {
   @override
@@ -7,60 +9,55 @@ class babyNames_page extends StatefulWidget {
 }
 
 class _babyNames_pageState extends State<babyNames_page> {
-
   String name = "Name";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Categories"),
-        elevation: 0,
-        backgroundColor: Theme.of(context).accentColor,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+      backgroundColor: Colors.white,
+      appBar: BaseAppBar(
+        appbartext: "Category",
+        appBar: AppBar(),
       ),
       body: Container(
         child: ListView.builder(
           itemCount: 200,
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 15),
-                  child: GestureDetector(
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
+              child: GestureDetector(
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      border: Border.all(color: kGray, width: 1)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(name.toString()+" $index"),
-                        Container(
-                            height: 20,
-                            width: 20,
-                            child: Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              color: Colors.white,
-                              size: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100.0),
-                              color: Theme.of(context).accentColor,
-                            )),
+                        Text(
+                          name.toString() + " $index",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontFamily: "OpenSans",
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Image.asset(
+                          "Assets/Icons/right_pink.png",
+                          height: 15,
+                        )
                       ],
                     ),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>namesPage(name)));
-                    },
                   ),
                 ),
-                Divider(
-                  indent: 30.0,
-                )
-              ],
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => namesPage(name)));
+                },
+              ),
             );
           },
         ),
