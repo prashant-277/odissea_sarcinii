@@ -29,14 +29,17 @@ class _myweekTimelineState extends State<myweekTimeline> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(""),
-                    GestureDetector(
+                    InkWell(
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child:
-                            Image.asset("Assets/Icons/back.png", height: 15)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child:
+                              Image.asset("Assets/Icons/back.png", height: 15),
+                        )),
                     Container(
-                      height: MediaQuery.of(context).size.height,
+                      height: MediaQuery.of(context).size.height/1.32,
                       child: ListView.builder(
                         itemCount: 10,
                         itemBuilder: (context, index) {
@@ -94,23 +97,21 @@ class _myweekTimelineState extends State<myweekTimeline> {
                         },
                       ),
                     ),
-
                   ],
-
-                )
-            ),
+                )),
           ),
         ),
       ),
-      
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.transparent,
         onPressed: () {
           showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                contentPadding: EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 15),
-                  backgroundColor: kwhite, content: uploadDialog()));
+                  contentPadding:
+                      EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 15),
+                  backgroundColor: kwhite,
+                  content: Hero(tag: 'imageHero', child: uploadDialog())));
         },
         child: Image.asset("Assets/Icons/add.png"),
       ),
@@ -287,8 +288,7 @@ class DetailScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                      )
-                  ));
+                      )));
             },
             child: Image.asset("Assets/Icons/add.png"),
           ),

@@ -46,22 +46,21 @@ class _changepasswordState extends State<changepassword> {
               "",
               style: TextStyle(fontSize: 20),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      "Assets/Icons/back.png",
-                      height: 15,
-                      color: kblack,
-                    ),
+            Row(
+              children: [
+                IconButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Image.asset(
+                    "Assets/Icons/back.png",
+                    height: 15,
+                    color: kblack,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),

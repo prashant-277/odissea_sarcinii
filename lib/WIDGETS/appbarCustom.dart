@@ -17,8 +17,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       elevation: 0,
       backgroundColor: statusbarColor,
-      title: GestureDetector(
-        onTap: () {
+      title: FlatButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        padding: EdgeInsets.only(left: 0),
+        onPressed: () {
           Navigator.pop(context);
         },
         child: Row(

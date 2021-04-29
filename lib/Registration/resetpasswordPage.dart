@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:odiseea_sarcinii/Registration/RegistrationPage.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class resetpasswordPage extends StatefulWidget {
   @override
@@ -39,18 +43,16 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
         automaticallyImplyLeading: false,
         title: Text(""),
         leading: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 0.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset(
-                "Assets/Icons/back.png",
-                fit: BoxFit.fill,
-                color: kblack,
-                height: 15,
-              ),
+          child: IconButton(
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Image.asset(
+              "Assets/Icons/back.png",
+              height: 15,
+              color: kblack,
             ),
           ),
         ),
@@ -98,8 +100,8 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                           onChanged: (value) {
                             setState(() => password = value);
                           },
-                          style: TextStyle(
-                              fontFamily: "OpenSans", color: kblack),
+                          style:
+                              TextStyle(fontFamily: "OpenSans", color: kblack),
                           maxLines: 1,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
@@ -170,8 +172,8 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                           onChanged: (value) {
                             setState(() => conffirmpassword = value);
                           },
-                          style: TextStyle(
-                              fontFamily: "OpenSans", color: kblack),
+                          style:
+                              TextStyle(fontFamily: "OpenSans", color: kblack),
                           maxLines: 1,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
@@ -237,8 +239,15 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
                         _pswdCtrl.text == _confirmpswdCtrl.text) {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => RegistrationPage()));
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              alignment: Alignment.bottomCenter,
+                              duration: Duration(milliseconds: 300),
+                              child: RegistrationPage()));
+                    }
+                    if (_pswdCtrl.text.toString() !=
+                        _confirmpswdCtrl.text.toString()) {
+                      displayToast("Your password is not matched");
                     }
                   })),
             ],

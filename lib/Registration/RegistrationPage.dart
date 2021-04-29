@@ -8,6 +8,7 @@ import 'package:odiseea_sarcinii/Registration/SignUp_Page.dart';
 import 'package:http/http.dart' as http;
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -53,16 +54,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: primarybutton(
                           "Sign Up",
                           () {
-                            Navigator.push(
+/*                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUp_Page()));
+                                    builder: (context) => SignUp_Page()));*/
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 300),
+                                    child: SignUp_Page()));
                           },
                         ),
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width / 2.5,
-
                         child: FlatButton(
                           padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
                           color: kwhite,
@@ -75,8 +81,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           onPressed: () {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignIn_Page()));
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    alignment: Alignment.bottomCenter,
+                                    duration: Duration(milliseconds: 300),
+                                    child: SignIn_Page()));
                           },
                           child: Text(
                             "Sign In",
@@ -123,8 +132,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     onPressed: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ForgotPassword_Page()));
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              alignment: Alignment.bottomCenter,
+                              duration: Duration(milliseconds: 300),
+                              child: ForgotPassword_Page()));
                     },
                     child: Text(
                       "Forgot Password?",
@@ -136,12 +148,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
+                FlatButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => Dashboard_Page()));
+                        PageTransition(
+                            type: PageTransitionType.fade,
+                            alignment: Alignment.bottomCenter,
+                            duration: Duration(milliseconds: 300),
+                            child: Dashboard_Page()));
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -151,15 +168,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         "Skip  ",
                         style: TextStyle(
                             color: kblack,
-                            fontSize: 18,
+                            fontSize: 20,
                             fontFamily: "OpenSans",
                             fontWeight: FontWeight.w600),
                       ),
-                      Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: kblack,
-                        size: 18,
-                      ),
+                      Image.asset(
+                        "Assets/Icons/right_single.png",
+                        height: 15,
+                      )
                     ],
                   ),
                 ),

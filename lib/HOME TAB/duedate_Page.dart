@@ -23,18 +23,21 @@ class _duedate_PageState extends State<duedate_Page> {
         child: Column(
           children: [
             Text(""),
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.asset("Assets/Icons/back.png", height: 15),
+            Row(
+              children: [
+                IconButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Image.asset(
+                    "Assets/Icons/back.png",
+                    height: 15,
+                    color: kwhite,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.only(top: 5.0),
@@ -76,7 +79,7 @@ class _duedate_PageState extends State<duedate_Page> {
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.1,
-              height: MediaQuery.of(context).size.height / 2.3,
+              height: MediaQuery.of(context).size.height / 2.7,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("Assets/Images/shape.png"),
@@ -84,11 +87,13 @@ class _duedate_PageState extends State<duedate_Page> {
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
                     children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height / 12),
                       Text(
                         "January",
                         style: TextStyle(
@@ -107,6 +112,7 @@ class _duedate_PageState extends State<duedate_Page> {
                         fontSize: 40,
                         fontWeight: FontWeight.w500),
                   ),
+                  Container(height: 10),
                   Text(
                     "2021",
                     style: TextStyle(
@@ -115,11 +121,12 @@ class _duedate_PageState extends State<duedate_Page> {
                         fontSize: 20,
                         fontWeight: FontWeight.w700),
                   ),
+                  Container(height: 16),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 15.0),
+              padding: const EdgeInsets.only(top: 25.0),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50)),

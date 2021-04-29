@@ -8,6 +8,7 @@ import 'package:odiseea_sarcinii/ME%20TAB/doctorVisit_page.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/weight_tracker.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../ME TAB/myPhotos_page.dart';
 
@@ -59,8 +60,11 @@ class Me_page extends StatelessWidget {
                         onTapped: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => weeksinfo_page()));
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  alignment: Alignment.bottomCenter,
+                                  duration: Duration(milliseconds: 300),
+                                  child: weeksinfo_page()));
                         },
                       ),
                     ),
@@ -94,8 +98,11 @@ class Me_page extends StatelessWidget {
                         onTapped: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => myweekTimeline()));
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  alignment: Alignment.bottomCenter,
+                                  duration: Duration(milliseconds: 300),
+                                  child: myweekTimeline()));
                         },
                         text: "My Photos",
                         imageName: "Assets/Icons/my_photos.png",
@@ -107,8 +114,11 @@ class Me_page extends StatelessWidget {
                           onTapped: () {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => doctorVisit_page()));
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    alignment: Alignment.bottomCenter,
+                                    duration: Duration(milliseconds: 300),
+                                    child: doctorVisit_page()));
                           },
                           text: "Doctor Visit",
                           imageName: "Assets/Icons/doctor_visit.png",
@@ -119,8 +129,11 @@ class Me_page extends StatelessWidget {
                         onTapped: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => weight_tracker()));
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  alignment: Alignment.bottomCenter,
+                                  duration: Duration(milliseconds: 300),
+                                  child: weight_tracker()));
                         },
                         text: "Weight Tracker",
                         imageName: "Assets/Icons/weight_tracker.png",
@@ -136,13 +149,18 @@ class Me_page extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: listtiles(
+
                         text: "My Points",
                         imageName: "Assets/Icons/plan_online.png",
                         onTapped: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => mypoints_page()));
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  alignment: Alignment.bottomCenter,
+                                  duration: Duration(milliseconds: 300),
+                                  child: mypoints_page()));
+
                         },
                       ),
                     ),

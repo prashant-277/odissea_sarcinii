@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/nameFilter_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'nameDetail_page.dart';
 
@@ -38,8 +39,13 @@ class _namesPageState extends State<namesPage> {
         widgets: [
           IconButton(
               onPressed: () {
-                Navigator.of(context, rootNavigator: true).push(
-                    MaterialPageRoute(builder: (context) => nameFilter_page()));
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        alignment: Alignment.bottomCenter,
+                        duration: Duration(milliseconds: 300),
+                        child: nameFilter_page()));
               },
               icon: Image.asset(
                 "Assets/Icons/filter.png",

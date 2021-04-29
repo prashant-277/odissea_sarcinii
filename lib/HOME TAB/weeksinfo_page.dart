@@ -57,6 +57,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
           ],
         ),
         body: Container(
+
           child: PageView.builder(
             scrollDirection: Axis.vertical,
             reverse: false,

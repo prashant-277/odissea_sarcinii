@@ -19,66 +19,81 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
     GlobalKey<NavigatorState>(),
   ];
 
-  final _items = [
-
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
             icon: new IconButton(
-              icon: new Image.asset(_currentIndex == 0 ?
-              'Assets/Icons/home_act.png' : "Assets/Icons/home.png",
+              icon: new Image.asset(
+                _currentIndex == 0
+                    ? 'Assets/Icons/home_act.png'
+                    : "Assets/Icons/home.png",
               ),
               onPressed: null,
               iconSize: 35,
             ),
-            title: Text(
-              'Home',
-            ),
+            title: Text('Home',
+                style: TextStyle(
+                    fontFamily: "OpenSans", fontWeight: FontWeight.w500)),
           ),
           BottomNavigationBarItem(
             icon: new IconButton(
-              icon: new Image.asset(_currentIndex == 1?'Assets/Icons/challenge_act.png':
-              'Assets/Icons/challenge.png',
+              icon: new Image.asset(
+                _currentIndex == 1
+                    ? 'Assets/Icons/challenge_act.png'
+                    : 'Assets/Icons/challenge.png',
               ),
               onPressed: null,
               iconSize: 35,
             ),
-            title: Text('Me'),
+            title: Text('Me',
+                style: TextStyle(
+                    fontFamily: "OpenSans", fontWeight: FontWeight.w500)),
           ),
           BottomNavigationBarItem(
             icon: new IconButton(
-              icon: new Image.asset(_currentIndex == 2?
-              'Assets/Icons/baby_act.png':'Assets/Icons/baby.png',
+              icon: new Image.asset(
+                _currentIndex == 2
+                    ? 'Assets/Icons/baby_act.png'
+                    : 'Assets/Icons/baby.png',
               ),
               onPressed: null,
               iconSize: 35,
             ),
-            title: Text('Baby'),
+            title: Text('Baby',
+                style: TextStyle(
+                    fontFamily: "OpenSans", fontWeight: FontWeight.w500)),
           ),
           BottomNavigationBarItem(
             icon: new IconButton(
-              icon: new Image.asset(_currentIndex==3?
-              'Assets/Icons/community_act.png':'Assets/Icons/community.png',
+              icon: new Image.asset(
+                _currentIndex == 3
+                    ? 'Assets/Icons/community_act.png'
+                    : 'Assets/Icons/community.png',
               ),
               onPressed: null,
               iconSize: 35,
             ),
-            title: Text('Community'),
+            title: Text('Community',
+                style: TextStyle(
+                    fontFamily: "OpenSans", fontWeight: FontWeight.w500)),
           ),
           BottomNavigationBarItem(
             icon: new IconButton(
-              icon: new Image.asset(_currentIndex==4?
-              'Assets/Icons/profile_act.png':'Assets/Icons/profile.png',
+              icon: new Image.asset(
+                _currentIndex == 4
+                    ? 'Assets/Icons/profile_act.png'
+                    : 'Assets/Icons/profile.png',
               ),
               onPressed: null,
               iconSize: 35,
             ),
-            title: Text('Profile'),
+            title: Text('Profile',
+                style: TextStyle(
+                    fontFamily: "OpenSans", fontWeight: FontWeight.w500)),
           ),
         ],
         showUnselectedLabels: true,
@@ -91,7 +106,6 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
         type: BottomNavigationBarType.fixed,
         selectedLabelStyle: TextStyle(fontFamily: "OpenSans"),
         unselectedLabelStyle: TextStyle(fontFamily: "OpenSans"),
-
         onTap: (index) {
           setState(() {
             _currentIndex = index;
@@ -99,7 +113,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
         },
         currentIndex: _currentIndex,
       ),
-      body: Stack(
+      body:   Stack(
         children: <Widget>[
           _buildPageOffstage(navigatorKeys[0], 0, "Home"),
           _buildPageOffstage(navigatorKeys[1], 1, "Me"),
@@ -109,7 +123,6 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
         ],
       ),
     );
-
   }
 
   Widget _buildPageOffstage(
@@ -117,7 +130,6 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
     return Offstage(
       offstage: _currentIndex != index,
       child: CustomNavigator(
-
         navigatorKey: key,
         home: page(title: '$s'),
         pageRoute: PageRoutes.materialPageRoute,

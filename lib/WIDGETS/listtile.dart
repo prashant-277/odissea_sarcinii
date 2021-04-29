@@ -14,14 +14,15 @@ class listtiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Card(elevation: 5,
-
+      child: Card(
+        elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
         color: kwhite,
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0,right: 15.0,bottom: 15.0,top: 15.0),
+          padding: const EdgeInsets.only(
+              left: 15.0, right: 15.0, bottom: 15.0, top: 15.0),
           child: ListTile(
             focusColor: Colors.transparent,
             selectedTileColor: Colors.transparent,

@@ -5,6 +5,7 @@ import 'package:odiseea_sarcinii/HOME%20TAB/myweekTimeline.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/weeksinfo_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Home_Page extends StatefulWidget {
   @override
@@ -26,7 +27,6 @@ class _Home_PageState extends State<Home_Page> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
               Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -52,7 +52,6 @@ class _Home_PageState extends State<Home_Page> {
                                 fontFamily: "OpenSans",
                                 fontWeight: FontWeight.w600),
                           ),
-
                         ],
                       ),
                     ),
@@ -133,12 +132,20 @@ class _Home_PageState extends State<Home_Page> {
                                             onTap: () {
                                               Navigator.push(
                                                   context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
+                                                  PageTransition(
+                                                      type: PageTransitionType
+                                                          .fade,
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      duration: Duration(
+                                                          milliseconds: 300),
+                                                      child:
                                                           dobCalculatorPage()));
                                             },
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 5.0),
                                               child: Container(
                                                 height: 27,
                                                 width: 110,
@@ -153,7 +160,8 @@ class _Home_PageState extends State<Home_Page> {
                                                 ),
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(50.0),
+                                                      BorderRadius.circular(
+                                                          50.0),
                                                   color: buttonColor,
                                                 ),
                                               ),
@@ -240,7 +248,7 @@ class _Home_PageState extends State<Home_Page> {
                                 decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(50)),
-                                    color: kwhite,
+                                    color: buttonColor,
                                     border: Border.all(
                                         color: Colors.red[700], width: 4)),
                               ),
@@ -340,23 +348,26 @@ class _Home_PageState extends State<Home_Page> {
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => weeksinfo_page()));
-                          },
-                          child: Text(
-                            "Read more...",
-                            style: TextStyle(
-                                color: kwhite,
-                                fontFamily: "OpenSans",
-                                fontSize: 14),
-                          ),
+                      child: FlatButton(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        padding: const EdgeInsets.only(right:15.0),
+                        child: Text(
+                          "Read more...",
+                          style: TextStyle(
+                              color: kwhite,
+                              fontFamily: "OpenSans",
+                              fontSize: 14),
                         ),
+                        onPressed: (){
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  alignment: Alignment.bottomCenter,
+                                  duration: Duration(milliseconds: 300),
+                                  child: weeksinfo_page()));
+                        },
                       ),
                     ),
                     /*Align(
@@ -489,8 +500,11 @@ class _Home_PageState extends State<Home_Page> {
                       onPressed: () {
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => myweekTimeline()));
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                alignment: Alignment.bottomCenter,
+                                duration: Duration(milliseconds: 300),
+                                child: myweekTimeline()));
                       },
                       padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
                       shape: RoundedRectangleBorder(

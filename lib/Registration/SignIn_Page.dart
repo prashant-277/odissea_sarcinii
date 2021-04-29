@@ -55,16 +55,17 @@ class _SignIn_PageState extends State<SignIn_Page> {
                     fit: BoxFit.fill,
                   ),
                   Positioned(
-                    top: 40,
-                    left: 20,
-                    child: GestureDetector(
-                      onTap: () {
+                    top: 20,
+                    child: IconButton(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Image.asset(
+                      icon: Image.asset(
                         "Assets/Icons/back.png",
-                        fit: BoxFit.fill,
                         height: 15,
+                        color: kwhite,
                       ),
                     ),
                   ),

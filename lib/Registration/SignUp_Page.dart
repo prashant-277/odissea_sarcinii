@@ -5,6 +5,7 @@ import 'package:odiseea_sarcinii/Registration/SignIn_Page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SignUp_Page extends StatefulWidget {
   @override
@@ -59,22 +60,21 @@ class _SignUp_PageState extends State<SignUp_Page> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(""),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "Assets/Icons/back.png",
-                        fit: BoxFit.fill,
-                        height: 15,
-                      ),
-                    ],
+              Row(
+                children: [
+                  IconButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Image.asset(
+                      "Assets/Icons/back.png",
+                      height: 15,
+                      color: kwhite,
+                    ),
                   ),
-                ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
@@ -110,7 +110,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
                               padding: const EdgeInsets.only(
                                   left: 0, right: 0, top: 15),
                               child: Container(
-
                                 child: Row(
                                   children: [
                                     IconButton(
@@ -147,7 +146,8 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                             functionValidate: commonValidation,
                                             suffixIcon: null,
                                             prefixIcon: null,
-                                            parametersValidate: "Please enter Last Name",
+                                            parametersValidate:
+                                                "Please enter Last Name",
                                             textInputType: TextInputType.name,
                                           ),
                                         ],
@@ -280,7 +280,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 child: AbsorbPointer(
                                   child: textfield(
                                     controller: dob_controller,
-
                                     obscureText: false,
                                     hintText: "EDOB",
                                     functionValidate: commonValidation,
@@ -303,7 +302,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                     ),
                                     parametersValidate: "Please select EDOB",
                                     textInputType: TextInputType.number,
-
                                   ),
                                 ),
                               ),
@@ -317,7 +315,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                   }
                                 })),
                             SizedBox(height: 10),
-
                           ],
                         ),
                       ),
@@ -372,10 +369,13 @@ class _SignUp_PageState extends State<SignUp_Page> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => SignIn_Page()));
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                alignment: Alignment.bottomCenter,
+                                duration: Duration(milliseconds: 300),
+                                child: SignIn_Page()));
                       },
                       child: Text(
                         "Sign In",

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:odiseea_sarcinii/Registration/otpConfirmPage.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ForgotPassword_Page extends StatefulWidget {
   @override
@@ -11,6 +12,8 @@ class ForgotPassword_Page extends StatefulWidget {
 }
 
 class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController _emailCtrl = TextEditingController();
   String email = '';
 
@@ -23,18 +26,16 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
         automaticallyImplyLeading: false,
         title: Text(""),
         leading: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 0.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset(
-                "Assets/Icons/back.png",
-                fit: BoxFit.fill,
-                color: kblack,
-                height: 15,
-              ),
+          child: IconButton(
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Image.asset(
+              "Assets/Icons/back.png",
+              height: 15,
+              color: kblack,
             ),
           ),
         ),
@@ -79,46 +80,50 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
                 ),
               ),
               SizedBox(height: 20),
-              Container(
-                width: MediaQuery.of(context).size.width / 1.15,
-                child: TextFormField(
-                  textAlign: TextAlign.start,
-                  controller: _emailCtrl,
-                  validator: (value) =>
-                      value.isEmpty ? 'Please enter email' : null,
-                  style: TextStyle(fontFamily: "OpenSans", color: kblack),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.deny(new RegExp(r" "))
-                  ],
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        borderSide: BorderSide(color: kGray, width: 1)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        borderSide: BorderSide(color: kGray, width: 1)),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color: kGray,
-                        width: 1.0,
+              Form(
+                key: _formKey,
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.15,
+                  child: TextFormField(
+                    textAlign: TextAlign.start,
+                    controller: _emailCtrl,
+                    validator: (value) =>
+                        value.isEmpty ? 'Please enter email' : null,
+                    style: TextStyle(fontFamily: "OpenSans", color: kblack),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(new RegExp(r" "))
+                    ],
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 10.0),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          borderSide: BorderSide(color: kGray, width: 1)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          borderSide: BorderSide(color: kGray, width: 1)),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(
+                          color: kGray,
+                          width: 1.0,
+                        ),
                       ),
-                    ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontFamily: "OpenSans",
-                    ),
-                    hintText: 'Email',
-                    prefixIcon: new IconButton(
-                      icon: new Image.asset(
-                        'Assets/Icons/email.png',
-                        color: buttonColor,
-                        width: 20.0,
-                        height: 20.0,
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontFamily: "OpenSans",
                       ),
-                      onPressed: null,
+                      hintText: 'Email',
+                      prefixIcon: new IconButton(
+                        icon: new Image.asset(
+                          'Assets/Icons/email.png',
+                          color: buttonColor,
+                          width: 20.0,
+                          height: 20.0,
+                        ),
+                        onPressed: null,
+                      ),
                     ),
                   ),
                 ),
@@ -129,10 +134,16 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
               Container(
                   width: MediaQuery.of(context).size.width / 1.15,
                   child: primarybutton("Send", () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => otpConfirmPage()));
+                    if (_formKey.currentState.validate()) {
+                      print("done");
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              alignment: Alignment.bottomCenter,
+                              duration: Duration(milliseconds: 300),
+                              child: otpConfirmPage()));
+                    }
                   })),
             ],
           ),

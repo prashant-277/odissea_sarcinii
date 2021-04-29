@@ -19,7 +19,7 @@ class _weightListpageState extends State<weightListpage> {
             showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                    backgroundColor: kwhite, content: addweightDetail()));
+                    backgroundColor: kwhite, content: Hero(tag: "dialoghero",child: addweightDetail())));
             /*Navigator.push(context,
                 MaterialPageRoute(builder: (context) => addweightDetail()));*/
           },

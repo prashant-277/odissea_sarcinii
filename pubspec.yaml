@@ -32,7 +32,7 @@ dependencies:
     git:
       url: https://github.com/kjawadDeveloper/Custom-navigator.git
 
-  persistent_bottom_nav_bar:
+  animated_splash_screen:
   popup_menu: ^1.0.5
   grouped_buttons: ^1.0.4
   image_picker: ^0.6.6+5
@@ -50,6 +50,8 @@ dependencies:
   otp_text_field: ^1.1.0
   dropdown_date_picker: ^0.1.1+2
   draw_graph: ^0.0.2
+  fluttertoast: ^8.0.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
