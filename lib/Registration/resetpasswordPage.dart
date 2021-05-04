@@ -1,13 +1,18 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:odiseea_sarcinii/url.dart';
 import 'package:odiseea_sarcinii/Registration/RegistrationPage.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
-import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
 
 class resetpasswordPage extends StatefulWidget {
+  var email;
+
+  resetpasswordPage(this.email);
+
   @override
   _resetpasswordPageState createState() => _resetpasswordPageState();
 }
@@ -16,6 +21,8 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _pswdCtrl = TextEditingController();
   TextEditingController _confirmpswdCtrl = TextEditingController();
+  final url1 = url.basicUrl;
+
   String email = '';
 
   String password = '';
@@ -234,16 +241,38 @@ class _resetpasswordPageState extends State<resetpasswordPage> {
               SizedBox(height: 25),
               Container(
                   width: MediaQuery.of(context).size.width / 1.15,
-                  child: primarybutton("Reset", () {
+                  child: primarybutton("Reset", () async {
                     if (_formKey.currentState.validate() &&
                         _pswdCtrl.text == _confirmpswdCtrl.text) {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.fade,
-                              alignment: Alignment.bottomCenter,
-                              duration: Duration(milliseconds: 300),
-                              child: RegistrationPage()));
+
+
+                      var url = "$url1/resetPassword";
+
+                      var map = new Map<String, dynamic>();
+                      map["email"] = widget.email.toString();
+                      map["password"] = _pswdCtrl.text.toString();
+
+                      final response = await http.post(url, body: map);
+
+                      final responseJson = json.decode(response.body);
+                      print(responseJson.toString());
+                      if (responseJson["status"].toString() == "Success") {
+
+                        displayToast(responseJson["message"].toString());
+
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                alignment: Alignment.bottomCenter,
+                                duration: Duration(milliseconds: 300),
+                                child: RegistrationPage()));
+
+                      } else {
+                        displayToast(responseJson["message"].toString());
+                      }
+
+
                     }
                     if (_pswdCtrl.text.toString() !=
                         _confirmpswdCtrl.text.toString()) {

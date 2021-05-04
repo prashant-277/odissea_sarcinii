@@ -1,11 +1,23 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:device_info/device_info.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:odiseea_sarcinii/Registration/SignIn_Page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:odiseea_sarcinii/url.dart';
 
 class SignUp_Page extends StatefulWidget {
   @override
@@ -13,9 +25,15 @@ class SignUp_Page extends StatefulWidget {
 }
 
 class _SignUp_PageState extends State<SignUp_Page> {
-  List<RadioModel> sampleData = new List<RadioModel>();
+
+
+  final url1 = url.basicUrl;
 
   final _formKey = GlobalKey<FormState>();
+  File _image1;
+  String urlimg1;
+  String document_path1;
+  PermissionStatus _status;
 
   TextEditingController fname_controller = TextEditingController();
   TextEditingController lname_controller = TextEditingController();
@@ -28,11 +46,12 @@ class _SignUp_PageState extends State<SignUp_Page> {
   void initState() {
     super.initState();
 
-    sampleData.add(new RadioModel(
-        false, 'M', 'Male', Icon(Icons.arrow_back_ios_outlined)));
-    sampleData.add(new RadioModel(
-        false, 'F', 'Female', Icon(Icons.arrow_forward_ios_outlined)));
+    PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.camera)
+        .then(_updateStatus);
   }
+
+
 
   String password = '';
   bool show = true;
@@ -113,11 +132,192 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 child: Row(
                                   children: [
                                     IconButton(
-                                      icon: new Image.asset(
-                                        'Assets/Images/profile_pic.png',
-                                      ),
+                                      icon: _image1 == null
+                                          ? Image.asset(
+                                              "Assets/Images/profile_pic.png")
+                                          : Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        50.0),
+                                                child: _image1 == null
+                                                    ? Image.network(
+                                                        urlimg1 == null
+                                                            ? ""
+                                                            : urlimg1,
+                                                        fit: BoxFit.fill,
+                                                      )
+                                                    : Image.file(_image1,
+                                                        height:
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                1,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            6,
+                                                        fit: BoxFit.fill),
+                                              ),
+                                            ),
                                       iconSize: 90,
-                                      onPressed: null,
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                new AlertDialog(
+                                                  title: Text("Add photo!"),
+                                                  elevation: 1,
+                                                  contentPadding:
+                                                      EdgeInsets.all(5.0),
+                                                  content:
+                                                      new SingleChildScrollView(
+                                                    child: new ListBody(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: FlatButton(
+                                                            onPressed:
+                                                                _askPermissionD1,
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text("Camera"),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: FlatButton(
+                                                            onPressed:
+                                                                imageSelectorGalleryD1,
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text("Gallery"),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: FlatButton(
+                                                            onPressed: () {},
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text("View"),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: FlatButton(
+                                                            onPressed: () {
+                                                              document_path1 =
+                                                                  null;
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {});
+                                                            },
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text("Delete"),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: FlatButton(
+                                                            onPressed: () {},
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text("Share"),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ));
+                                      },
                                     ),
                                     SizedBox(
                                       width: 5,
@@ -270,11 +470,11 @@ class _SignUp_PageState extends State<SignUp_Page> {
 
                                   setState(() {
                                     date = date;
-                                    dob_controller.text = date.day.toString() +
+                                    dob_controller.text = date.year.toString() +
                                         "-" +
-                                        date.month.toString() +
+                                        date.day.toString() +
                                         "-" +
-                                        date.year.toString();
+                                        date.month.toString();
                                   });
                                 },
                                 child: AbsorbPointer(
@@ -311,7 +511,9 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 width: MediaQuery.of(context).size.width / 1.2,
                                 child: primarybutton("Sign Up", () {
                                   if (_formKey.currentState.validate()) {
-                                    print("done");
+                                    registrationData();
+                                  } else {
+                                    displayToast("Enter valid data");
                                   }
                                 })),
                             SizedBox(height: 10),
@@ -322,38 +524,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
                   ),
                 ),
               ),
-              /*Padding(
-                  padding: const EdgeInsets.only(top: 7.0, bottom: 0),
-                  child: Container(
-                    height: 70,
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 2,
-                      itemBuilder: (BuildContext context, int index) {
-                        return new InkWell(
-                          splashColor: Theme.of(context).primaryColor,
-                          onTap: () {
-                            setState(() {
-                              sampleData.forEach(
-                                  (element) => element.isSelected = false);
-                              sampleData[index].isSelected = true;
-                            });
-                            print(sampleData[index].text);
-                            print(sampleData[index].buttonText);
-                          },
-                          child: new RadioItem(sampleData[index]),
-                        );
-                      },
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: kblack26),
-                      color: kwhite,
-                    ),
-                  )),
-              SizedBox(
-                height: 20,
-              ),*/
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: Container(
@@ -396,51 +566,118 @@ class _SignUp_PageState extends State<SignUp_Page> {
       ),
     );
   }
-}
 
-class RadioItem extends StatelessWidget {
-  final RadioModel _item;
-
-  RadioItem(this._item);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      margin: new EdgeInsets.all(15.0),
-      child: new Row(
-        children: <Widget>[
-          new Container(
-            height: 45.0,
-            width: 45.0,
-            child: new Center(
-              child: new Text(_item.buttonText,
-                  style: new TextStyle(
-                      color: _item.isSelected ? kwhite : kblack,
-                      fontSize: 18.0)),
-            ),
-            decoration: new BoxDecoration(
-              color: _item.isSelected ? Colors.purple[300] : Colors.transparent,
-              border: new Border.all(
-                  width: 1.0,
-                  color: _item.isSelected ? Colors.purple[300] : Colors.grey),
-              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
-            ),
-          ),
-          new Container(
-            margin: new EdgeInsets.only(left: 10.0),
-            child: new Text(_item.text),
-          )
-        ],
-      ),
-    );
+  void _askPermissionD1() {
+    PermissionHandler().requestPermissions([PermissionGroup.camera]).then(
+        _onStatusRequestedD1);
   }
-}
 
-class RadioModel {
-  bool isSelected;
-  final String buttonText;
-  final String text;
-  final Widget icon;
+  void _onStatusRequestedD1(Map<PermissionGroup, PermissionStatus> value) {
+    final status = value[PermissionGroup.camera];
+    if (status == PermissionStatus.granted) {
+      imageSelectorCameraD1();
+    } else {
+      _updateStatus(status);
+    }
+  }
 
-  RadioModel(this.isSelected, this.buttonText, this.text, this.icon);
+  _updateStatus(PermissionStatus value) {
+    if (value != _status) {
+      setState(() {
+        _status = value;
+      });
+    }
+  }
+
+  void imageSelectorCameraD1() async {
+    Navigator.pop(context);
+    var imageFile1 = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+    );
+    setState(() {
+      print(document_path1);
+    });
+    document_path1 = imageFile1.path;
+    if (document_path1.indexOf('file://') == 0) {
+      document_path1 = document_path1.split('file://')[1];
+      print(document_path1);
+    }
+    setState(() {
+      _image1 = imageFile1;
+      print(document_path1);
+    });
+  }
+
+  void imageSelectorGalleryD1() async {
+    Navigator.pop(context);
+    var imageFile1 = await ImagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
+    setState(() {
+      print(document_path1);
+    });
+    document_path1 = imageFile1.path;
+    if (document_path1.indexOf('file://') == 0) {
+      document_path1 = document_path1.split('file://')[1];
+      print(document_path1);
+      //document_path1 = File(file) as String;
+    }
+    setState(() {
+      _image1 = imageFile1;
+    });
+  }
+
+  Future<void> registrationData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var postUri = Uri.parse("$url1/register");
+    var request = new http.MultipartRequest("POST", postUri);
+    request.fields['user_name'] = username_controller.text.toString();
+    request.fields['first_name'] = fname_controller.text.toString();
+    request.fields['last_name'] = lname_controller.text.toString();
+    request.fields['email'] = email_controller.text.toString();
+    request.fields['password'] = password_controller.text.toString();
+    request.fields['device_id'] = prefs.getString("deviceId").toString();
+    request.fields['fcm_token'] = prefs.getString("fcmToken").toString();
+    request.fields['dob'] = dob_controller.text.toString();
+
+    document_path1 != null
+        ? request.files
+            .add(await MultipartFile.fromPath('image', document_path1))
+        : request.fields["image"] = "";
+
+    request.send().then((response) async {
+      if (response.statusCode == 200) {
+        print("Uploaded!");
+        print("--------> " + response.statusCode.toString());
+
+        final responseStream = await response.stream.bytesToString();
+        final responseJson = json.decode(responseStream);
+
+        print(responseJson.toString());
+        if (responseJson["status"].toString() == "Success") {
+          displayToast(responseJson["message"].toString());
+
+          prefs.setString("apiToken", responseJson["data"]["api_token"].toString());
+
+          Timer(
+              Duration(seconds: 1),
+              () => Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade,
+                      alignment: Alignment.bottomCenter,
+                      duration: Duration(milliseconds: 300),
+                      child: SignIn_Page())));
+        } else {
+          displayToast(responseJson["message"].toString());
+        }
+      } else {
+        final responseStream = await response.stream.bytesToString();
+        final responseJson = json.decode(responseStream);
+
+        print("Not Uploaded");
+      }
+    });
+  }
 }

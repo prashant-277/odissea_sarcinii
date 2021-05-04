@@ -1,4 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:device_info/device_info.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:odiseea_sarcinii/APP%20SETUP/Dashboard_Page.dart';
@@ -9,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -19,6 +24,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool isLoggedIn = false;
   var profileData;
   static final FacebookLogin facebookSignIn = new FacebookLogin();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  var device_token;
+  var device_id;
 
   void onLoginStatusChanged(bool isLoggedIn, {profileData}) {
     setState(() {
@@ -27,6 +35,103 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+
+    firebaseCloudMessaging_Listeners();
+    getDeviceId();
+    checkIsLogin();
+  }
+
+  Future<void> firebaseCloudMessaging_Listeners() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (Platform.isIOS) iOS_Permission();
+    if (Platform.isAndroid) Android_Permission();
+
+    _firebaseMessaging.getToken().then((token) {
+      setState(() {
+        device_token = token;
+        print("fcm token  " + device_token);
+        prefs.setString("fcmToken", device_token.toString());
+      });
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
+
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+  }
+
+  void Android_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+  }
+
+  Future<String> getDeviceId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isIOS) {
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+
+      print("Device id---------" + iosDeviceInfo.identifierForVendor);
+
+      setState(() {
+        device_id = iosDeviceInfo.identifierForVendor;
+        prefs.setString("deviceId", device_id);
+      });
+      return iosDeviceInfo.identifierForVendor;
+    } else if (Platform.isAndroid) {
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+      print("Device id---------" + androidDeviceInfo.androidId.toString());
+
+      setState(() {
+        device_id = androidDeviceInfo.androidId;
+        prefs.setString("deviceId", device_id);
+      });
+      return androidDeviceInfo.androidId; // unique ID on Android
+
+    }
+
+  }
+  Future<void> checkIsLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("userEmail") != null) {
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.bottomCenter,
+              duration: Duration(milliseconds: 300),
+              child: Dashboard_Page()));
+
+
+    } else {
+
+    }  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "366438737920",
+    "project_id": "odiseea-sarcinii-5c169",
+    "storage_bucket": "odiseea-sarcinii-5c169.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366438737920:android:9496eabd0b7e8ce0a750e5",
+        "android_client_info": {
+          "package_name": "com.odiseea.odiseea_sarcinii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366438737920-e6cnrfv69edhd7eudhh6db9v1hqc006c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.odiseea.odiseea_sarcinii",
+            "certificate_hash": "61a834cf01355dab8051201255526e374d37f6e5"
+          }
+        },
+        {
+          "client_id": "366438737920-e2tnf9mdo11m3trvrsj1il6vrhn7flmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwCL_2Cfoi4gBcpkC9UZkyoBHm1K7KkcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366438737920-e2tnf9mdo11m3trvrsj1il6vrhn7flmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

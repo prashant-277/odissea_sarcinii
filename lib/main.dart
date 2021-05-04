@@ -1,9 +1,12 @@
 import 'dart:async';
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:odiseea_sarcinii/APP%20SETUP/Dashboard_Page.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Registration/RegistrationPage.dart';
 
 void main() async {
@@ -11,15 +14,14 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Color(0xffF7785E),
-          accentColor: Color(0xffF7785E),
-          backgroundColor: Color(0xffF7785E),
+          /*primaryColor: buttonColor,
+          accentColor: kwhite,
+          backgroundColor: kblack,*/
         ),
         home: MyHomePage());
   }
@@ -31,9 +33,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void initState() {
+
+  /*void initState() {
     super.initState();
-    /*Timer(
+    Timer(
         Duration(milliseconds: 2000),
         () => Navigator.push(
             context,
@@ -43,10 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 duration: Duration(milliseconds: 2000),
                 alignment: Alignment.bottomCenter,
                 child: RegistrationPage())));
-*/
-    /*Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => RegistrationPage())));*/
-  }
+    Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => RegistrationPage())));
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -143,4 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );*/
   }
+
+
 }

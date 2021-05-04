@@ -1,10 +1,15 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:odiseea_sarcinii/Registration/otpConfirmPage.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:odiseea_sarcinii/url.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgotPassword_Page extends StatefulWidget {
   @override
@@ -13,6 +18,7 @@ class ForgotPassword_Page extends StatefulWidget {
 
 class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
   final _formKey = GlobalKey<FormState>();
+  final url1 = url.basicUrl;
 
   TextEditingController _emailCtrl = TextEditingController();
   String email = '';
@@ -133,16 +139,36 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
               ),
               Container(
                   width: MediaQuery.of(context).size.width / 1.15,
-                  child: primarybutton("Send", () {
+                  child: primarybutton("Send", () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     if (_formKey.currentState.validate()) {
                       print("done");
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.fade,
-                              alignment: Alignment.bottomCenter,
-                              duration: Duration(milliseconds: 300),
-                              child: otpConfirmPage()));
+
+                      var url = "$url1/forgotPassword";
+
+                      var map = new Map<String, dynamic>();
+                      map["email"] = _emailCtrl.text.toString();
+
+                      final response = await http.post(url, body: map);
+
+                      final responseJson = json.decode(response.body);
+                      print(responseJson.toString());
+                      if (responseJson["status"].toString() == "Success") {
+                        displayToast(responseJson["message"].toString());
+
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                alignment: Alignment.bottomCenter,
+                                duration: Duration(milliseconds: 300),
+                                child: otpConfirmPage(
+                                    responseJson["data"]["email"].toString(),
+                                    responseJson["data"]["otp"].toString())));
+                      } else {
+                        displayToast(responseJson["message"].toString());
+                      }
                     }
                   })),
             ],

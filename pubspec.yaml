@@ -37,7 +37,7 @@ dependencies:
   grouped_buttons: ^1.0.4
   image_picker: ^0.6.6+5
   flutter_datetime_picker:
-  flutter_facebook_login: ^3.0.0
+  flutter_facebook_login:
   flutter_facebook_auth:
   table_calendar:
   cupertino_tabbar:
@@ -51,6 +51,11 @@ dependencies:
   dropdown_date_picker: ^0.1.1+2
   draw_graph: ^0.0.2
   fluttertoast: ^8.0.6
+  device_info: ^2.0.0
+  permission_handler: ^4.3.0
+  camera: ^0.5.8+4
+  http:
+  firebase_messaging:
 
 dev_dependencies:
   flutter_test:

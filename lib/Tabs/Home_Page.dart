@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/dobCalculatorPage.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/myweekTimeline.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/weeksinfo_page.dart';
-import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -351,7 +350,7 @@ class _Home_PageState extends State<Home_Page> {
                       child: FlatButton(
                         highlightColor: Colors.transparent,
                         splashColor: Colors.transparent,
-                        padding: const EdgeInsets.only(right:15.0),
+                        padding: const EdgeInsets.only(right: 15.0),
                         child: Text(
                           "Read more...",
                           style: TextStyle(
@@ -359,7 +358,7 @@ class _Home_PageState extends State<Home_Page> {
                               fontFamily: "OpenSans",
                               fontSize: 14),
                         ),
-                        onPressed: (){
+                        onPressed: () {
                           Navigator.push(
                               context,
                               PageTransition(
@@ -370,7 +369,7 @@ class _Home_PageState extends State<Home_Page> {
                         },
                       ),
                     ),
-                    /*Align(
+                      /*Align(
                       alignment: Alignment.bottomCenter,
                       child: Card(
                         elevation: 0,

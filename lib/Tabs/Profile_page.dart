@@ -5,6 +5,7 @@ import 'package:odiseea_sarcinii/PROFILE%20TAB/termsandcondition.dart';
 import 'package:odiseea_sarcinii/Registration/RegistrationPage.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile_page extends StatefulWidget {
   @override
@@ -104,7 +105,10 @@ class _Profile_pageState extends State<Profile_page> {
                                 fontFamily: "OpenSans",
                                 fontWeight: FontWeight.w600),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
+                            SharedPreferences prefs = await  SharedPreferences.getInstance();
+                            prefs.setString("userEmail", null);
+
                             Navigator.of(context, rootNavigator: true).push(
                                 MaterialPageRoute(builder: (context) => RegistrationPage()));
                           },

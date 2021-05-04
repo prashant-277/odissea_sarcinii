@@ -1,10 +1,18 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:odiseea_sarcinii/APP%20SETUP/Dashboard_Page.dart';
+import 'package:odiseea_sarcinii/Tabs/Home_Page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:odiseea_sarcinii/url.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SignIn_Page extends StatefulWidget {
   @override
@@ -13,6 +21,7 @@ class SignIn_Page extends StatefulWidget {
 
 class _SignIn_PageState extends State<SignIn_Page> {
   bool rememberMe = false;
+  final url1 = url.basicUrl;
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController usernameEmail_controller = TextEditingController();
@@ -114,7 +123,8 @@ class _SignIn_PageState extends State<SignIn_Page> {
                                 ),
                                 onPressed: null,
                               ),
-                              parametersValidate: "Please enter Email/User Name",
+                              parametersValidate:
+                                  "Please enter Email/User Name",
                               textInputType: TextInputType.name,
                             ),
                           ),
@@ -164,7 +174,8 @@ class _SignIn_PageState extends State<SignIn_Page> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Checkbox(
-                                  side: BorderSide(color: Colors.grey, width: 2),
+                                  side:
+                                      BorderSide(color: Colors.grey, width: 2),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4)),
                                   value: rememberMe,
@@ -189,6 +200,7 @@ class _SignIn_PageState extends State<SignIn_Page> {
                         child: primarybutton("Sign In", () {
                           if (_formKey.currentState.validate()) {
                             print("done");
+                            login();
                           }
                         })),
                     Text("")
@@ -200,5 +212,38 @@ class _SignIn_PageState extends State<SignIn_Page> {
         ),
       ),
     );
+  }
+
+  login() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = "$url1/login";
+
+    var map = new Map<String, dynamic>();
+    map["email"] = usernameEmail_controller.text.toString();
+    map["password"] = _pswdCtrl.text.toString();
+    map["fcm_token"] = prefs.getString("fcmToken").toString();
+
+    final response = await http.post(url, body: map);
+
+    final responseJson = json.decode(response.body);
+    print(responseJson.toString());
+    if (responseJson["status"].toString() == "Success") {
+
+      prefs.setString("userEmail", responseJson["data"]["email"].toString());
+
+      displayToast(responseJson["message"].toString());
+
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.bottomCenter,
+              duration: Duration(milliseconds: 300),
+              child: Dashboard_Page()));
+
+
+    } else {
+      displayToast(responseJson["message"].toString());
+    }
   }
 }
