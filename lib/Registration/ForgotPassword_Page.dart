@@ -140,10 +140,8 @@ class _ForgotPassword_PageState extends State<ForgotPassword_Page> {
               Container(
                   width: MediaQuery.of(context).size.width / 1.15,
                   child: primarybutton("Send", () async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
+
                     if (_formKey.currentState.validate()) {
-                      print("done");
 
                       var url = "$url1/forgotPassword";
 

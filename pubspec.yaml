@@ -33,6 +33,7 @@ dependencies:
       url: https://github.com/kjawadDeveloper/Custom-navigator.git
 
   animated_splash_screen:
+  flutter_spinkit:
   popup_menu: ^1.0.5
   grouped_buttons: ^1.0.4
   image_picker: ^0.6.6+5
@@ -56,6 +57,8 @@ dependencies:
   camera: ^0.5.8+4
   http:
   firebase_messaging:
+  flutter_share:
+
 
 dev_dependencies:
   flutter_test:

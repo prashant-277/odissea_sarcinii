@@ -115,8 +115,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       return androidDeviceInfo.androidId; // unique ID on Android
 
     }
-
   }
+
   Future<void> checkIsLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("userEmail") != null) {
@@ -127,11 +127,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               alignment: Alignment.bottomCenter,
               duration: Duration(milliseconds: 300),
               child: Dashboard_Page()));
+    } else {}
+  }
 
-
-    } else {
-
-    }  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -159,10 +157,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: primarybutton(
                           "Sign Up",
                           () {
-/*                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUp_Page()));*/
                             Navigator.push(
                                 context,
                                 PageTransition(
@@ -315,14 +309,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
         onLoginStatusChanged(true, profileData: profile);
         print(facebookLoginResult.accessToken.token);
 
-        var graphResponse1 = await http.get(
-          Uri.parse(
-              "https://graph.facebook.com/v10.0/884006802393345/permission?access_token=${facebookLoginResult.accessToken.token}"),
-        );
-
-        var profile1 = json.decode(graphResponse1.body);
-
-        print("Friend List ******* " + profile1.toString());
+        Navigator.push(
+            context,
+            PageTransition(
+                type: PageTransitionType.fade,
+                alignment: Alignment.bottomCenter,
+                duration: Duration(milliseconds: 300),
+                child: Dashboard_Page()));
 
         break;
     }

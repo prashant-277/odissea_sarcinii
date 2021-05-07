@@ -26,9 +26,10 @@ class _SignIn_PageState extends State<SignIn_Page> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController usernameEmail_controller = TextEditingController();
   TextEditingController _pswdCtrl = TextEditingController();
-  String email = '';
 
+  String email = '';
   String password = '';
+
   bool show = true;
 
   void onTap() {
@@ -214,7 +215,7 @@ class _SignIn_PageState extends State<SignIn_Page> {
     );
   }
 
-  login() async {
+  login()  async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = "$url1/login";
 
@@ -227,9 +228,11 @@ class _SignIn_PageState extends State<SignIn_Page> {
 
     final responseJson = json.decode(response.body);
     print(responseJson.toString());
+
     if (responseJson["status"].toString() == "Success") {
 
       prefs.setString("userEmail", responseJson["data"]["email"].toString());
+      prefs.setString("apiToken", responseJson["data"]["api_token"].toString());
 
       displayToast(responseJson["message"].toString());
 

@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          /*primaryColor: buttonColor,
+            /*primaryColor: buttonColor,
           accentColor: kwhite,
           backgroundColor: kblack,*/
-        ),
+            ),
         home: MyHomePage());
   }
 }
@@ -33,7 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   /*void initState() {
     super.initState();
     Timer(
@@ -145,6 +144,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );*/
   }
-
-
 }
