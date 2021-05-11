@@ -98,7 +98,7 @@ class _birthPlanner_pageState extends State<birthPlanner_page> {
                         style: TextStyle(
                             fontFamily: "OpenSans",
                             fontWeight: FontWeight.w600,
-                            color: kblack,
+                            color: kwhite,
                             fontSize: 15),
                       ),
                     ),
@@ -205,7 +205,7 @@ class _birthPlanner_pageState extends State<birthPlanner_page> {
                         style: TextStyle(
                             fontFamily: "OpenSans",
                             fontWeight: FontWeight.w600,
-                            color: kblack,
+                            color: kwhite,
                             fontSize: 15),
                       ),
                     ),
@@ -414,7 +414,7 @@ class _birthPlanner_pageState extends State<birthPlanner_page> {
                         style: TextStyle(
                             fontFamily: "OpenSans",
                             fontWeight: FontWeight.w600,
-                            color: kblack,
+                            color: kwhite,
                             fontSize: 15),
                       ),
                     ),

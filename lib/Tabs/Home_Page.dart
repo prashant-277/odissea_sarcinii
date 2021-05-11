@@ -321,150 +321,153 @@ class _Home_PageState extends State<Home_Page> {
                   ],
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("Assets/Images/background3.png"),
-                    fit: BoxFit.fill,
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade,
+                          alignment: Alignment.bottomCenter,
+                          duration: Duration(milliseconds: 300),
+                          child: weeksinfo_page()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("Assets/Images/background3.png"),
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                width: MediaQuery.of(context).size.width / 1.1,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 15, left: 15, right: 15),
-                      child: Container(
-                        child: Text(
-                          "If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary. If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary.If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary. If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontSize: 15,
-                              color: kwhite),
-                          maxLines: 10,
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 15, left: 15, right: 15),
+                        child: Container(
+                          child: Text(
+                            "If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary. If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary.If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary. If alarm callbacks will need access to other Flutter plugins, including the alarm manager plugin itself, it may be necessary.",
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 15,
+                                color: kwhite),
+                            maxLines: 10,
+                          ),
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: FlatButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: Text(
-                          "Read more...",
-                          style: TextStyle(
-                              color: kwhite,
-                              fontFamily: "OpenSans",
-                              fontSize: 14),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: FlatButton(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: Text(
+                            "Read more...",
+                            style: TextStyle(
+                                color: kwhite,
+                                fontFamily: "OpenSans",
+                                fontSize: 14),
+                          ),
+                          onPressed: null
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  alignment: Alignment.bottomCenter,
-                                  duration: Duration(milliseconds: 300),
-                                  child: weeksinfo_page()));
-                        },
                       ),
-                    ),
                       /*Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Card(
-                        elevation: 0,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              child: Container(
-                                  child: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                  color: Colors.orange[200],
-                                  height:
-                                      MediaQuery.of(context).size.height / 8),
-                              onTap: () {
-                                _scrollController.animateTo(
-                                    _scrollController.position.minScrollExtent,
-                                    curve: Curves.fastOutSlowIn,
-                                    duration:
-                                        const Duration(milliseconds: 5000));
-                              },
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height / 8,
-                              width: MediaQuery.of(context).size.width / 1.5,
-                              color: Colors.orange[200],
-                              child: ListView.builder(
-                                itemCount: 10,
-                                scrollDirection: Axis.horizontal,
-                                controller: _scrollController,
-                                itemBuilder: (context, index) {
-                                  return Stack(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                          height: 60,
-                                          width: 60,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100.0),
-                                            color: kblack38,
-                                          ),
-                                          child: Icon(
-                                            Icons.add,
-                                            size: 30,
-                                            color: kwhite,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment(0, 0.6),
-                                        child: Container(
-                                            height: 20,
-                                            width: 20,
-                                            child:
-                                                Center(child: Text("$index")),
+                        alignment: Alignment.bottomCenter,
+                        child: Card(
+                          elevation: 0,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                child: Container(
+                                    child: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                    color: Colors.orange[200],
+                                    height:
+                                        MediaQuery.of(context).size.height / 8),
+                                onTap: () {
+                                  _scrollController.animateTo(
+                                      _scrollController.position.minScrollExtent,
+                                      curve: Curves.fastOutSlowIn,
+                                      duration:
+                                          const Duration(milliseconds: 5000));
+                                },
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.height / 8,
+                                width: MediaQuery.of(context).size.width / 1.5,
+                                color: Colors.orange[200],
+                                child: ListView.builder(
+                                  itemCount: 10,
+                                  scrollDirection: Axis.horizontal,
+                                  controller: _scrollController,
+                                  itemBuilder: (context, index) {
+                                    return Stack(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Container(
+                                            height: 60,
+                                            width: 60,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(100.0),
-                                              border: Border.all(
-                                                  color: kblack38,
-                                                  width: 1),
+                                              color: kblack38,
+                                            ),
+                                            child: Icon(
+                                              Icons.add,
+                                              size: 30,
                                               color: kwhite,
-                                            )),
-                                      ),
-                                    ],
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment(0, 0.6),
+                                          child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              child:
+                                                  Center(child: Text("$index")),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(100.0),
+                                                border: Border.all(
+                                                    color: kblack38,
+                                                    width: 1),
+                                                color: kwhite,
+                                              )),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                              GestureDetector(
+                                child: Container(
+                                    color: Colors.orange[200],
+                                    child: Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                    height:
+                                        MediaQuery.of(context).size.height / 8),
+                                onTap: () {
+                                  _scrollController.animateTo(
+                                    _scrollController.position.maxScrollExtent,
+                                    curve: Curves.fastOutSlowIn,
+                                    duration: const Duration(milliseconds: 5000),
                                   );
                                 },
                               ),
-                            ),
-                            GestureDetector(
-                              child: Container(
-                                  color: Colors.orange[200],
-                                  child: Icon(
-                                    Icons.arrow_forward_ios_outlined,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                  height:
-                                      MediaQuery.of(context).size.height / 8),
-                              onTap: () {
-                                _scrollController.animateTo(
-                                  _scrollController.position.maxScrollExtent,
-                                  curve: Curves.fastOutSlowIn,
-                                  duration: const Duration(milliseconds: 5000),
-                                );
-                              },
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    )*/
-                  ],
+                      )*/
+                    ],
+                  ),
                 ),
               ),
               Padding(

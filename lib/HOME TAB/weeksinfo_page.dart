@@ -38,8 +38,8 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                 ),
                 onPressed: () {
                   pageController.previousPage(
-                      duration: Duration(milliseconds: 400),
-                      curve: Curves.bounceInOut);
+                      duration: Duration(milliseconds: 800),
+                      curve: Curves.ease);
                 }),
             IconButton(
                 icon: Image.asset(
@@ -51,15 +51,14 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                 hoverColor: Colors.transparent,
                 onPressed: () {
                   pageController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut);
+                      duration: Duration(milliseconds: 800),
+                      curve: Curves.ease);
                 })
           ],
         ),
         body: Container(
-
           child: PageView.builder(
-            scrollDirection: Axis.vertical,
+            scrollDirection: Axis.horizontal,
             reverse: false,
             allowImplicitScrolling: false,
             physics: NeverScrollableScrollPhysics(),
@@ -118,7 +117,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                                 elevation: 0),
                                             thumbColor: buttonColor,
                                             showValueIndicator:
-                                            ShowValueIndicator.always,
+                                                ShowValueIndicator.always,
                                             activeTrackColor: kwhite,
                                             inactiveTrackColor: Colors.red,
                                             valueIndicatorColor: kwhite,
@@ -127,12 +126,13 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                                 fontFamily: "OpenSans",
                                                 fontWeight: FontWeight.w600),
                                             valueIndicatorShape:
-                                            PaddleSliderValueIndicatorShape(),
+                                                PaddleSliderValueIndicatorShape(),
                                             trackShape: CustomTrackShape(),
                                             overlayColor: Colors.transparent),
                                         child: Container(
-                                          width:
-                                          MediaQuery.of(context).size.width /
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
                                               1.50,
                                           child: Slider(
                                               value: sliderValue.toDouble(),
@@ -145,7 +145,8 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                                   '${sliderValue.round()}',
                                               onChanged: (double newValue) {
                                                 setState(() {
-                                                  sliderValue= newValue.round();
+                                                  sliderValue =
+                                                      newValue.round();
                                                 });
                                               },
                                               semanticFormatterCallback:
@@ -153,8 +154,6 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                                 return '${newValue.round()}';
                                               }),
                                         )),
-
-
                                     Container(
                                       height: 24,
                                       width: 24,
@@ -163,18 +162,17 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                                               Radius.circular(50)),
                                           color: kwhite,
                                           border: Border.all(
-                                              color: Colors.red[100], width: 4)),
+                                              color: Colors.red[100],
+                                              width: 4)),
                                     ),
-
                                   ],
                                 ),
-
-
                               ],
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -325,7 +323,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                               ),
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.height / 4.2,
+                                    MediaQuery.of(context).size.height / 4.3,
                                 child: Stack(
                                   children: [
                                     Image.asset(

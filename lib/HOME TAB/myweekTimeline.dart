@@ -510,7 +510,7 @@ class _DetailScreenState extends State<DetailScreen>
                   "https://chessmafia.com/php/Odiseea/public/uploads/" + imageArray[index]["image"].toString(),
                   fit: BoxFit.fill,
                 ),*/
-                      );
+                    );
                 }),
       ),
       floatingActionButton: Column(
@@ -523,8 +523,7 @@ class _DetailScreenState extends State<DetailScreen>
                       context: context,
                       builder: (_) => AlertDialog(
                           backgroundColor: kwhite,
-                          content: uploadphotosdialog(
-                              widget.imagedata[widget.index]["week"])))
+                          content: uploadphotosdialog(widget.imagedata[widget.index]["week"])))
                   .then((_) => setState(() {
                         getImages();
                       }));
