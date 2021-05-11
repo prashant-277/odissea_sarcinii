@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:odiseea_sarcinii/Registration/RegistrationPage.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:odiseea_sarcinii/url.dart';
 
 class changepassword extends StatefulWidget {
   @override
@@ -10,6 +17,8 @@ class changepassword extends StatefulWidget {
 
 class _changepasswordState extends State<changepassword> {
   final _formKey = GlobalKey<FormState>();
+  final url1 = url.basicUrl;
+
 
   TextEditingController _oldpswdCtrl = TextEditingController();
   TextEditingController _newpswdCtrl = TextEditingController();
@@ -203,9 +212,44 @@ class _changepasswordState extends State<changepassword> {
               padding: const EdgeInsets.symmetric(vertical: 40.0),
               child: Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  child: primarybutton("Change", () {
+                  child: primarybutton("Change", () async {
                     if (_formKey.currentState.validate()) {
-                      print("done");
+
+
+                      if (_newpswdCtrl.text.toString() !=
+                          _confirmpswdCtrl.text.toString()) {
+                        displayToast("Your password is not matched");
+                      }else {
+                        SharedPreferences prefs = await SharedPreferences
+                            .getInstance();
+
+                        var url = "$url1/changePassword";
+
+                        var map = new Map<String, dynamic>();
+                        map["old_password"] =
+                            _oldpswdCtrl.text.toString(); //week.toString();
+                        map["password"] =
+                            _newpswdCtrl.text.toString(); //week.toString();
+
+                        Map<String, String> header = {
+                          "Authorization": prefs.getString("apiToken")
+                              .toString()
+                        };
+
+                        final response = await http.post(
+                            url, headers: header, body: map);
+
+                        final responseJson = json.decode(response.body);
+                        print("ddddd" + responseJson.toString());
+                        if(responseJson["status"]=="Success"){
+                          displayToast(responseJson["message"].toString());
+                          Navigator.of(context, rootNavigator: true).push(
+                              MaterialPageRoute(builder: (context) => RegistrationPage()));
+                        }else{
+                          displayToast(responseJson["message"].toString());
+                        }
+                      }
+
                     }
                   })),
             )

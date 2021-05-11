@@ -9,12 +9,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/uploadDialog.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/uploadphotosdialog.dart';
 import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
-import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:odiseea_sarcinii/url.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class myweekTimeline extends StatefulWidget {
@@ -25,6 +23,8 @@ class myweekTimeline extends StatefulWidget {
 class _myweekTimelineState extends State<myweekTimeline>
     with TickerProviderStateMixin {
   final url1 = url.basicUrl;
+  final url2 = url.imageUrl;
+
   bool isLoading = true;
 
   List imagedata = [];
@@ -38,11 +38,12 @@ class _myweekTimelineState extends State<myweekTimeline>
   void initState() {
     super.initState();
     getImages();
+
   }
 
   Future<void> getImages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    print(prefs.getString("apiToken").toString());
     var url = "$url1/getImage";
 
     Map<String, String> header = {
@@ -152,18 +153,10 @@ class _myweekTimelineState extends State<myweekTimeline>
                                           child: ClipRRect(
                                               // borderRadius: new BorderRadius.circular(12.0),
                                               child: FadeInImage(
-                                                  image: NetworkImage(imagedata[
-                                                                          index]
-                                                                      ["image_arr"]
-                                                                  [0]["image"]
-                                                              .toString() ==
+                                                  image: NetworkImage(imagedata[index]["image_arr"][0]["image"].toString() ==
                                                           ""
                                                       ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                      : "https://chessmafia.com/php/Odiseea/public/uploads/" +
-                                                          imagedata[index]
-                                                                      ["image_arr"]
-                                                                  [0]["image"]
-                                                              .toString()),
+                                                      : url2 +imagedata[index]["image_arr"][0]["image"].toString()),
                                                   fit: BoxFit.fill,
                                                   placeholder: AssetImage(
                                                       "Assets/Images/giphy.gif"))),
@@ -220,166 +213,6 @@ class _myweekTimelineState extends State<myweekTimeline>
     );
   }
 
-  /*Widget uploadDialog() {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Add new image",
-                style: TextStyle(
-                    color: kblack,
-                    fontFamily: "OpenSans",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
-              ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop('dialog');
-                  },
-                  icon: Image.asset(
-                    "Assets/Icons/cancel.png",
-                    height: 15,
-                  ))
-            ],
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 4.0,
-            width: MediaQuery.of(context).size.width / 1.5,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black26, width: 0.5)),
-            child: IconButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                        title: Text("Upload photo"),
-                        elevation: 1,
-                        contentPadding: EdgeInsets.all(5.0),
-                        content: selectPhoto()));
-              },
-              icon: _image1 == null
-                  ? Image.asset(
-                      "Assets/Images/new_img.png",
-                      height: 75,
-                    )
-                  : Container(
-                      width: MediaQuery.of(context).size.width / 1,
-                      child: ClipRRect(
-                        borderRadius: new BorderRadius.circular(10.0),
-                        child: _image1 == null
-                            ? Image.network(
-                                urlimg1 == null ? "" : urlimg1,
-                                fit: BoxFit.fill,
-                              )
-                            : Image.file(_image1,
-                                height: MediaQuery.of(context).size.height / 1,
-                                width: MediaQuery.of(context).size.width / 6,
-                                fit: BoxFit.fill),
-                      ),
-                    ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: primarybutton("Upload", () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  var postUri = Uri.parse("$url1/imageUpload");
-                  var request = new http.MultipartRequest("POST", postUri);
-                  request.fields['week'] = post_week.toString()=="null"?"1":post_week.toString();
-
-                  request.headers["Authorization"] =
-                      prefs.getString("apiToken").toString();
-
-                  document_path1 != null
-                      ? request.files.add(
-                          await MultipartFile.fromPath('image', document_path1))
-                      : request.fields["image"] = "";
-
-                  request.send().then((response) async {
-                    if (response.statusCode == 200) {
-                      print("Uploaded!");
-
-                      print("--------> " + response.statusCode.toString());
-
-                      final responseStream =
-                          await response.stream.bytesToString();
-                      final responseJson = json.decode(responseStream);
-
-                      print(responseJson.toString());
-                      if (responseJson["status"].toString() == "Success") {
-                        displayToast(responseJson["message"].toString());
-                      } else {
-                        displayToast(responseJson["message"].toString());
-                      }
-                    } else {
-                      final responseStream =
-                          await response.stream.bytesToString();
-                      final responseJson = json.decode(responseStream);
-
-                      print("Not Uploaded");
-                      print(responseJson);
-                    }
-                  });
-                })),
-          )
-        ],
-      ),
-    );
-  }*/
-
-  /*Widget selectPhoto() {
-    return SingleChildScrollView(
-      child: new ListBody(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: FlatButton(
-              onPressed: () {
-                imageSelectorCameraD1();
-              },
-              child: Row(
-                children: <Widget>[
-                  Text("Camera"),
-                ],
-              ),
-            ),
-            decoration: BoxDecoration(
-              border: BorderDirectional(
-                bottom: BorderSide(width: 0.5, color: Colors.black12),
-              ),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: FlatButton(
-              onPressed: () {
-                imageSelectorGalleryD1();
-              },
-              child: Row(
-                children: <Widget>[
-                  Text("Gallery"),
-                ],
-              ),
-            ),
-            decoration: BoxDecoration(
-              border: BorderDirectional(
-                bottom: BorderSide(width: 0.5, color: Colors.black12),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }*/
-
   void imageSelectorCameraD1() async {
     Navigator.pop(context);
     var imageFile1 = await ImagePicker.pickImage(
@@ -431,6 +264,8 @@ class _DetailScreenState extends State<DetailScreen>
     with TickerProviderStateMixin {
   List imageArray = [];
   final url1 = url.basicUrl;
+  final url2 = url.imageUrl;
+
   bool isLoading = true;
 
   @override
@@ -471,7 +306,7 @@ class _DetailScreenState extends State<DetailScreen>
                 await FlutterShare.share(
                     title: 'Odiseea Sarcinii',
                     text: '',
-                    linkUrl: "https://chessmafia.com/php/Odiseea/public/uploads/" + imageArray[0]["image"].toString(),
+                    linkUrl: url2 + imageArray[0]["image"].toString(),
                     chooserTitle: '');
 
               },
@@ -499,10 +334,8 @@ class _DetailScreenState extends State<DetailScreen>
                       child: FadeInImage(
                           image: NetworkImage(
                             imageArray[index]["image"].toString() == ""
-                                ? ""
-                                    "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                : "https://chessmafia.com/php/Odiseea/public/uploads/" +
-                                    imageArray[index]["image"].toString(),
+                                ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                : url2 + imageArray[index]["image"].toString(),
                           ),
                           placeholder: AssetImage("Assets/Images/giphy.gif"))
 

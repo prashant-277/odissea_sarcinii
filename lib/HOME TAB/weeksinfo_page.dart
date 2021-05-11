@@ -33,8 +33,8 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                 splashColor: Colors.transparent,
                 hoverColor: Colors.transparent,
                 icon: Image.asset(
-                  "Assets/Icons/up.png",
-                  height: 10,
+                  "Assets/Icons/left_white.png",
+                  height: 18,
                 ),
                 onPressed: () {
                   pageController.previousPage(
@@ -43,8 +43,8 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                 }),
             IconButton(
                 icon: Image.asset(
-                  "Assets/Icons/down_single.png",
-                  height: 10,
+                  "Assets/Icons/right_white.png",
+                  height: 18,
                 ),
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
@@ -61,7 +61,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
             scrollDirection: Axis.horizontal,
             reverse: false,
             allowImplicitScrolling: false,
-            physics: NeverScrollableScrollPhysics(),
+            physics: AlwaysScrollableScrollPhysics(),
             controller: pageController,
             itemCount: 42,
             onPageChanged: changeWeek,
@@ -236,7 +236,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 15),
                       child: Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
+                          width: MediaQuery.of(context).size.width / 1.1,
                           child: primarybutton(
                               "$newvalue weeks of pregnancy", () {})),
                     ),
@@ -247,7 +247,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width / 1.2,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
@@ -293,9 +293,9 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width / 1.2,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
-                          padding: const EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             children: [
                               Row(
@@ -323,7 +323,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                               ),
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.height / 4.3,
+                                    MediaQuery.of(context).size.height / 3.7,
                                 child: Stack(
                                   children: [
                                     Image.asset(
@@ -351,7 +351,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width / 1.2,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
@@ -397,7 +397,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width / 1.2,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
@@ -443,7 +443,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width / 1.2,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
@@ -489,7 +489,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width / 1.2,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
@@ -535,7 +535,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width / 1.2,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
