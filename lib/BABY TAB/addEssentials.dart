@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:odiseea_sarcinii/url.dart';
 
 class addEssentials extends StatefulWidget {
   @override
@@ -9,6 +15,36 @@ class addEssentials extends StatefulWidget {
 
 class _addEssentialsState extends State<addEssentials> {
   String data;
+  bool isLoading = true;
+  final url1 = url.basicUrl;
+  List essentialPlanList = [];
+  TextEditingController descripation_cntrl = TextEditingController();
+
+  int count;
+  @override
+  void initState() {
+    super.initState();
+    getessential();
+  }
+
+  Future<void> getessential() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = "$url1/getessentialList";
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response = await http.get(Uri.parse(url), headers: header);
+
+    final responseJson = json.decode(response.body);
+    print("essential plan " + responseJson.toString());
+
+    setState(() {
+      isLoading = false;
+      essentialPlanList = responseJson["data"];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +139,7 @@ class _addEssentialsState extends State<addEssentials> {
                   height: MediaQuery.of(context).size.height / 5,
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
+                    controller: descripation_cntrl,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontFamily: "OpenSans", color: Colors.black),
                     decoration: InputDecoration(
@@ -124,8 +161,43 @@ class _addEssentialsState extends State<addEssentials> {
               padding: const EdgeInsets.only(top: 20.0),
               child: Container(
                   width: MediaQuery.of(context).size.width,
-                  child: primarybutton("Save", () {
-                    Navigator.pop(context);
+                  child: primarybutton("Save", () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    var url = "$url1/createessentialList";
+
+                    for (int i = 0; i < essentialPlanList.length; i++) {
+                      if (essentialPlanList[i]["title"].toString() !=
+                          data.toString()) {
+                        if (count == null) {
+                          setState(() {
+                            count = 0;
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          count = 1;
+                        });
+                      }
+                    }
+                    var map = new Map<String, dynamic>();
+                    map["title"] = data.toString();
+                    map["description"] = descripation_cntrl.text.toString();
+                    map["flag"] = count.toString();
+
+                    Map<String, String> header = {
+                      "Authorization": prefs.getString("apiToken").toString()
+                    };
+
+                    final response = await http.post(Uri.parse(url),
+                        headers: header, body: map);
+
+                    final responseJson = json.decode(response.body);
+                    print("birth plan add " + responseJson.toString());
+                    if (responseJson["status"] == "Success") {
+                      Navigator.pop(context);
+                    }else{
+                      displayToast(responseJson["message"].toString());
+                    }
                   })),
             )
           ],

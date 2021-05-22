@@ -37,7 +37,8 @@ class textfield extends StatelessWidget {
           style: TextStyle(fontFamily: "OpenSans", color: kblack),
           obscureText: obscureText,
           controller: controller,
-          inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r" "))],
+         textCapitalization: TextCapitalization.words,
+         // inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r" "))],
           decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(15.0, 10.0, 20.0, 10.0),
               focusedBorder: OutlineInputBorder(

@@ -124,7 +124,7 @@ class _otpConfirmPageState extends State<otpConfirmPage> {
                     map["email"] = widget.email.toString();
                     map["otp"] = userotp.toString();
 
-                    final response = await http.post(url, body: map);
+                    final response = await http.post(Uri.parse(url), body: map);
 
                     final responseJson = json.decode(response.body);
                     print(responseJson.toString());

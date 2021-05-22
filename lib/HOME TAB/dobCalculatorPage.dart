@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:dropdown_date_picker/dropdown_date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/duedate_Page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:odiseea_sarcinii/url.dart';
 
 class dobCalculatorPage extends StatefulWidget {
   @override
@@ -11,6 +15,7 @@ class dobCalculatorPage extends StatefulWidget {
 
 class _dobCalculatorPageState extends State<dobCalculatorPage> {
   List<RadioModel> sampleData = new List<RadioModel>();
+  final url1 = url.basicUrl;
 
   String data;
 
@@ -30,14 +35,24 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
 
   final dropdownDatePicker = DropdownDatePicker(
     dateFormat: DateFormat.dmy,
-    firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
+    firstDate: ValidDate(year: now.year - 1, month: 1, day: 1),
     lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
     textStyle: TextStyle(fontWeight: FontWeight.w600, fontFamily: "OpenSans"),
     dropdownColor: kwhite,
-    dateHint: DateHint(year: 'year', month: 'month', day: 'day'),
+    dateHint: DateHint(year: now.year.toString(), month: now.month.toString(), day: (now.day-1).toString()),
     ascending: false,
     underLine: Text(""),
+  );
 
+  final dropdownDatePickerduedate = DropdownDatePicker(
+    dateFormat: DateFormat.dmy,
+    firstDate: ValidDate(year: now.year, month: now.month, day: now.day),
+    lastDate: ValidDate(year: now.year + 1, month: now.month, day: now.day),
+    textStyle: TextStyle(fontWeight: FontWeight.w600, fontFamily: "OpenSans"),
+    dropdownColor: kwhite,
+    dateHint: DateHint(year: now.year.toString(), month: now.month.toString(), day: now.day.toString()),
+    ascending: false,
+    underLine: Text(""),
   );
 
   @override
@@ -125,8 +140,7 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                             .forEach((element) => element.isSelected = false);
                         sampleData[index].isSelected = true;
                       });
-                      print(sampleData[index].text);
-                      print(sampleData[index].buttonText);
+                      print("buttonText " + sampleData[index].buttonText);
                       if (sampleData[index].buttonText == "LMP") {
                         count = 1;
                       } else {
@@ -164,76 +178,99 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width / 1.2,
-                      child: dropdownDatePicker),
+                      child: count == 0
+                          ? dropdownDatePickerduedate
+                          : dropdownDatePicker),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 15),
-              child: Row(
-                children: [
-                  Text(
-                    "Cycle Length",
+            Visibility(
+              visible: count == 0 ? false : true,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 15),
+                child: Row(
+                  children: [
+                    Text(
+                      "Cycle Length",
+                      style: TextStyle(
+                          color: kblack,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Visibility(
+              visible: count == 0 ? false : true,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Container(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  decoration: new BoxDecoration(
+                    color: kwhite,
+                    border: new Border.all(width: 1.0, color: Colors.black12),
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(10.0)),
+                  ),
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    hint: Text(
+                      "Select cycle",
+                      style: TextStyle(
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.w600),
+                    ),
                     style: TextStyle(
-                        color: kblack,
                         fontFamily: "OpenSans",
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600,
+                        color: kblack),
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 25,
+                      color: kblack,
+                    ),
+                    underline: Text(""),
+                    elevation: 0,
+                    items: <String>[
+                      '21 days',
+                      '22 days',
+                      '23 days',
+                      '24 days',
+                      '25 days',
+                      '26 days',
+                      '27 days',
+                      '28 days',
+                      '29 days',
+                      '30 days',
+                      '31 days',
+                      '32 days',
+                      '33 days',
+                      '34 days',
+                      '35 days'
+                    ].map((String value) {
+                      return new DropdownMenuItem<String>(
+                        value: value,
+                        child: new Text(value,
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontWeight: FontWeight.w500,
+                                color: kblack)),
+                      );
+                    }).toList(),
+                    value: data,
+                    onChanged: (newValue) {
+                      setState(() {
+                        data = newValue;
+                        print("ddd " + data.toString().substring(0, 2));
+                      });
+                    },
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0),
-              child: Container(
-                height: 40,
-                width: MediaQuery.of(context).size.width / 1.2,
-                decoration: new BoxDecoration(
-                  color: kwhite,
-                  border: new Border.all(width: 1.0, color: Colors.black12),
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(10.0)),
-                ),
-                padding: EdgeInsets.only(left: 15, right: 15),
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  hint: Text(
-                    "Select cycle",
-                    style: TextStyle(
-                        fontFamily: "OpenSans", fontWeight: FontWeight.w600),
-                  ),
-                  style: TextStyle(
-                      fontFamily: "OpenSans",
-                      fontWeight: FontWeight.w600,
-                      color: kblack),
-                  icon: Icon(
-                    Icons.keyboard_arrow_down,
-                    size: 25,
-                    color: kblack,
-                  ),
-                  underline: Text(""),
-                  elevation: 0,
-                  items: <String>['10 days', '20 days', '30 days', '40 days']
-                      .map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack)),
-                    );
-                  }).toList(),
-                  value: data,
-                  onChanged: (newValue) {
-                    setState(() {
-                      data = newValue;
-                      print(data);
-                    });
-                  },
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -241,8 +278,9 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
                 child: primarybutton(
                     count == 0 ? "Calculate my due date" : "Calculate my LMP",
                     () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => duedate_Page()));
+                  count == 0 ? calculateDuedate() : calculateLMP();
+
+                  // print(dropdownDatePicker.getDate());
                 }),
               ),
             )
@@ -250,6 +288,57 @@ class _dobCalculatorPageState extends State<dobCalculatorPage> {
         ),
       ),
     );
+  }
+
+  calculateDuedate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = "$url1/calData";
+
+    var map = new Map<String, dynamic>();
+    map["due_date"] = dropdownDatePickerduedate.getDate().toString();
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response =
+        await http.post(Uri.parse(url), headers: header, body: map);
+
+    final responseJson = json.decode(response.body);
+    print("Calculator " + responseJson.toString());
+
+    if (responseJson["status"].toString() == "Success") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => duedate_Page(responseJson["data"])));
+    }
+  }
+
+  calculateLMP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = "$url1/calData";
+
+    var map = new Map<String, dynamic>();
+    map["due_date"] = dropdownDatePicker.getDate().toString();
+    map["cycle_length"] = data.toString().substring(0, 2);
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response =
+        await http.post(Uri.parse(url), headers: header, body: map);
+
+    final responseJson = json.decode(response.body);
+    print("Calculator " + responseJson.toString());
+
+    if (responseJson["status"].toString() == "Success") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => duedate_Page(responseJson["data"])));
+    }
   }
 }
 

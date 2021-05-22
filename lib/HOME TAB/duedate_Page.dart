@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 
 class duedate_Page extends StatefulWidget {
+  List dueDate;
+
+  duedate_Page(this.dueDate);
+
   @override
   _duedate_PageState createState() => _duedate_PageState();
 }
@@ -53,7 +57,7 @@ class _duedate_PageState extends State<duedate_Page> {
             Padding(
               padding: const EdgeInsets.only(bottom: 0),
               child: Text(
-                "January 4, 2022",
+                widget.dueDate[0]["date"].toString(),
                 style: TextStyle(
                     color: kwhite,
                     fontFamily: "OpenSans",
@@ -67,7 +71,7 @@ class _duedate_PageState extends State<duedate_Page> {
               child: Container(
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: Text(
-                  "Congratulations! You are 1 week pregnant.",
+                  "Congratulations! You are " + widget.dueDate[0]["week"].toString() + " week and " +widget.dueDate[0]["days"].toString() +" days pregnant.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kwhite,
@@ -95,7 +99,7 @@ class _duedate_PageState extends State<duedate_Page> {
                       Container(
                           height: MediaQuery.of(context).size.height / 12),
                       Text(
-                        "January",
+                        widget.dueDate[0]["month"].toString(),
                         style: TextStyle(
                             color: kwhite,
                             fontFamily: "OpenSans",
@@ -105,7 +109,7 @@ class _duedate_PageState extends State<duedate_Page> {
                     ],
                   ),
                   Text(
-                    "4",
+                      widget.dueDate[0]["day"].toString(),
                     style: TextStyle(
                         color: kblack,
                         fontFamily: "OpenSans",
@@ -114,7 +118,7 @@ class _duedate_PageState extends State<duedate_Page> {
                   ),
                   Container(height: 10),
                   Text(
-                    "2021",
+                    widget.dueDate[0]["year"].toString(),
                     style: TextStyle(
                         color: kblack,
                         fontFamily: "OpenSans",

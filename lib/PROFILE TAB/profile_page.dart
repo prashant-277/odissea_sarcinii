@@ -35,7 +35,7 @@ class _profile_pageState extends State<profile_page>
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.post(url, headers: header);
+    final response = await http.post(Uri.parse(url), headers: header);
 
     final responseJson = json.decode(response.body);
     print(responseJson);
@@ -98,7 +98,8 @@ class _profile_pageState extends State<profile_page>
                         ),
                       ),
                       Container(
-                        child: /*FadeInImage(
+                        child:
+                            /*FadeInImage(
                             height: 80,
                             width: 80,
                             image: NetworkImage(
@@ -108,17 +109,18 @@ class _profile_pageState extends State<profile_page>
                             AssetImage("Assets/Images/giphy.gif")
                       ),*/
 
-                        ClipOval(
+                            ClipOval(
                           child: FadeInImage(
                               height: 120,
                               width: 120,
-                              image: NetworkImage(
-                                  userData["image"].toString() == "" ?
-                                      "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                  :url2 + userData["image"].toString()),
+                              image: NetworkImage(userData["image"]
+                                          .toString() ==
+                                      ""
+                                  ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                  : url2 + userData["image"].toString()),
                               fit: BoxFit.fill,
                               placeholder:
-                              AssetImage("Assets/Images/giphy.gif")),
+                                  AssetImage("Assets/Images/giphy.gif")),
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100.0),
@@ -160,7 +162,8 @@ class _profile_pageState extends State<profile_page>
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(right: 15.0),
-                              child: Text(userData["email"],
+                              child: Text(
+                                userData["email"],
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontWeight: FontWeight.w500,
@@ -202,7 +205,8 @@ class _profile_pageState extends State<profile_page>
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(right: 15.0),
-                              child: Text(userData["dob"],
+                              child: Text(
+                                userData["dob"],
                                 style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontWeight: FontWeight.w500,
@@ -225,16 +229,14 @@ class _profile_pageState extends State<profile_page>
                   child: Container(
                       width: MediaQuery.of(context).size.width / 1.2,
                       child: primarybutton("Edit Profile", () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => editProfile(userData))).then((value) {
+                        Navigator.of(context, rootNavigator: true)
+                            .push(MaterialPageRoute(
+                                builder: (context) => editProfile(userData)))
+                            .then((value) {
                           setState(() {
                             getUserDetail();
                           });
                         });
-
-
                       })),
                 )
               ],

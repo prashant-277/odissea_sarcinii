@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/myweekTimeline.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -20,9 +21,11 @@ class uploadDialog extends StatefulWidget {
 
 class _uploadDialogState extends State<uploadDialog> {
   final url1 = url.basicUrl;
+  TextEditingController weeknumberctrl = TextEditingController();
 
   List imagedata = [];
   int post_week;
+  final _formKey = GlobalKey<FormState>();
 
   String urlimg1;
   String document_path1;
@@ -45,7 +48,7 @@ class _uploadDialogState extends State<uploadDialog> {
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.post(url, headers: header);
+    final response = await http.post(Uri.parse(url), headers: header);
 
     final responseJson = json.decode(response.body);
 
@@ -57,127 +60,146 @@ class _uploadDialogState extends State<uploadDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Add new image",
-                style: TextStyle(
-                    color: kblack,
-                    fontFamily: "OpenSans",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
-              ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop('dialog');
-                  },
-                  icon: Image.asset(
-                    "Assets/Icons/cancel.png",
-                    height: 15,
-                  ))
-            ],
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 4.0,
-            width: MediaQuery.of(context).size.width / 1.5,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black26, width: 0.5)),
-            child: IconButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                        title: Text("Upload photo"),
-                        elevation: 1,
-                        contentPadding: EdgeInsets.all(5.0),
-                        content: selectPhoto()));
-              },
-              icon: _image1 == null
-                  ? Image.asset(
-                      "Assets/Images/new_img.png",
-                      height: 75,
-                    )
-                  : Container(
-                      width: MediaQuery.of(context).size.width / 1,
-                      child: ClipRRect(
-                        borderRadius: new BorderRadius.circular(10.0),
-                        child: _image1 == null
-                            ? Image.network(
-                                urlimg1 == null ? "" : urlimg1,
-                                fit: BoxFit.fill,
-                              )
-                            : Image.file(_image1,
-                                height: MediaQuery.of(context).size.height / 1,
-                                width: MediaQuery.of(context).size.width / 6,
-                                fit: BoxFit.fill),
-                      ),
-                    ),
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Add new image",
+                  style: TextStyle(
+                      color: kblack,
+                      fontFamily: "OpenSans",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop('dialog');
+                    },
+                    icon: Image.asset(
+                      "Assets/Icons/cancel.png",
+                      height: 15,
+                    ))
+              ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: primarybutton("Upload", () async {
-                  if (document_path1 == null) {
-                    displayToast("Please select an image");
-                  } else {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    var postUri = Uri.parse("$url1/imageUpload");
-                    var request = new http.MultipartRequest("POST", postUri);
-                    request.fields['week'] = post_week.toString() == "null"
-                        ? "1"
-                        : post_week.toString();
-
-                    request.headers["Authorization"] =
-                        prefs.getString("apiToken").toString();
-
-                    document_path1 != null
-                        ? request.files.add(await MultipartFile.fromPath(
-                            'image', document_path1))
-                        : request.fields["image"] = "";
-
-                    request.send().then((response) async {
-                      if (response.statusCode == 200) {
-                        print("Uploaded!");
-
-                        print("--------> " + response.statusCode.toString());
-
-                        final responseStream =
-                            await response.stream.bytesToString();
-                        final responseJson = json.decode(responseStream);
-
-                        print(responseJson.toString());
-                        if (responseJson["status"].toString() == "Success") {
-                          displayToast(responseJson["message"].toString());
-                          //Navigator.pop(context, true);
-                          /*await Navigator.of(context)
-                            .push(new MaterialPageRoute(builder: (context) => myweekTimeline()));*/
-
-                          Navigator.pop(context);
-                        } else {
-                          displayToast(responseJson["message"].toString());
-                        }
+            Container(
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Form(
+                key: _formKey,
+                child: textfield(
+                  controller: weeknumberctrl,
+                  obscureText: false,
+                  hintText: "Enter week number",
+                  functionValidate: commonValidation,
+                  suffixIcon: null,
+                  prefixIcon: null,
+                  parametersValidate: "Please enter week number",
+                  textInputType: TextInputType.number,
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Container(
+              height: MediaQuery.of(context).size.height / 4.0,
+              width: MediaQuery.of(context).size.width / 1.5,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.black26, width: 0.5)),
+              child: IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => new AlertDialog(
+                          title: Text("Upload photo"),
+                          elevation: 1,
+                          contentPadding: EdgeInsets.all(5.0),
+                          content: selectPhoto()));
+                },
+                icon: _image1 == null
+                    ? Image.asset(
+                        "Assets/Images/new_img.png",
+                        height: 75,
+                      )
+                    : Container(
+                        width: MediaQuery.of(context).size.width / 1,
+                        child: ClipRRect(
+                          borderRadius: new BorderRadius.circular(10.0),
+                          child: _image1 == null
+                              ? Image.network(
+                                  urlimg1 == null ? "" : urlimg1,
+                                  fit: BoxFit.fill,
+                                )
+                              : Image.file(_image1,
+                                  height:
+                                      MediaQuery.of(context).size.height / 1,
+                                  width: MediaQuery.of(context).size.width / 6,
+                                  fit: BoxFit.fill),
+                        ),
+                      ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: primarybutton("Upload", () async {
+                    if (_formKey.currentState.validate()) {
+                      if (document_path1 == null) {
+                        displayToast("Please select an image");
                       } else {
-                        final responseStream =
-                            await response.stream.bytesToString();
-                        final responseJson = json.decode(responseStream);
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        var postUri = Uri.parse("$url1/imageUpload");
+                        var request =
+                            new http.MultipartRequest("POST", postUri);
+                        request.fields['week'] = weeknumberctrl.text.toString();
 
-                        print("Not Uploaded");
-                        print(responseJson);
+                        request.headers["Authorization"] =
+                            prefs.getString("apiToken").toString();
+
+                        document_path1 != null
+                            ? request.files.add(await MultipartFile.fromPath(
+                                'image', document_path1))
+                            : request.fields["image"] = "";
+
+                        request.send().then((response) async {
+                          if (response.statusCode == 200) {
+                            print("Uploaded!");
+
+                            print(
+                                "--------> " + response.statusCode.toString());
+
+                            final responseStream =
+                                await response.stream.bytesToString();
+                            final responseJson = json.decode(responseStream);
+
+                            print(responseJson.toString());
+                            if (responseJson["status"].toString() ==
+                                "Success") {
+                              displayToast(responseJson["message"].toString());
+                              Navigator.pop(context);
+                            } else {
+                              displayToast(responseJson["message"].toString());
+                            }
+                          } else {
+                            final responseStream =
+                                await response.stream.bytesToString();
+                            final responseJson = json.decode(responseStream);
+
+                            print("Not Uploaded");
+                            print(responseJson);
+                          }
+                        });
                       }
-                    });
-                  }
-                })),
-          )
-        ],
+                    }
+                  })),
+            )
+          ],
+        ),
       ),
     );
   }

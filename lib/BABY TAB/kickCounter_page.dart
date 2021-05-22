@@ -92,8 +92,7 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                 color: Colors.grey.withOpacity(0.2),
                                 spreadRadius: 1,
                                 blurRadius: 1,
-                                offset:
-                                    Offset(0, 1), // changes position of shadow
+                                offset: Offset(0, 1), // changes position of shadow
                               ),
                             ],
                           ),
@@ -112,11 +111,9 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                   color: buttonColor,
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "09 April 2021",
@@ -142,8 +139,7 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       children: [
@@ -228,8 +224,7 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                   onTap: () {
                                     Navigator.of(context, rootNavigator: true)
                                         .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                kickDetail_page()));
+                                            builder: (context) => kickDetail_page()));
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

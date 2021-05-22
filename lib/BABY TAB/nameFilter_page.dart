@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class nameFilter_page extends StatefulWidget {
   @override
@@ -16,9 +17,9 @@ class _nameFilter_pageState extends State<nameFilter_page> {
   void initState() {
     super.initState();
 
-    sampleData.add(new RadioModel(true, 'Assets/Icons/boy.png', '',
+    sampleData.add(new RadioModel(false, 'Assets/Icons/boy.png', 'Boy',
         Icon(Icons.arrow_back_ios_outlined), "Assets/Icons/boy_act.png"));
-    sampleData.add(new RadioModel(false, 'Assets/Icons/girl.png', '',
+    sampleData.add(new RadioModel(false, 'Assets/Icons/girl.png', 'Girl',
         Icon(Icons.arrow_forward_ios_outlined), "Assets/Icons/girl_act.png"));
   }
 
@@ -42,14 +43,17 @@ class _nameFilter_pageState extends State<nameFilter_page> {
                 itemCount: 2,
                 itemBuilder: (BuildContext context, int index) {
                   return new GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       setState(() {
                         sampleData
                             .forEach((element) => element.isSelected = false);
                         sampleData[index].isSelected = true;
+
+                        prefs.setString("gender", sampleData[index].text);
                       });
-                      print(sampleData[index].text);
-                      print(sampleData[index].buttonText);
+                      print("gender " + sampleData[index].text);
                     },
                     child: new RadioItem(sampleData[index]),
                   );
@@ -99,8 +103,37 @@ class _nameFilter_pageState extends State<nameFilter_page> {
                     color: kblack,
                   ),
                   underline: Text(""),
+                  menuMaxHeight: 300,
                   elevation: 0,
-                  items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                  items: <String>[
+                    'Select alphabet',
+                    'A',
+                    'B',
+                    'C',
+                    'D',
+                    'E',
+                    'F',
+                    'G',
+                    'H',
+                    'I',
+                    'J',
+                    'K',
+                    'L',
+                    'M',
+                    'N',
+                    'O',
+                    'P',
+                    'Q',
+                    'R',
+                    'S',
+                    'T',
+                    'U',
+                    'V',
+                    'W',
+                    'X',
+                    'Y',
+                    'Z'
+                  ].map((String value) {
                     return new DropdownMenuItem<String>(
                       value: value,
                       child: new Text(value,
@@ -111,10 +144,18 @@ class _nameFilter_pageState extends State<nameFilter_page> {
                     );
                   }).toList(),
                   value: data,
-                  onChanged: (newValue) {
+                  onChanged: (newValue) async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+
                     setState(() {
                       data = newValue;
                       print(data);
+                      if (data == "Select alphabet") {
+                        prefs.setString("alphabet", "");
+                      } else {
+                        prefs.setString("alphabet", data);
+                      }
                     });
                   },
                 ),
@@ -124,7 +165,9 @@ class _nameFilter_pageState extends State<nameFilter_page> {
               padding: const EdgeInsets.all(20.0),
               child: Container(
                   width: MediaQuery.of(context).size.width,
-                  child: primarybutton("Find name", () {})),
+                  child: primarybutton("Find name", () {
+                    Navigator.pop(context);
+                  })),
             )
           ],
         ),
@@ -180,7 +223,13 @@ class RadioItem extends StatelessWidget {
           ),
           new Container(
             margin: new EdgeInsets.only(left: 0.0),
-            child: new Text(_item.text),
+            child: new Text(
+              _item.text,
+              style: TextStyle(
+                  fontFamily: "OpenSans",
+                  fontWeight: FontWeight.w500,
+                  color: kblack),
+            ),
           )
         ],
       ),

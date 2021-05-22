@@ -1,13 +1,51 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:odiseea_sarcinii/ME%20TAB/addweightDetail.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:odiseea_sarcinii/url.dart';
 
 class weightListpage extends StatefulWidget {
   @override
   _weightListpageState createState() => _weightListpageState();
 }
 
-class _weightListpageState extends State<weightListpage> {
+class _weightListpageState extends State<weightListpage> with TickerProviderStateMixin{
+  List weightList = [];
+  bool isLoading = true;
+  final url1 = url.basicUrl;
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    getweightlist();
+  }
+
+  Future<void> getweightlist() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString("apiToken").toString());
+    var url = "$url1/getWeightList";
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response = await http.get(Uri.parse(url), headers: header);
+
+    final responseJson = json.decode(response.body);
+    print("weight tracker "  + responseJson.toString());
+
+    setState(() {
+      weightList = responseJson["data"];
+      isLoading = false;
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +57,21 @@ class _weightListpageState extends State<weightListpage> {
             showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                    backgroundColor: kwhite, content: Hero(tag: "dialoghero",child: addweightDetail())));
+                    backgroundColor: kwhite,
+                    content: Hero(tag: "dialoghero",
+                        child: addweightDetail()))).then((value) => getweightlist());
             /*Navigator.push(context,
                 MaterialPageRoute(builder: (context) => addweightDetail()));*/
           },
         ),
-        body: ListView.builder(
-          itemCount: 5,
+        body: isLoading
+            ? SpinKitFadingFour(
+          color: buttonColor,
+          controller: AnimationController(
+              vsync: this, duration: const Duration(milliseconds: 1200)),
+        )
+            : ListView.builder(
+          itemCount: weightList == null ? "" : weightList.length,
           itemBuilder: (context, index) {
             return Container(
               child: Padding(
@@ -110,7 +156,7 @@ class _weightListpageState extends State<weightListpage> {
                             Column(
                               children: [
                                 Text(
-                                  "51.4 kg",
+                                  weightList[index]["start_weight"].toString() + " kg",
                                   style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontWeight: FontWeight.w600,
@@ -118,7 +164,7 @@ class _weightListpageState extends State<weightListpage> {
                                   ),
                                 ),
                                 Text(
-                                  "Week 21",
+                                  "Week "+ weightList[index]["start_week"].toString(),
                                   style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontWeight: FontWeight.w600,
@@ -135,7 +181,7 @@ class _weightListpageState extends State<weightListpage> {
                             Column(
                               children: [
                                 Text(
-                                  "58.8 kg",
+                            weightList[index]["current_weight"].toString() + " kg",
                                   style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontWeight: FontWeight.w600,
@@ -143,7 +189,7 @@ class _weightListpageState extends State<weightListpage> {
                                   ),
                                 ),
                                 Text(
-                                  "Week 31",
+                                  "Week "+ weightList[index]["current_week"].toString(),
                                   style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontWeight: FontWeight.w600,
@@ -160,7 +206,7 @@ class _weightListpageState extends State<weightListpage> {
                             Column(
                               children: [
                                 Text(
-                                  "7.4 kg",
+                                  weightList[index]["change_weight"].toString() + " kg",
                                   style: TextStyle(
                                     fontFamily: "OpenSans",
                                     fontWeight: FontWeight.w600,

@@ -540,6 +540,7 @@ class _day_DoctorvisitState extends State<day_Doctorvisit> {
                       maxLines: 1,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration.collapsed(
+                        hintText: "Notes...",
                         border: InputBorder.none,
                         hintStyle:
                             TextStyle(color: Colors.black26, fontSize: 13),

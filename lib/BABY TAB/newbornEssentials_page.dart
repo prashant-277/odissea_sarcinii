@@ -1,17 +1,54 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/addEssentials.dart';
 import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
-import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:odiseea_sarcinii/url.dart';
+import 'package:http/http.dart' as http;
 
 class newbornEssentials_page extends StatefulWidget {
   @override
   _newbornEssentials_pageState createState() => _newbornEssentials_pageState();
 }
 
-class _newbornEssentials_pageState extends State<newbornEssentials_page> {
+class _newbornEssentials_pageState extends State<newbornEssentials_page>
+    with TickerProviderStateMixin {
   bool checkBoxValue = false;
+  final url1 = url.basicUrl;
+  List essentialPlanList = [];
+  bool isLoading = true;
   int selected = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getessential();
+  }
+
+  Future<void> getessential() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = "$url1/getessentialList";
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response = await http.get(Uri.parse(url), headers: header);
+
+    final responseJson = json.decode(response.body);
+    print("birth plan " + responseJson.toString());
+
+    setState(() {
+      setState(() {
+        isLoading = false;
+      });
+      essentialPlanList = responseJson["data"];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,547 +108,174 @@ class _newbornEssentials_pageState extends State<newbornEssentials_page> {
               builder: (_) => AlertDialog(
                   backgroundColor: kwhite,
                   contentPadding:
-                      EdgeInsets.only(top: 10, left: 15, right: 5 , bottom: 20),
-                  content: addEssentials()));
+                      EdgeInsets.only(top: 10, left: 15, right: 5, bottom: 20),
+                  content: addEssentials())).then((value) => getessential());
         },
         child: Image.asset("Assets/Icons/add.png"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          color: kwhite,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 14,
-                width: MediaQuery.of(context).size.width,
-                color: buttonColor,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        "Clothing",
-                        style: TextStyle(
-                            fontFamily: "OpenSans",
-                            fontWeight: FontWeight.w600,
-                            color: kwhite,
-                            fontSize: 15),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
+      body: isLoading
+          ? SpinKitFadingFour(
+              color: buttonColor,
+              controller: AnimationController(
+                  vsync: this, duration: const Duration(milliseconds: 1200)),
+            )
+          : essentialPlanList.toString() == "[]"
+              ? Center(
+                  child: Container(
+                  child: Text(
+                    "No data found",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontWeight: FontWeight.w500,
+                        color: kblack,
+                        fontSize: 15),
+                  ),
+                ))
+              : Container(
                   width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 14,
-                width: MediaQuery.of(context).size.width,
-                color: buttonColor,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        "Blankets",
-                        style: TextStyle(
-                            fontFamily: "OpenSans",
-                            fontWeight: FontWeight.w600,
-                            color: kwhite,
-                            fontSize: 15),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 14,
-                width: MediaQuery.of(context).size.width,
-                color: buttonColor,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        "Feeding",
-                        style: TextStyle(
-                            fontFamily: "OpenSans",
-                            fontWeight: FontWeight.w600,
-                            color: kwhite,
-                            fontSize: 15),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      width: 25,
-                      child: IconButton(
-                          splashColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          padding: EdgeInsets.all(3),
-                          onPressed: () {
-                            setState(() {
-                              if (checkBoxValue == true) {
-                                checkBoxValue = false;
-                              } else {
-                                checkBoxValue = true;
-                              }
-                            });
-                          },
-                          icon: Image.asset(
-                            checkBoxValue
-                                ? "Assets/Icons/check.png"
-                                : "Assets/Icons/uncheck.png",
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Lorem Ipsum is simply dummy.",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.w500,
-                              color: kblack,
-                              fontSize: 15)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: kGray,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+                  color: kwhite,
+                  child: ListView.builder(
+                      itemCount: essentialPlanList == null
+                          ? ""
+                          : essentialPlanList.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            essentialPlanList[index]["description"]
+                                        .toString() ==
+                                    "[]"
+                                ? Container()
+                                : Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 14,
+                                    width: MediaQuery.of(context).size.width,
+                                    color: buttonColor,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15.0),
+                                          child: Text(
+                                            essentialPlanList[index]["title"]
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontFamily: "OpenSans",
+                                                fontWeight: FontWeight.w600,
+                                                color: kwhite,
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: essentialPlanList[index]
+                                            ["description"] ==
+                                        null
+                                    ? ""
+                                    : essentialPlanList[index]["description"]
+                                        .length,
+                                itemBuilder: (context, index1) {
+                                  return Dismissible(
+                                    direction: DismissDirection.endToStart,
+                                    background: Container(
+                                      height: 50,
+                                        width: MediaQuery.of(context).size.width,
+                                        color: Colors.red,
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(right:10.0),
+                                            child: Text(
+                                              "Delete",
+                                              style: TextStyle(
+                                                  fontFamily: "OpenSans",
+                                                  fontWeight: FontWeight.w600,
+                                                  color: kwhite,
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                        )),
+                                    onDismissed: (direction) async {
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      var url = "$url1/deleteessential";
+
+                                      var map = new Map<String, dynamic>();
+                                      map["desc_id"] =  essentialPlanList[index]["description"][index1]["id"].toString();
+
+
+                                      Map<String, String> header = {
+                                        "Authorization": prefs.getString("apiToken").toString()
+                                      };
+
+                                      final response = await http.post(Uri.parse(url),
+                                          headers: header, body: map);
+
+                                      final responseJson = json.decode(response.body);
+                                      print("essential delete " + responseJson.toString());
+                                      if (responseJson["status"] == "Success") {
+                                        setState(() {
+                                          getessential();
+                                        });
+                                      }else{
+                                        displayToast(responseJson["message"].toString());
+                                      }
+                                    },
+                                    key: UniqueKey(),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 15.0),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.zero,
+                                            width: 25,
+                                            child: IconButton(
+                                                splashColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                padding: EdgeInsets.all(3),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (checkBoxValue == true) {
+                                                      checkBoxValue = false;
+                                                    } else {
+                                                      checkBoxValue = true;
+                                                    }
+                                                  });
+                                                },
+                                                icon: Image.asset(
+                                                  checkBoxValue
+                                                      ? "Assets/Icons/check.png"
+                                                      : "Assets/Icons/uncheck.png",
+                                                )),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: Text(
+                                                essentialPlanList[index]
+                                                            ["description"]
+                                                        [index1]["description"]
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontFamily: "OpenSans",
+                                                    fontWeight: FontWeight.w500,
+                                                    color: kblack,
+                                                    fontSize: 15)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                })
+                          ],
+                        );
+                      })),
     );
   }
 }

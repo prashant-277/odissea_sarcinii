@@ -19,7 +19,6 @@ class _changepasswordState extends State<changepassword> {
   final _formKey = GlobalKey<FormState>();
   final url1 = url.basicUrl;
 
-
   TextEditingController _oldpswdCtrl = TextEditingController();
   TextEditingController _newpswdCtrl = TextEditingController();
   TextEditingController _confirmpswdCtrl = TextEditingController();
@@ -48,49 +47,40 @@ class _changepasswordState extends State<changepassword> {
     return SingleChildScrollView(
       child: Container(
         color: kwhite,
-        height: MediaQuery.of(context).size.height,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "",
-              style: TextStyle(fontSize: 20),
-            ),
-            Row(
-              children: [
-                IconButton(
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Image.asset(
-                    "Assets/Icons/back.png",
-                    height: 15,
-                    color: kblack,
-                  ),
-                ),
-              ],
+            Text(""),
+            IconButton(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Image.asset(
+                "Assets/Icons/back.png",
+                height: 15,
+                color: kblack,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Row(
-                children: [
-                  Text(
-                    "Change password",
-                    style: TextStyle(
-                        color: kblack,
-                        fontSize: 25,
-                        fontFamily: "OpenSans",
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
+              child: Text(
+                "Change password",
+                style: TextStyle(
+                    color: kblack,
+                    fontSize: 25,
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Form(
               key: _formKey,
               child: Container(
+                width: MediaQuery.of(context).size.width,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width / 1.15,
@@ -204,55 +194,52 @@ class _changepasswordState extends State<changepassword> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 30),
+                    Container(
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        child: primarybutton("Change", () async {
+                          if (_formKey.currentState.validate()) {
+                            if (_newpswdCtrl.text.toString() !=
+                                _confirmpswdCtrl.text.toString()) {
+                              displayToast("Your password is not matched");
+                            } else {
+                              SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+
+                              var url = "$url1/changePassword";
+
+                              var map = new Map<String, dynamic>();
+                              map["old_password"] =
+                                  _oldpswdCtrl.text.toString(); //week.toString();
+                              map["password"] =
+                                  _newpswdCtrl.text.toString(); //week.toString();
+
+                              Map<String, String> header = {
+                                "Authorization":
+                                prefs.getString("apiToken").toString()
+                              };
+
+                              final response =
+                              await http.post(Uri.parse(url), headers: header, body: map);
+
+                              final responseJson = json.decode(response.body);
+                              print("ddddd" + responseJson.toString());
+                              if (responseJson["status"] == "Success") {
+                                displayToast(responseJson["message"].toString());
+                                Navigator.of(context, rootNavigator: true).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => RegistrationPage()));
+                              } else {
+                                displayToast(responseJson["message"].toString());
+                              }
+                            }
+                          }
+                        })),
                   ],
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40.0),
-              child: Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: primarybutton("Change", () async {
-                    if (_formKey.currentState.validate()) {
 
-
-                      if (_newpswdCtrl.text.toString() !=
-                          _confirmpswdCtrl.text.toString()) {
-                        displayToast("Your password is not matched");
-                      }else {
-                        SharedPreferences prefs = await SharedPreferences
-                            .getInstance();
-
-                        var url = "$url1/changePassword";
-
-                        var map = new Map<String, dynamic>();
-                        map["old_password"] =
-                            _oldpswdCtrl.text.toString(); //week.toString();
-                        map["password"] =
-                            _newpswdCtrl.text.toString(); //week.toString();
-
-                        Map<String, String> header = {
-                          "Authorization": prefs.getString("apiToken")
-                              .toString()
-                        };
-
-                        final response = await http.post(
-                            url, headers: header, body: map);
-
-                        final responseJson = json.decode(response.body);
-                        print("ddddd" + responseJson.toString());
-                        if(responseJson["status"]=="Success"){
-                          displayToast(responseJson["message"].toString());
-                          Navigator.of(context, rootNavigator: true).push(
-                              MaterialPageRoute(builder: (context) => RegistrationPage()));
-                        }else{
-                          displayToast(responseJson["message"].toString());
-                        }
-                      }
-
-                    }
-                  })),
-            )
           ],
         ),
       ),

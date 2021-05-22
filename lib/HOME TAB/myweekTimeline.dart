@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:odiseea_sarcinii/APP%20SETUP/Page.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/uploadDialog.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/uploadphotosdialog.dart';
 import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
@@ -34,11 +36,12 @@ class _myweekTimelineState extends State<myweekTimeline>
   String urlimg1;
   String document_path1;
 
+  String status;
+
   @override
   void initState() {
     super.initState();
     getImages();
-
   }
 
   Future<void> getImages() async {
@@ -50,15 +53,21 @@ class _myweekTimelineState extends State<myweekTimeline>
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.post(url, headers: header);
+    final response = await http.post(Uri.parse(url), headers: header);
 
     final responseJson = json.decode(response.body);
 
     setState(() {
       imagedata = responseJson["data"];
       post_week = imagedata.length + 1;
-      isLoading = false;
+      status = responseJson["status"].toString();
     });
+    if (responseJson["status"] == "Success") {
+      isLoading = false;
+    } else {
+      displayToast(responseJson["message"].toString());
+      isLoading = false;
+    }
   }
 
   @override
@@ -75,122 +84,154 @@ class _myweekTimelineState extends State<myweekTimeline>
               fit: BoxFit.fill,
             ),
           ),
-          child: isLoading
-              ? SpinKitFadingFour(
-                  color: kwhite,
-                  controller: AnimationController(
-                      vsync: this,
-                      duration: const Duration(milliseconds: 1200)),
-                )
-              : Align(
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(""),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon:
-                              Image.asset("Assets/Icons/back.png", height: 15),
-                        ),
+          child: Align(
+              alignment: Alignment.topLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(""),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: FlatButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset("Assets/Icons/back.png", height: 15),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text("My week timeline",
+                                style: TextStyle(
+                                    fontFamily: "OpenSans",
+                                    fontWeight: FontWeight.w600,
+                                    color: kwhite,
+                                    fontSize: 15)),
+                          )
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height / 1.32,
-                          child: ListView.builder(
-                            itemCount:
-                                imagedata == null ? "" : imagedata.length,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Week",
-                                        style: TextStyle(
-                                            color: kwhite,
-                                            fontFamily: "OpenSans",
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        imagedata[index]["week"].toString(),
-                                        style: TextStyle(
-                                            color: kwhite,
-                                            fontFamily: "OpenSans",
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Container(
-                                        width: 0.2,
-                                        color: kwhite,
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                2.5,
-                                      ),
-                                      SizedBox(height: 10)
-                                    ],
-                                  ),
-                                  ClipRRect(
-                                    borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                    child: GestureDetector(
-                                      child: Hero(
-                                        tag: 'imageHero',
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              2.45,
-                                          child: ClipRRect(
-                                              // borderRadius: new BorderRadius.circular(12.0),
-                                              child: FadeInImage(
-                                                  image: NetworkImage(imagedata[index]["image_arr"][0]["image"].toString() ==
-                                                          ""
-                                                      ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                      : url2 +imagedata[index]["image_arr"][0]["image"].toString()),
-                                                  fit: BoxFit.fill,
-                                                  placeholder: AssetImage(
-                                                      "Assets/Images/giphy.gif"))),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.white,
-                                                  width: 7)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 1.32,
+                      child: isLoading
+                          ? SpinKitFadingFour(
+                              color: kwhite,
+                              controller: AnimationController(
+                                  vsync: this,
+                                  duration: const Duration(milliseconds: 1200)),
+                            )
+                          : imagedata.toString() == "[]"
+                              ? Center(
+                                  child: Text("No data found",
+                                      style: TextStyle(
+                                          color: kwhite,
+                                          fontFamily: "OpenSans",
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600)))
+                              : ListView.builder(
+                                  itemCount:
+                                      imagedata == null ? "" : imagedata.length,
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Week",
+                                              style: TextStyle(
+                                                  color: kwhite,
+                                                  fontFamily: "OpenSans",
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Text(
+                                              imagedata[index]["week"]
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: kwhite,
+                                                  fontFamily: "OpenSans",
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Container(
+                                              width: 0.2,
+                                              color: kwhite,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  2.5,
+                                            ),
+                                            SizedBox(height: 10)
+                                          ],
                                         ),
-
-                                        /*Image.network("https://chessmafia.com/php/Odiseea/public/uploads/"+imagedata[index]["image_arr"][0]["image"].toString(),
-                                    height: 170,
-                                  ),*/
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (_) {
-                                          return DetailScreen(imagedata, index);
-                                        }));
-                                      },
-                                    ),
-                                  ),
-                                  Image.asset(
-                                    "Assets/Images/group1589.png",
-                                    height: 10,
-                                    color: Colors.transparent,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
+                                        ClipRRect(
+                                          borderRadius:
+                                              new BorderRadius.circular(8.0),
+                                          child: GestureDetector(
+                                            child: Hero(
+                                              tag: 'imageHero',
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    2.45,
+                                                child: ClipRRect(
+                                                    // borderRadius: new BorderRadius.circular(12.0),
+                                                    child: FadeInImage(
+                                                        image: NetworkImage(imagedata[index]["image_arr"]
+                                                                            [0][
+                                                                        "image"]
+                                                                    .toString() ==
+                                                                ""
+                                                            ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                            : url2 +
+                                                                imagedata[index]
+                                                                            ["image_arr"][0]
+                                                                        [
+                                                                        "image"]
+                                                                    .toString()),
+                                                        fit: BoxFit.fill,
+                                                        placeholder: AssetImage(
+                                                            "Assets/Images/giphy.gif"))),
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 7)),
+                                              ),
+                                            ),
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) {
+                                                return DetailScreen(
+                                                    imagedata, index);
+                                              })).then((value) => getImages());
+                                            },
+                                          ),
+                                        ),
+                                        Image.asset(
+                                          "Assets/Images/group1589.png",
+                                          height: 10,
+                                          color: Colors.transparent,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                    ),
+                  ),
+                ],
+              )),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -265,8 +306,11 @@ class _DetailScreenState extends State<DetailScreen>
   List imageArray = [];
   final url1 = url.basicUrl;
   final url2 = url.imageUrl;
+  PageController pageController = PageController(initialPage: 0);
 
   bool isLoading = true;
+
+  var pageDeleteId;
 
   @override
   void initState() {
@@ -283,13 +327,13 @@ class _DetailScreenState extends State<DetailScreen>
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.post(url, headers: header);
+    final response = await http.post(Uri.parse(url), headers: header);
 
     final responseJson = json.decode(response.body);
 
     setState(() {
       imageArray = responseJson["data"][widget.index]["image_arr"];
-      print("dddd" + imageArray.toString());
+      print("dddd--- " + imageArray.toString());
       isLoading = false;
     });
   }
@@ -308,7 +352,6 @@ class _DetailScreenState extends State<DetailScreen>
                     text: '',
                     linkUrl: url2 + imageArray[0]["image"].toString(),
                     chooserTitle: '');
-
               },
               icon: Image.asset(
                 "Assets/Icons/share.png",
@@ -321,11 +364,12 @@ class _DetailScreenState extends State<DetailScreen>
         height: MediaQuery.of(context).size.height,
         child: isLoading
             ? SpinKitFadingFour(
-                color: kwhite,
+                color: buttonColor,
                 controller: AnimationController(
                     vsync: this, duration: const Duration(milliseconds: 1200)),
               )
             : PageView.builder(
+                controller: pageController,
                 scrollDirection: Axis.horizontal,
                 itemCount: imageArray == null ? "" : imageArray.length,
                 itemBuilder: (context, index) {
@@ -337,14 +381,14 @@ class _DetailScreenState extends State<DetailScreen>
                                 ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
                                 : url2 + imageArray[index]["image"].toString(),
                           ),
-                          placeholder: AssetImage("Assets/Images/giphy.gif"))
-
-                      /*Image.network(
-                  "https://chessmafia.com/php/Odiseea/public/uploads/" + imageArray[index]["image"].toString(),
-                  fit: BoxFit.fill,
-                ),*/
-                    );
-                }),
+                          placeholder: AssetImage("Assets/Images/giphy.gif")));
+                },
+                onPageChanged: (page) {
+                  setState(() {
+                    pageDeleteId = imageArray[page]["id"];
+                  });
+                },
+              ),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -356,7 +400,8 @@ class _DetailScreenState extends State<DetailScreen>
                       context: context,
                       builder: (_) => AlertDialog(
                           backgroundColor: kwhite,
-                          content: uploadphotosdialog(widget.imagedata[widget.index]["week"])))
+                          content: uploadphotosdialog(
+                              widget.imagedata[widget.index]["week"])))
                   .then((_) => setState(() {
                         getImages();
                       }));
@@ -367,7 +412,7 @@ class _DetailScreenState extends State<DetailScreen>
             backgroundColor: Colors.transparent,
             child: Image.asset("Assets/Icons/delete.png"),
             onPressed: () {
-              print(widget.imagedata[widget.index]["week"]);
+              print(pageDeleteId.toString());
               showDialog(
                   context: context,
                   builder: (_) => AlertDialog(
@@ -416,16 +461,19 @@ class _DetailScreenState extends State<DetailScreen>
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
 
-                              var url = "$url1/deleteImage/" +
-                                  imageArray[0]["id"].toString();
+                              var url = pageDeleteId.toString() == "null"
+                                  ? "$url1/deleteImage/" +
+                                      imageArray[0]["id"].toString()
+                                  : "$url1/deleteImage/" +
+                                      pageDeleteId.toString();
 
                               Map<String, String> header = {
                                 "Authorization":
                                     prefs.getString("apiToken").toString()
                               };
 
-                              final response =
-                                  await http.get(url, headers: header);
+                              final response = await http.get(Uri.parse(url),
+                                  headers: header);
 
                               final responseJson = json.decode(response.body);
                               if (responseJson["status"] == "Success") {

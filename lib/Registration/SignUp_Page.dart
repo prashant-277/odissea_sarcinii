@@ -25,8 +25,6 @@ class SignUp_Page extends StatefulWidget {
 }
 
 class _SignUp_PageState extends State<SignUp_Page> {
-
-
   final url1 = url.basicUrl;
 
   final _formKey = GlobalKey<FormState>();
@@ -50,8 +48,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
         .checkPermissionStatus(PermissionGroup.camera)
         .then(_updateStatus);
   }
-
-
 
   String password = '';
   bool show = true;
@@ -133,18 +129,36 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                   children: [
                                     IconButton(
                                       icon: _image1 == null
-                                          ? Image.asset("Assets/Images/profile_pic.png")
+                                          ? Image.asset(
+                                              "Assets/Images/profile_pic.png")
                                           : Container(
-                                              width: MediaQuery.of(context).size.width / 1,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1,
                                               child: ClipRRect(
-                                                borderRadius: new BorderRadius.circular(50.0),
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        50.0),
                                                 child: _image1 == null
-                                                    ? Image.network( urlimg1 == null ? "" : urlimg1,
+                                                    ? Image.network(
+                                                        urlimg1 == null
+                                                            ? ""
+                                                            : urlimg1,
                                                         fit: BoxFit.fill,
                                                       )
                                                     : Image.file(_image1,
-                                                        height: MediaQuery.of(context).size.height /1,
-                                                        width: MediaQuery.of(context).size.width / 6,
+                                                        height:
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                1,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            6,
                                                         fit: BoxFit.fill),
                                               ),
                                             ),
@@ -163,43 +177,67 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                                     child: new ListBody(
                                                       children: <Widget>[
                                                         Container(
-                                                          width: MediaQuery.of(context).size.width,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
                                                           child: FlatButton(
-                                                            onPressed: _askPermissionD1,
+                                                            onPressed:
+                                                                _askPermissionD1,
                                                             child: Row(
-                                                              children: <Widget>[
+                                                              children: <
+                                                                  Widget>[
                                                                 Text("Camera"),
                                                               ],
                                                             ),
                                                           ),
-                                                          decoration: BoxDecoration(
-                                                            border: BorderDirectional(
-                                                              bottom: BorderSide(width: 0.5,color: Colors .black12),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
                                                             ),
                                                           ),
                                                         ),
                                                         Container(
-                                                          width: MediaQuery.of(context).size.width,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
                                                           child: FlatButton(
-                                                            onPressed: imageSelectorGalleryD1,
+                                                            onPressed:
+                                                                imageSelectorGalleryD1,
                                                             child: Row(
-                                                              children: <Widget>[
+                                                              children: <
+                                                                  Widget>[
                                                                 Text("Gallery"),
                                                               ],
                                                             ),
                                                           ),
-                                                          decoration: BoxDecoration(
-                                                            border: BorderDirectional(
-                                                              bottom: BorderSide( width: 0.5, color: Colors .black12),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
                                                             ),
                                                           ),
                                                         ),
                                                         Container(
-                                                          width: MediaQuery.of(context).size.width,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
                                                           child: FlatButton(
                                                             onPressed: () {},
                                                             child: Row(
-                                                              children: <Widget>[
+                                                              children: <
+                                                                  Widget>[
                                                                 Text("View"),
                                                               ],
                                                             ),
@@ -216,37 +254,60 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                                           ),
                                                         ),
                                                         Container(
-                                                          width: MediaQuery.of(context).size.width,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
                                                           child: FlatButton(
                                                             onPressed: () {
-                                                              document_path1 = null;
-                                                              Navigator.pop(context);
+                                                              document_path1 =
+                                                                  null;
+                                                              Navigator.pop(
+                                                                  context);
                                                             },
                                                             child: Row(
-                                                              children: <Widget>[
+                                                              children: <
+                                                                  Widget>[
                                                                 Text("Delete"),
                                                               ],
                                                             ),
                                                           ),
-                                                          decoration: BoxDecoration(
-                                                            border: BorderDirectional(
-                                                              bottom: BorderSide(width: 0.5, color: Colors.black12),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
                                                             ),
                                                           ),
                                                         ),
                                                         Container(
-                                                          width: MediaQuery.of(context).size.width,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
                                                           child: FlatButton(
-                                                            onPressed: () {Navigator.pop(context);},
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
                                                             child: Row(
-                                                              children: <Widget>[
+                                                              children: <
+                                                                  Widget>[
                                                                 Text("Cancel"),
                                                               ],
                                                             ),
                                                           ),
-                                                          decoration: BoxDecoration(
-                                                            border: BorderDirectional(
-                                                              bottom: BorderSide(width: 0.5, color: Colors.black12),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border:
+                                                                BorderDirectional(
+                                                              bottom: BorderSide(
+                                                                  width: 0.5,
+                                                                  color: Colors
+                                                                      .black12),
                                                             ),
                                                           ),
                                                         ),
@@ -261,7 +322,8 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                     ),
                                     SingleChildScrollView(
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           textfield(
                                             controller: fname_controller,
@@ -384,8 +446,9 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                       await DatePicker.showDatePicker(
                                     context,
                                     showTitleActions: true,
-                                    minTime: DateTime(1980, 3, 5),
-                                    maxTime: DateTime.now(),
+                                    minTime: DateTime.now(),
+                                    maxTime:
+                                        DateTime.now().add(Duration(days: 280)),
                                     onChanged: (date) {},
                                     onConfirm: (date) {},
                                     locale: LocaleType.en,
@@ -594,7 +657,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
         print(responseJson.toString());
         if (responseJson["status"].toString() == "Success") {
           displayToast(responseJson["message"].toString());
-
 
           Timer(
               Duration(seconds: 1),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:odiseea_sarcinii/HOME%20TAB/myweekTimeline.dart';
@@ -9,13 +11,56 @@ import 'package:odiseea_sarcinii/ME%20TAB/weight_tracker.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:odiseea_sarcinii/url.dart';
 
 import '../ME TAB/myPhotos_page.dart';
 
-class Me_page extends StatelessWidget {
+class Me_page extends StatefulWidget {
   final String title;
 
   const Me_page({Key key, this.title}) : super(key: key);
+
+  @override
+  _Me_pageState createState() => _Me_pageState();
+}
+
+class _Me_pageState extends State<Me_page> {
+  double sliderValue1;
+
+  List userDetail = [];
+  final url1 = url.basicUrl;
+
+
+  @override
+  void initState() {
+    super.initState();
+    getDetail();
+  }
+
+  Future<void> getDetail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString("apiToken").toString());
+    var url = "$url1/home";
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response = await http.post(Uri.parse(url), headers: header);
+
+    final responseJson = json.decode(response.body);
+    print("Home screen "  + responseJson.toString());
+
+    setState(() {
+      userDetail = responseJson["data"];
+      sliderValue1 = double.parse(userDetail[0]["user_data"]["total_day"].toString());
+    });
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +109,7 @@ class Me_page extends StatelessWidget {
                                   type: PageTransitionType.fade,
                                   alignment: Alignment.bottomCenter,
                                   duration: Duration(milliseconds: 300),
-                                  child: weeksinfo_page()));
+                                  child: weeksinfo_page(userDetail[0]["user_data"])));
                         },
                       ),
                     ),

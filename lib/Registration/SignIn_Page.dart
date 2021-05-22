@@ -24,8 +24,8 @@ class _SignIn_PageState extends State<SignIn_Page> {
   final url1 = url.basicUrl;
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController usernameEmail_controller = TextEditingController();
-  TextEditingController _pswdCtrl = TextEditingController();
+  TextEditingController usernameEmail_controller = TextEditingController(text: "test@gmail.com");
+  TextEditingController _pswdCtrl = TextEditingController(text: "000000");
 
   String email = '';
   String password = '';
@@ -176,8 +176,8 @@ class _SignIn_PageState extends State<SignIn_Page> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Checkbox(
-                                    side:
-                                        BorderSide(color: Colors.grey, width: 2),
+                                    side: BorderSide(
+                                        color: Colors.grey, width: 2),
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(4)),
                                     value: rememberMe,
@@ -217,7 +217,7 @@ class _SignIn_PageState extends State<SignIn_Page> {
     );
   }
 
-  login()  async {
+  login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = "$url1/login";
 
@@ -226,13 +226,12 @@ class _SignIn_PageState extends State<SignIn_Page> {
     map["password"] = _pswdCtrl.text.toString();
     map["fcm_token"] = prefs.getString("fcmToken").toString();
 
-    final response = await http.post(url, body: map);
+    final response = await http.post(Uri.parse(url), body: map);
 
     final responseJson = json.decode(response.body);
     print(responseJson.toString());
 
     if (responseJson["status"].toString() == "Success") {
-
       prefs.setString("userEmail", responseJson["data"]["email"].toString());
       prefs.setString("apiToken", responseJson["data"]["api_token"].toString());
 
@@ -245,8 +244,6 @@ class _SignIn_PageState extends State<SignIn_Page> {
               alignment: Alignment.bottomCenter,
               duration: Duration(milliseconds: 300),
               child: Dashboard_Page()));
-
-
     } else {
       displayToast(responseJson["message"].toString());
     }

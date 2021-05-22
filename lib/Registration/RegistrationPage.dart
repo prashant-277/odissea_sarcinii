@@ -251,13 +251,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                   onPressed: () {
-                    Navigator.push(
+                    /*Navigator.push(
                         context,
                         PageTransition(
                             type: PageTransitionType.fade,
                             alignment: Alignment.bottomCenter,
                             duration: Duration(milliseconds: 300),
-                            child: Dashboard_Page()));
+                            child: Dashboard_Page()));*/
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

@@ -46,7 +46,7 @@ dependencies:
   flutter_xlider: ^3.4.0
   stop_watch_timer: ^1.0.0
   shared_preferences:
-  android_alarm_manager:
+  android_alarm_manager: ^0.4.5+20
   modal_bottom_sheet:
   otp_text_field: ^1.1.0
   dropdown_date_picker: ^0.1.1+2
@@ -58,7 +58,10 @@ dependencies:
   http:
   firebase_messaging:
   flutter_share:
-
+  html2md: ^1.1.0
+  jiffy: ^4.1.0
+  workmanager: ^0.2.0
+  syncfusion_flutter_charts: ^19.1.64
 
 dev_dependencies:
   flutter_test:

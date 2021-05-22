@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:dropdown_date_picker/dropdown_date_picker.dart';
+import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
+import 'package:odiseea_sarcinii/url.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:odiseea_sarcinii/ME%20TAB/doctorVisit_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class month_Doctorvisit extends StatefulWidget {
@@ -17,6 +21,7 @@ class month_Doctorvisit extends StatefulWidget {
 
 class _month_DoctorvisitState extends State<month_Doctorvisit> {
   CalendarController _controller;
+  final url1 = url.basicUrl;
 
   TextEditingController moodCtrl = TextEditingController();
   TextEditingController energyCtrl = TextEditingController();
@@ -26,6 +31,7 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
   TextEditingController notesCtrl = TextEditingController();
 
   String saveDate;
+  var saveTime;
   String data;
 
   @override
@@ -33,18 +39,6 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
     super.initState();
     _controller = CalendarController();
   }
-
-  static final now = DateTime.now();
-  final dropdownDatePicker = DropdownDatePicker(
-    dateFormat: DateFormat.dmy,
-    firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
-    lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
-    textStyle: TextStyle(fontWeight: FontWeight.w600, fontFamily: "OpenSans"),
-    dropdownColor: kwhite,
-    dateHint: DateHint(year: 'Format', month: 'Min', day: 'Hour'),
-    ascending: false,
-    underLine: Text(""),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +77,15 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                     fontWeight: FontWeight.w700)),
             startingDayOfWeek: StartingDayOfWeek.sunday,
             onDaySelected: (day, events, holidays) {
-              print(day.toUtc());
-              print(day.day.toString() +
-                  day.month.toString() +
-                  day.year.toString());
+              print("day " + day.toString());
+
               saveDate = day.day.toString() +
+                  "-" +
                   day.month.toString() +
+                  "-" +
                   day.year.toString();
+
+              print("saveDate " + saveDate);
             },
             builders: CalendarBuilders(
               selectedDayBuilder: (context, date, events) => Container(
@@ -168,17 +164,32 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 00),
-            child: Row(
-              children: [
-                Container(
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    child: dropdownDatePicker),
-              ],
+            padding: const EdgeInsets.only(left: 15.0, top: 10),
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width / 1.1,
+              child: CupertinoTheme(
+                data: CupertinoThemeData(
+                  textTheme: CupertinoTextThemeData(
+                    dateTimePickerTextStyle: TextStyle(
+                        color: kblack,
+                        fontFamily: "OpenSans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                child: CupertinoTimerPicker(
+                    mode: CupertinoTimerPickerMode.hms,
+                    backgroundColor: kwhite,
+                    onTimerDurationChanged: (value) {
+                      saveTime = value;
+                    }),
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 10),
+            padding: const EdgeInsets.only(left: 20.0, top: 20),
             child: Row(
               children: [
                 Container(
@@ -211,11 +222,19 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
                     ),
                     underline: Text(""),
                     elevation: 0,
-                    items: <String>['10 days', '20 days', '30 days', '40 days']
-                        .map((String value) {
+                    items: <String>[
+                      'Never',
+                      '15 minutes before',
+                      '1 Hour before',
+                      '1 Day before'
+                    ].map((String value) {
                       return new DropdownMenuItem<String>(
                         value: value,
-                        child: new Text(value),
+                        child: new Text(value,
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontWeight: FontWeight.w500,
+                                color: kblack)),
                       );
                     }).toList(),
                     value: data,
@@ -468,7 +487,40 @@ class _month_DoctorvisitState extends State<month_Doctorvisit> {
             padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
             child: Container(
                 width: MediaQuery.of(context).size.width / 1.1,
-                child: primarybutton("Send", () {})),
+                child: primarybutton("Send", () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  var url = "$url1/createDoctorList";
+
+                  var map = new Map<String, dynamic>();
+                  map["appointment_date"] = saveDate.toString();
+                  map["appointment_time"] = saveTime.toString();
+                  map["remind_me"] = "Never";
+                  map["mood"] = moodCtrl.text.toString();
+                  map["energy"] = energyCtrl.text.toString();
+                  map["appetite"] = appetiteCtrl.text.toString();
+                  map["craving"] = cravingsCtrl.text.toString();
+                  map["sickness"] = morningsicknessCtrl.text.toString();
+                  map["notes"] = notesCtrl.text.toString();
+
+                  Map<String, String> header = {
+                    "Authorization": prefs.getString("apiToken").toString()
+                  };
+
+                  final response = await http.post(Uri.parse(url),
+                      headers: header, body: map);
+
+                  final responseJson = json.decode(response.body);
+                  print("Doctor visit-- " + responseJson.toString());
+
+                  if (responseJson["status"].toString() == "Success") {
+                    DefaultTabController.of(context).animateTo(1);
+                    displayToast("Your Dr.Appointment added successfully");
+                  }else{
+                    displayToast(responseJson["message"].toString());
+
+                  }
+                })),
           ),
           SizedBox(
             height: 10,

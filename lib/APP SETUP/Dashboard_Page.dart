@@ -24,7 +24,6 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
@@ -115,7 +114,7 @@ class _Dashboard_PageState extends State<Dashboard_Page> {
           },
           currentIndex: _currentIndex,
         ),
-        body:   Stack(
+        body: Stack(
           children: <Widget>[
             _buildPageOffstage(navigatorKeys[0], 0, "Home"),
             _buildPageOffstage(navigatorKeys[1], 1, "Me"),

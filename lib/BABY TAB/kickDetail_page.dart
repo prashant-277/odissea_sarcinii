@@ -8,6 +8,7 @@ class kickDetail_page extends StatefulWidget {
 }
 
 class _kickDetail_pageState extends State<kickDetail_page> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +16,6 @@ class _kickDetail_pageState extends State<kickDetail_page> {
       appBar: BaseAppBar(
         appBar: AppBar(),
         appbartext: "Session",
-
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -28,10 +28,14 @@ class _kickDetail_pageState extends State<kickDetail_page> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "Assets/Icons/kick.png",
-                    color: Colors.red,
-                    height: 70,
+                  IconButton(
+                    onPressed: () {},
+                    icon: Image.asset(
+                      "Assets/Icons/kick.png",
+                      color: buttonColor,
+                    ),
+                    iconSize: 70,
+                    splashRadius: 30.0,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -40,7 +44,7 @@ class _kickDetail_pageState extends State<kickDetail_page> {
                       style: TextStyle(
                           fontFamily: "OpenSans",
                           fontWeight: FontWeight.w600,
-                          color: Colors.red,
+                          color: buttonColor,
                           fontSize: 20),
                     ),
                   ),
@@ -115,260 +119,54 @@ class _kickDetail_pageState extends State<kickDetail_page> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, top: 5, right: 25, bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "1",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "03:06:07 PM",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "0:0:7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Divider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, top: 5, right: 25, bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "2",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "03:06:07 PM",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "0:0:7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Divider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, top: 5, right: 25, bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "3",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "03:06:07 PM",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "0:0:7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Divider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, top: 5, right: 25, bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "4",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "03:06:07 PM",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "0:0:7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Divider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, top: 5, right: 25, bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "5",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "03:06:07 PM",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "0:0:7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Divider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, top: 5, right: 25, bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "6",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "03:06:07 PM",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "0:0:7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Divider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, top: 5, right: 25, bottom: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "03:06:07 PM",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                              Text(
-                                "0:0:7",
-                                style: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontWeight: FontWeight.w500,
-                                    color: kblack,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
+                        Container(
+                          height: MediaQuery.of(context).size.height/2,
+                          child: ListView.builder(
+                              itemCount: 9,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 25, top: 5, right: 25, bottom: 5),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            (index+1).toString(),
+                                            style: TextStyle(
+                                                fontFamily: "OpenSans",
+                                                fontWeight: FontWeight.w500,
+                                                color: kblack,
+                                                fontSize: 15),
+                                          ),
+                                          Text(
+                                            "03:06:07 PM",
+                                            style: TextStyle(
+                                                fontFamily: "OpenSans",
+                                                fontWeight: FontWeight.w500,
+                                                color: kblack,
+                                                fontSize: 15),
+                                          ),
+                                          Text(
+                                            "0:0:7",
+                                            style: TextStyle(
+                                                fontFamily: "OpenSans",
+                                                fontWeight: FontWeight.w500,
+                                                color: kblack,
+                                                fontSize: 15),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                        child: Divider(),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
                         ),
                       ],
                     ),
@@ -377,7 +175,7 @@ class _kickDetail_pageState extends State<kickDetail_page> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height / 6.5,
+              height: MediaQuery.of(context).size.height / 8.0,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(

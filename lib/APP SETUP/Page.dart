@@ -23,7 +23,6 @@ class page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = Text(title);
     return Scaffold(
       body: Container(
         child: showPage(title.toString()),

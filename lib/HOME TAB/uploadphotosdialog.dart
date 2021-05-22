@@ -29,7 +29,6 @@ class _uploadphotosdialogState extends State<uploadphotosdialog> {
 
   String urlimg1;
   String document_path1;
-  PermissionStatus _status;
 
   File _image1;
 
@@ -48,7 +47,7 @@ class _uploadphotosdialogState extends State<uploadphotosdialog> {
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.post(url, headers: header);
+    final response = await http.post(Uri.parse(url), headers: header);
 
     final responseJson = json.decode(response.body);
 

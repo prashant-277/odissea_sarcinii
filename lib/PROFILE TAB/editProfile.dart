@@ -44,10 +44,10 @@ class _editProfileState extends State<editProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: buttonColor,
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("Assets/Images/background2.png"),
@@ -58,14 +58,14 @@ class _editProfileState extends State<editProfile> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("",style: TextStyle(fontSize: 1),),
+              Text(""),
               IconButton(onPressed: (){Navigator.pop(context);}, icon: Image.asset(
                 "Assets/Icons/back.png",
                 fit: BoxFit.fill,
                 height: 15,
               ),),
               Padding(
-                padding: const EdgeInsets.only(left: 20.0),
+                padding: const EdgeInsets.only(left: 20.0,bottom: 15,top: 15),
                 child: Row(
                   children: [
                     Text(
@@ -232,8 +232,8 @@ class _editProfileState extends State<editProfile> {
                               DateTime date = await DatePicker.showDatePicker(
                                 context,
                                 showTitleActions: true,
-                                minTime: DateTime(1980, 3, 5),
-                                maxTime: DateTime.now(),
+                                minTime: DateTime.now(),
+                                maxTime: DateTime.now().add(Duration(days: 280)),
                                 onChanged: (date) {},
                                 onConfirm: (date) {},
                                 locale: LocaleType.en,
@@ -316,7 +316,7 @@ class _editProfileState extends State<editProfile> {
                                   print(responseJson.toString());
                                   if (responseJson["status"].toString() == "Success") {
                                     displayToast(responseJson["message"].toString());
-
+                                    Navigator.pop(context);
                                   } else {
                                     displayToast(responseJson["message"].toString());
                                   }
@@ -335,7 +335,7 @@ class _editProfileState extends State<editProfile> {
                   ),
                 ),
               ),
-              Text(""),
+
 
             ],
           ),

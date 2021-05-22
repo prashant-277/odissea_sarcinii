@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:odiseea_sarcinii/url.dart';
 
 class addbirthplanner extends StatefulWidget {
   @override
@@ -9,6 +14,37 @@ class addbirthplanner extends StatefulWidget {
 
 class _addbirthplannerState extends State<addbirthplanner> {
   String data;
+  bool isLoading = true;
+  final url1 = url.basicUrl;
+  List birthPlanList = [];
+  TextEditingController descripation_cntrl = TextEditingController();
+
+  int count;
+
+  @override
+  void initState() {
+    super.initState();
+    getbirthplan();
+  }
+
+  Future<void> getbirthplan() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = "$url1/getbirthplanList";
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response = await http.get(Uri.parse(url), headers: header);
+
+    final responseJson = json.decode(response.body);
+    print("birth plan " + responseJson.toString());
+
+    setState(() {
+      isLoading = false;
+      birthPlanList = responseJson["data"];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +96,7 @@ class _addbirthplannerState extends State<addbirthplanner> {
                     ),
                     style: TextStyle(
                         fontFamily: "OpenSans",
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black),
                     icon: Icon(
                       Icons.keyboard_arrow_down,
@@ -89,7 +125,7 @@ class _addbirthplannerState extends State<addbirthplanner> {
                     onChanged: (newValue) {
                       setState(() {
                         data = newValue;
-                        print(data);
+                        print("title  " + data.toString());
                       });
                     },
                   ),
@@ -102,8 +138,10 @@ class _addbirthplannerState extends State<addbirthplanner> {
                   height: MediaQuery.of(context).size.height / 5,
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
+                    controller: descripation_cntrl,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(fontFamily: "OpenSans", color: Colors.black),
+                    style:
+                        TextStyle(fontFamily: "OpenSans", color: Colors.black),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(
@@ -123,8 +161,41 @@ class _addbirthplannerState extends State<addbirthplanner> {
               padding: const EdgeInsets.only(top: 20.0),
               child: Container(
                   width: MediaQuery.of(context).size.width,
-                  child: primarybutton("Save", () {
-                    Navigator.pop(context);
+                  child: primarybutton("Save", () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    var url = "$url1/createbirthplanList";
+
+                    for (int i = 0; i < birthPlanList.length; i++) {
+                      if (birthPlanList[i]["title"].toString() !=
+                          data.toString()) {
+                        if (count == null) {
+                          setState(() {
+                            count = 0;
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          count = 1;
+                        });
+                      }
+                    }
+                    var map = new Map<String, dynamic>();
+                    map["title"] = data.toString();
+                    map["description"] = descripation_cntrl.text.toString();
+                    map["flag"] = count.toString();
+
+                    Map<String, String> header = {
+                      "Authorization": prefs.getString("apiToken").toString()
+                    };
+
+                    final response = await http.post(Uri.parse(url),
+                        headers: header, body: map);
+
+                    final responseJson = json.decode(response.body);
+                    print("birth plan add " + responseJson.toString());
+                    if (responseJson["status"] == "Success") {
+                      Navigator.pop(context);
+                    }
                   })),
             )
           ],
