@@ -16,6 +16,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0,
+
       backgroundColor: statusbarColor,
       title: FlatButton(
         splashColor: Colors.transparent,
@@ -24,26 +25,32 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () {
           Navigator.pop(context);
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              "Assets/Icons/back.png",
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                appbartext,
-                style: TextStyle(
-                    fontFamily: "OpenSans",
-                    fontWeight: FontWeight.w600,
-                    color: kwhite,
-                    fontSize: 15),
+        child: GestureDetector(
+          onTap: (){
+            Navigator.pop(context,true);
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                "Assets/Icons/back.png",
+                height: 15,
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  appbartext,
+                  style: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.w600,
+                      color: kwhite,
+                      fontSize: 15),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       actions: widgets,

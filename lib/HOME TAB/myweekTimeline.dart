@@ -166,10 +166,7 @@ class _myweekTimelineState extends State<myweekTimeline>
                                             Container(
                                               width: 0.2,
                                               color: kwhite,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  2.5,
+                                              height: MediaQuery.of(context).size.height /2.5,
                                             ),
                                             SizedBox(height: 10)
                                           ],
@@ -180,34 +177,20 @@ class _myweekTimelineState extends State<myweekTimeline>
                                           child: GestureDetector(
                                             child: Hero(
                                               tag: 'imageHero',
-                                              child: Container(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    2.45,
-                                                child: ClipRRect(
-                                                    // borderRadius: new BorderRadius.circular(12.0),
-                                                    child: FadeInImage(
-                                                        image: NetworkImage(imagedata[index]["image_arr"]
-                                                                            [0][
-                                                                        "image"]
-                                                                    .toString() ==
-                                                                ""
-                                                            ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                            : url2 +
-                                                                imagedata[index]
-                                                                            ["image_arr"][0]
-                                                                        [
-                                                                        "image"]
-                                                                    .toString()),
-                                                        fit: BoxFit.fill,
-                                                        placeholder: AssetImage(
-                                                            "Assets/Images/giphy.gif"))),
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 7)),
-                                              ),
+                                              child: ClipRRect(
+                                                  child: FadeInImage(
+
+                                                      width: MediaQuery.of(context).size.width/1.3,
+                                                      height: MediaQuery.of(context).size.height/2.45,
+
+                                                      image: NetworkImage(imagedata[index]["image_arr"]
+                                                                          [0]["image"].toString() == ""
+                                                          ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                          : url2 + imagedata[index]["image_arr"][0]["image"].toString()),
+                                                      //fit: BoxFit.fill,
+
+                                                      placeholder: AssetImage(
+                                                          "Assets/Images/giphy.gif"))),
                                             ),
                                             onTap: () {
                                               Navigator.push(context,

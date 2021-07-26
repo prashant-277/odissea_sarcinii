@@ -31,8 +31,8 @@ class _addweightDetailState extends State<addweightDetail> {
 
   static final now = DateTime.now();
 
-  var today= new DateTime(now.year, now.month, now.day);
-  var currentweekcal= new DateTime(now.year+1, now.month, now.day);
+  var today = new DateTime(now.year, now.month, now.day);
+  var currentweekcal = new DateTime(now.year + 1, now.month, now.day);
 
   num startweek = 0;
   num currentweek = 0;
@@ -43,15 +43,14 @@ class _addweightDetailState extends State<addweightDetail> {
     //savestartweek = Jiffy(today.toString()).diff(Jiffy([2022, 5, 7]), Units.WEEK);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -88,38 +87,41 @@ class _addweightDetailState extends State<addweightDetail> {
                     fontWeight: FontWeight.w600),
               ),
               Padding(
-                padding: const EdgeInsets.only(top:10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Container(
                   height: 50,
-                    width: MediaQuery.of(context).size.width / 1.0,
-                    child: CupertinoTheme(
-                      data: CupertinoThemeData(
-                        textTheme: CupertinoTextThemeData(
-                          dateTimePickerTextStyle: TextStyle(
-                              color: kblack,
-                              fontFamily: "OpenSans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 1.0,
+                  child: CupertinoTheme(
+                    data: CupertinoThemeData(
+                      textTheme: CupertinoTextThemeData(
+                        dateTimePickerTextStyle: TextStyle(
+                            color: kblack,
+                            fontFamily: "OpenSans",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
                       ),
-                      child: CupertinoDatePicker(
-                          mode: CupertinoDatePickerMode.date,
-                          backgroundColor: kwhite,
-                          minimumDate: DateTime.now(),
-                          maximumDate: DateTime(now.year,now.month+9,now.day),
-                          onDateTimeChanged: (value) {
-                            setState(() {
-                              savestartweek = value;
-                              startweek = Jiffy(savestartweek.toString().substring(0,10)).diff(Jiffy(today.toString()), Units.WEEK);
-                            });
-                            print(savestartweek.toString().substring(0,10));
+                    ),
+                    child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.date,
+                        backgroundColor: kwhite,
+                        minimumDate: DateTime.now(),
+                        maximumDate: DateTime(now.year, now.month + 9, now.day),
+                        onDateTimeChanged: (value) {
+                          setState(() {
+                            savestartweek = value;
+                            startweek =
+                                Jiffy(savestartweek.toString().substring(0, 10))
+                                    .diff(Jiffy(today.toString()), Units.WEEK);
+                          });
+                          print(savestartweek.toString().substring(0, 10));
 
-                            print("start week  " + startweek.toString());
-
-
-                          }),
-                    ),),
+                          print("start week  " + startweek.toString());
+                        }),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -165,7 +167,9 @@ class _addweightDetailState extends State<addweightDetail> {
                     onChanged: (value) =>
                         setState(() {
                           _startValueweight = value;
-                          print("_startValueweight "+ _startValueweight.toString());
+                          print(
+                              "_startValueweight " + _startValueweight
+                                  .toString());
                         }),
                   ),
                   Padding(
@@ -192,8 +196,9 @@ class _addweightDetailState extends State<addweightDetail> {
                     onChanged: (value) =>
                         setState(() {
                           _startValuemonth = value;
-                          print("_startValuemonth "+ _startValuemonth.toString());
-                        } ),
+                          print("_startValuemonth " + _startValuemonth
+                              .toString());
+                        }),
                   ),
                 ],
               ),
@@ -206,10 +211,13 @@ class _addweightDetailState extends State<addweightDetail> {
                     fontWeight: FontWeight.w600),
               ),
               Padding(
-                padding: const EdgeInsets.only(top:10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Container(
                   height: 50,
-                  width: MediaQuery.of(context).size.width / 1.0,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 1.0,
                   child: CupertinoTheme(
                     data: CupertinoThemeData(
                       textTheme: CupertinoTextThemeData(
@@ -217,24 +225,24 @@ class _addweightDetailState extends State<addweightDetail> {
                             color: kblack,
                             fontFamily: "OpenSans",
                             fontSize: 14,
-                            fontWeight: FontWeight.w500
-
-                        ),
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                     child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.date,
                         backgroundColor: kwhite,
                         minimumDate: DateTime.now(),
-                        maximumDate: DateTime(now.year,now.month+9,now.day),
+                        maximumDate: DateTime(now.year, now.month + 9, now.day),
                         onDateTimeChanged: (value) {
                           setState(() {
                             savecurrentweek = value;
-                            currentweek = Jiffy(savecurrentweek.toString()).diff(Jiffy(today.toString()), Units.WEEK);
-                            print("current week "+ currentweek.toString());
+                            currentweek = Jiffy(savecurrentweek.toString())
+                                .diff(Jiffy(today.toString()), Units.WEEK);
+                            print("current week " + currentweek.toString());
                           });
                         }),
-                  ),),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -277,8 +285,11 @@ class _addweightDetailState extends State<addweightDetail> {
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(color: Colors.black26, width: 1),
                     ),
-                    onChanged: (value) =>
-                        setState(() => _currentValueweight = value),
+                    onChanged: (value) {
+                      setState(() {
+                        return _currentValueweight = value;
+                      });
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -307,35 +318,49 @@ class _addweightDetailState extends State<addweightDetail> {
                 ],
               ),
               Container(
-                  width: MediaQuery.of(context).size.width / 1,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 1,
                   child: primarybutton("Add", () async {
-
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
                     var url = "$url1/createWeightList";
 
                     var map = new Map<String, dynamic>();
                     map["start_week"] = startweek.toString();
                     map["current_week"] = currentweek.toString();
-                    map["start_weight"] = _startValueweight.toString() +"."+ _startValuemonth.toString();
-                    map["current_weight"] = _currentValueweight.toString() +"."+ _currentValuemonth.toString();
+                    map["start_weight"] = _startValueweight.toString() +
+                        "." +
+                        _startValuemonth.toString();
+                    map["current_weight"] = _currentValueweight.toString() +
+                        "." +
+                        _currentValuemonth.toString();
 
                     Map<String, String> header = {
                       "Authorization": prefs.getString("apiToken").toString()
                     };
 
-                    final response = await http.post(Uri.parse(url), headers: header, body: map);
+                    final response = await http.post(Uri.parse(url),
+                        headers: header, body: map);
 
                     final responseJson = json.decode(response.body);
                     print("ad weight " + responseJson.toString());
 
-
                     print("start week " + startweek.toString());
                     print("current_week " + currentweek.toString());
-                    print("start_weight " + _startValueweight.toString() +"."+ _startValuemonth.toString());
-                    print("current_weight " + _currentValueweight.toString() +"."+ _currentValuemonth.toString());
+                    print("start_weight " +
+                        _startValueweight.toString() +
+                        "." +
+                        _startValuemonth.toString());
+                    print("current_weight " +
+                        _currentValueweight.toString() +
+                        "." +
+                        _currentValuemonth.toString());
 
-
-                    if(responseJson["status"].toString()=="Success"){Navigator.pop(context);}
+                    if (responseJson["status"].toString() == "Success") {
+                      Navigator.pop(context);
+                    }
                   }))
             ],
           ),

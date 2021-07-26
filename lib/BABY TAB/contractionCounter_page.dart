@@ -1,15 +1,82 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:intl/intl.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/contractionHistory_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:odiseea_sarcinii/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class contractionCounter_page extends StatefulWidget {
   @override
   _contractionCounter_pageState createState() =>
       _contractionCounter_pageState();
 }
+void onStart() {
+  Stopwatch _stopwatch;
+  Timer _timer;
+  _stopwatch = Stopwatch();
+  _timer = new Timer.periodic(new Duration(milliseconds: 30), (timer) {});
 
-class _contractionCounter_pageState extends State<contractionCounter_page> {
+  _stopwatch.start();
+  WidgetsFlutterBinding.ensureInitialized();
+  final service = FlutterBackgroundService();
+
+  service.onDataReceived.listen((event) {
+    if (event["action"] == "setAsForeground") {
+      service.setForegroundMode(true);
+      return;
+    }
+
+    if (event["action"] == "setAsBackground") {
+      service.setForegroundMode(false);
+    }
+
+    if (event["action"] == "stopService") {
+      service.stopBackgroundService();
+      _stopwatch.stop();
+    }
+  });
+
+  // bring to foreground
+  service.setForegroundMode(true);
+  Timer.periodic(Duration(seconds: 1), (timer) async {
+    if (!(await service.isServiceRunning())) timer.cancel();
+    service.setNotificationInfo(
+      title: "Contraction counter",
+      content: "Updated at ${formatTime(_stopwatch.elapsedMilliseconds)}",
+    );
+
+    service.sendData(
+      {"current_date": formatTime(_stopwatch.elapsedMilliseconds).toString()},
+    );
+  });
+}
+class _contractionCounter_pageState extends State<contractionCounter_page>
+    with TickerProviderStateMixin{
+
+  int   start = 0;
+  Map<String, dynamic> timeStringforkick;
+  String _timeString;
+
+  Future<void> gettime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getString("timeString") == null) {
+      prefs.setString("timeStringContraction", _formatDateTime(DateTime.now()).toString());
+      setState(() {
+        _timeString = prefs.getString("timeStringContraction");
+      });
+      print("if");
+    } else {
+      setState(() {
+        _timeString = prefs.getString("timeStringContraction");
+      });
+      print("else");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +88,8 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
            IconButton(
                onPressed: () {
                  Navigator.of(context, rootNavigator: true).push(
-                     MaterialPageRoute(builder: (context) => contractionHistory_page()));
+                     MaterialPageRoute(
+                         builder: (context) => contractionHistory_page()));
                },
                icon: Image.asset(
                  "Assets/Icons/history.png",
@@ -35,11 +103,38 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 /*Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => kick_Session_page()));*/
+
+
+                  if(start==0){
+                    setState(() {
+                      start=1;
+                      gettime();
+                    });
+
+                    FlutterBackgroundService.initialize(onStart);
+                    FlutterBackgroundService().sendData({"action": "setAsForeground"});
+
+                  }else{
+                    var isRunning = await FlutterBackgroundService()
+                        .isServiceRunning();
+                    if (isRunning) {
+                      FlutterBackgroundService().sendData(
+                        {"action": "stopService"},
+                      );
+                      setState(() {
+                        start=0;
+                      });
+
+                    } else {
+                      FlutterBackgroundService.initialize(onStart);
+                    }
+                  }
+
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -60,18 +155,19 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
                         Image.asset(
                           "Assets/Icons/contraction_act.png",
                           height: 70,
-
                         ),
-                        Text(
-                          "Start Contraction",
+                        Text(start==0 ?
+                          "Start Contraction"
+                            : "Stop Contraction",
                           style: TextStyle(
                               fontFamily: "OpenSans",
                               fontWeight: FontWeight.w600,
                               color: kwhite,
                               fontSize: 18),
                         ),
-                        Image.asset(
-                          "Assets/Icons/start.png",
+                        Image.asset(start==0 ?
+                          "Assets/Icons/start.png"
+                            : "Assets/Icons/stop.png",
                           height: 35,
                         ),
                       ],
@@ -85,7 +181,7 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
               child: Container(
                 height: MediaQuery.of(context).size.height / 1.9,
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
                     return Container(
                       child: Padding(
@@ -100,8 +196,7 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
                                 color: Colors.grey.withOpacity(0.2),
                                 spreadRadius: 1,
                                 blurRadius: 1,
-                                offset:
-                                    Offset(0, 1), // changes position of shadow
+                                offset: Offset(0, 1), // changes position of shadow
                               ),
                             ],
                           ),
@@ -158,8 +253,7 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
                                               color: buttonColor,
                                             ),
                                           ),
-                                          Text(
-                                            "03:06:07 PM",
+                                          Text(_timeString == null ? "00:00:00" : _timeString,
                                             style: TextStyle(
                                               fontFamily: "OpenSans",
                                               fontWeight: FontWeight.w500,
@@ -170,8 +264,7 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 3.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 3.0),
                                       child: Row(
                                         children: [
                                           Text(
@@ -182,13 +275,34 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
                                               color: buttonColor,
                                             ),
                                           ),
-                                          Text(
-                                            "4 sec",
-                                            style: TextStyle(
-                                              fontFamily: "OpenSans",
-                                              fontWeight: FontWeight.w500,
-                                              color: kblack,
-                                            ),
+                                          StreamBuilder<Map<String, dynamic>>(
+                                            stream: FlutterBackgroundService().onDataReceived,
+                                            builder: (context, snapshot) {
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: Text("00:00:00",
+                                                    style: TextStyle(
+                                                      fontFamily: "OpenSans",
+                                                      fontWeight: FontWeight.w500,
+                                                      color: kblack,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              final data = snapshot.data;
+                                              DateTime date =
+                                              DateTime.tryParse(data["current_date"]);
+                                              timeStringforkick = snapshot.data;
+                                              return Text(
+                                                data.toString().substring(14, 23),
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: "OpenSans",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: kblack,
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ],
                                       ),
@@ -233,5 +347,9 @@ class _contractionCounter_pageState extends State<contractionCounter_page> {
         ),
       ),
     );
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat('h:mm:ss a ').format(dateTime);
   }
 }

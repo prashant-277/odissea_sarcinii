@@ -124,13 +124,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             child: FadeInImage(
                                                 height: 80,
                                                 width: 80,
-                                                image: NetworkImage(userDetail[0]["user_data"]["image"].toString() ==""
+                                                image: NetworkImage(userDetail[0]["user_data"]["image"].toString() == ""
                                                     ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                    : url2 +
-                                                        userDetail[0]["user_data"]["image"].toString()),
+                                                    : url2 + userDetail[0]["user_data"]["image"].toString()),
                                                 fit: BoxFit.fill,
-                                                placeholder: AssetImage(
-                                                    "Assets/Images/giphy.gif")),
+                                                placeholder: AssetImage("Assets/Images/giphy.gif")),
                                           ),
                                         ),
                                         decoration: BoxDecoration(
@@ -179,8 +177,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(2.0),
+                                                  padding: const EdgeInsets.all(2.0),
                                                   child: Text(
                                                     "Your baby is " +
                                                         userDetail[0]["detail"]["baby_size"].toString() +
@@ -195,31 +192,18 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 ),
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          top: 5.0),
+                                                      const EdgeInsets.only(top: 5.0),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      Navigator.push(
-                                                              context,
-                                                              PageTransition(
-                                                                  type:
-                                                                      PageTransitionType
-                                                                          .fade,
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .bottomCenter,
-                                                                  duration: Duration(
-                                                                      milliseconds:
-                                                                          300),
-                                                                  child:
-                                                                      dobCalculatorPage()))
-                                                          .then((value) =>
-                                                              getDetail());
+                                                      Navigator.push(context, PageTransition(
+                                                          type:PageTransitionType.fade,
+                                                                  alignment: Alignment.bottomCenter,
+                                                                  duration: Duration(milliseconds: 300),
+                                                                  child: dobCalculatorPage()))
+                                                          .then((value) => getDetail());
                                                     },
                                                     child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 5.0),
+                                                      padding: const EdgeInsets.symmetric(vertical: 5.0),
                                                       child: Container(
                                                         height: 27,
                                                         width: 110,
@@ -228,17 +212,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             "EDOB Calculator",
                                                             style: TextStyle(
                                                                 color: kwhite,
-                                                                fontFamily:
-                                                                    "OpenSans",
+                                                                fontFamily: "OpenSans",
                                                                 fontSize: 10),
                                                           ),
                                                         ),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      50.0),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(50.0),
                                                           color: buttonColor,
                                                         ),
                                                       ),
@@ -286,11 +265,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         height: 24,
                                         width: 24,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(50)),
+                                            borderRadius: BorderRadius.all(Radius.circular(50)),
                                             color: buttonColor,
-                                            border: Border.all(
-                                                color: kwhite, width: 4)),
+                                            border: Border.all(color: kwhite, width: 4)),
                                       ),
                                       SliderTheme(
                                           data: SliderThemeData(
@@ -299,8 +276,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   enabledThumbRadius: 3.0,
                                                   elevation: 0),
                                               thumbColor: buttonColor,
-                                              showValueIndicator:
-                                                  ShowValueIndicator.always,
+                                              showValueIndicator: ShowValueIndicator.always,
                                               activeTrackColor: kwhite,
                                               inactiveTrackColor: Colors.red,
                                               valueIndicatorColor: kwhite,
@@ -308,17 +284,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   TextStyle(
                                                       color: buttonColor,
                                                       fontFamily: "OpenSans",
-                                                      fontWeight:
-                                                          FontWeight.w600),
+                                                      fontWeight: FontWeight.w600),
                                               valueIndicatorShape:
                                                   PaddleSliderValueIndicatorShape(),
                                               trackShape: CustomTrackShape(),
                                               overlayColor: Colors.transparent),
                                           child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.55,
+                                            width: MediaQuery.of(context).size.width / 1.55,
                                             child: Slider(
                                               value: sliderValue.toDouble(),
                                               min: 1,
@@ -341,26 +313,19 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         height: 24,
                                         width: 24,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(50)),
+                                            borderRadius: BorderRadius.all(Radius.circular(50)),
                                             color: buttonColor,
-                                            border: Border.all(
-                                                color: Colors.red[700],
-                                                width: 4)),
+                                            border: Border.all(color: Colors.red[700], width: 4)),
                                       ),
                                     ],
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                6,
+                                        width: MediaQuery.of(context).size.width / 6,
                                         child: Text(
-                                          userDetail[0]["user_data"]["dob"]
-                                              .toString(),
+                                          userDetail[0]["user_data"]["dob"].toString(),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: kwhite,
@@ -374,9 +339,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             MediaQuery.of(context).size.width /
                                                 6,
                                         child: Text(
-                                          userDetail[0]["user_data"]
-                                                  ["final_date"]
-                                              .toString(),
+                                          userDetail[0]["user_data"]["final_date"].toString(),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: kwhite,
@@ -425,9 +388,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 child: FadeInImage(
                                     height: 125,
                                     width: 125,
-                                    image: NetworkImage(url2 +
-                                        userDetail[0]["detail"]["image"]
-                                            .toString()),
+                                    image: NetworkImage(
+                                        url2 + userDetail[0]["detail"]["image"].toString()),
                                     fit: BoxFit.fill,
                                     placeholder:
                                         AssetImage("Assets/Images/giphy.gif")),
@@ -443,14 +405,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                                  context,
-                                  PageTransition(
+                          Navigator.push(context, PageTransition(
                                       type: PageTransitionType.fade,
                                       alignment: Alignment.bottomCenter,
                                       duration: Duration(milliseconds: 300),
-                                      child: weeksinfo_page(
-                                          userDetail[0]["user_data"])))
+                                      child: weeksinfo_page(userDetail[0]["user_data"])))
                               .then((value) => getDetail());
                         },
                         child: Container(
@@ -470,8 +429,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 child: Container(
                                   child: Text(
                                     html2md.convert(userDetail[0]["detail"]
-                                            ["description"]
-                                        .toString()),
+                                            ["description"].toString()),
                                     style: TextStyle(
                                         fontFamily: "OpenSans",
                                         fontSize: 15,
@@ -530,13 +488,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 ],
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                        context,
-                                        PageTransition(
+                                Navigator.push(context, PageTransition(
                                             type: PageTransitionType.fade,
                                             alignment: Alignment.bottomCenter,
-                                            duration:
-                                                Duration(milliseconds: 300),
+                                            duration: Duration(milliseconds: 300),
                                             child: myweekTimeline()))
                                     .then((value) => getDetail());
                               },

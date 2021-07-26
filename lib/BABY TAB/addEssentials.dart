@@ -31,11 +31,16 @@ class _addEssentialsState extends State<addEssentials> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = "$url1/getessentialList";
 
+    var map = new Map<String, dynamic>();
+    map["type"] = "";
+    map["essential_id"] =  "";
+    map["flag"] = "";
+
     Map<String, String> header = {
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.get(Uri.parse(url), headers: header);
+    final response = await http.post(Uri.parse(url), headers: header,body:map);
 
     final responseJson = json.decode(response.body);
     print("essential plan " + responseJson.toString());
@@ -134,7 +139,7 @@ class _addEssentialsState extends State<addEssentials> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0, right: 10),
+              padding: const EdgeInsets.only(top: 10.0, right: 10)  ,
               child: Container(
                   height: MediaQuery.of(context).size.height / 5,
                   width: MediaQuery.of(context).size.width / 1.2,

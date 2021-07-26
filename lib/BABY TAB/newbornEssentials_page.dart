@@ -26,21 +26,32 @@ class _newbornEssentials_pageState extends State<newbornEssentials_page>
   @override
   void initState() {
     super.initState();
-    getessential();
+    getessential("","",null);
   }
 
-  Future<void> getessential() async {
+  Future<void> getessential(String type_data, String flag, int essentialid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = "$url1/getessentialList";
+
+
+    print(type_data.toString().toString());
+    print(flag.toString());
+    print(essentialid.toString().toString());
+
+
+    var map = new Map<String, dynamic>();
+    map["type"] = type_data.toString();
+    map["essential_id"] =  essentialid.toString();
+    map["flag"] = flag.toString();
 
     Map<String, String> header = {
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.get(Uri.parse(url), headers: header);
+    final response = await http.post(Uri.parse(url), headers: header,body: map);
 
     final responseJson = json.decode(response.body);
-    print("birth plan " + responseJson.toString());
+    print("getessentialList " + responseJson.toString());
 
     setState(() {
       setState(() {
@@ -109,7 +120,7 @@ class _newbornEssentials_pageState extends State<newbornEssentials_page>
                   backgroundColor: kwhite,
                   contentPadding:
                       EdgeInsets.only(top: 10, left: 15, right: 5, bottom: 20),
-                  content: addEssentials())).then((value) => getessential());
+                  content: addEssentials())).then((value) => getessential("","",null));
         },
         child: Image.asset("Assets/Icons/add.png"),
       ),
@@ -142,8 +153,7 @@ class _newbornEssentials_pageState extends State<newbornEssentials_page>
                         return Column(
                           children: [
                             essentialPlanList[index]["description"]
-                                        .toString() ==
-                                    "[]"
+                                        .toString() == "[]"
                                 ? Container()
                                 : Container(
                                     height:
@@ -218,7 +228,7 @@ class _newbornEssentials_pageState extends State<newbornEssentials_page>
                                       print("essential delete " + responseJson.toString());
                                       if (responseJson["status"] == "Success") {
                                         setState(() {
-                                          getessential();
+                                          getessential("","",null);
                                         });
                                       }else{
                                         displayToast(responseJson["message"].toString());
@@ -243,13 +253,20 @@ class _newbornEssentials_pageState extends State<newbornEssentials_page>
                                                   setState(() {
                                                     if (checkBoxValue == true) {
                                                       checkBoxValue = false;
+                                                      setState(() {
+                                                        getessential("add_data","0",essentialPlanList[index]["description"][index1]["id"]);
+                                                      });
                                                     } else {
                                                       checkBoxValue = true;
+                                                      setState(() {
+                                                        getessential("add_data","1",essentialPlanList[index]["description"][index1]["id"]);
+                                                      });
                                                     }
                                                   });
                                                 },
                                                 icon: Image.asset(
-                                                  checkBoxValue
+                                                  essentialPlanList[index]
+                                                  ["description"][index1]["flag"]==0
                                                       ? "Assets/Icons/check.png"
                                                       : "Assets/Icons/uncheck.png",
                                                 )),

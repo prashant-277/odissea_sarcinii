@@ -57,6 +57,7 @@ class _weightListpageState extends State<weightListpage> with TickerProviderStat
             showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
+
                     backgroundColor: kwhite,
                     content: Hero(tag: "dialoghero",
                         child: addweightDetail()))).then((value) => getweightlist());

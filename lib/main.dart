@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:flutter_background_service/flutter_background_service.dart';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,59 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Registration/RegistrationPage.dart';
 
 void main() async {
+  //HttpOverrides.global = new MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+  //FlutterBackgroundService.initialize(onStart);
+
   runApp(MyApp());
+}
+
+Stopwatch _stopwatch;
+Timer _timer;
+// void onStart() {
+//   _stopwatch = Stopwatch();
+//   _timer = new Timer.periodic(new Duration(milliseconds: 30), (timer) {});
+//
+//   _stopwatch.start();
+//   WidgetsFlutterBinding.ensureInitialized();
+//   final service = FlutterBackgroundService();
+//   service.onDataReceived.listen((event) {
+//     if (event["action"] == "setAsForeground") {
+//       service.setForegroundMode(true);
+//       return;
+//     }
+//
+//     if (event["action"] == "setAsBackground") {
+//       service.setForegroundMode(false);
+//     }
+//
+//     if (event["action"] == "stopService") {
+//       service.stopBackgroundService();
+//     }
+//   });
+//
+//   // bring to foreground
+//   service.setForegroundMode(true);
+//   Timer.periodic(Duration(seconds: 1), (timer) async {
+//     if (!(await service.isServiceRunning())) timer.cancel();
+//     service.setNotificationInfo(
+//       title: "Kick session",
+//       content: "Updated at ${formatTime(_stopwatch.elapsedMilliseconds)}",
+//     );
+//
+//     service.sendData(
+//       {"current_date": formatTime(_stopwatch.elapsedMilliseconds).toString()},
+//     );
+//   });
+// }
+
+String formatTime(int milliseconds) {
+  var secs = milliseconds ~/ 1000;
+  var hours = (secs ~/ 3600).toString().padLeft(2, '0');
+  var minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
+  var seconds = (secs % 60).toString().padLeft(2, '0');
+
+  return "$hours:$minutes:$seconds";
 }
 
 class MyApp extends StatelessWidget {
@@ -145,3 +199,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );*/
   }
 }
+
+/*class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}*/

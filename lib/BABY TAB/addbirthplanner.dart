@@ -31,11 +31,16 @@ class _addbirthplannerState extends State<addbirthplanner> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = "$url1/getbirthplanList";
 
+    var map = new Map<String, dynamic>();
+    map["type"] = "";
+    map["birth_id"] =  "";
+    map["flag"] = "";
+
     Map<String, String> header = {
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.get(Uri.parse(url), headers: header);
+    final response = await http.post(Uri.parse(url), headers: header,body:map);
 
     final responseJson = json.decode(response.body);
     print("birth plan " + responseJson.toString());

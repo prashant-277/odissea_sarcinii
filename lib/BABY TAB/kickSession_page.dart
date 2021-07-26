@@ -1,17 +1,65 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/kickDetail_page.dart';
-import 'package:odiseea_sarcinii/BABY%20TAB/kick_Session_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/appbarCustom.dart';
 import 'package:odiseea_sarcinii/constants.dart';
+import 'package:odiseea_sarcinii/url.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'kickshowDetail_page.dart';
 
 class kickCounter_page extends StatefulWidget {
   @override
   _kickCounter_pageState createState() => _kickCounter_pageState();
 }
 
-class _kickCounter_pageState extends State<kickCounter_page> {
+class _kickCounter_pageState extends State<kickCounter_page> with
+    TickerProviderStateMixin{
+  final url1 = url.basicUrl;
+  List kickData = [];
+  bool isLoading = true;
+  Map<String, dynamic> timeStringforkick;
+
+  String message="";
+  @override
+  void initState() {
+    super.initState();
+    getKickData();
+  }
+
+  Future<void> getKickData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = "$url1/kickData";
+
+    Map<String, String> header = {
+      "Authorization": prefs.getString("apiToken").toString()
+    };
+
+    final response = await http.post(Uri.parse(url), headers: header);
+
+    final responseJson = json.decode(response.body);
+    print("kickCount " + responseJson.toString());
+
+    if(responseJson["status"].toString()=="Success"){
+      setState(() {
+        kickData = responseJson["data"];
+        message = responseJson["message"].toString();
+        isLoading = false;
+      });
+    }else{
+      setState(() {
+        message = responseJson["message"].toString();
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +67,6 @@ class _kickCounter_pageState extends State<kickCounter_page> {
       appBar: BaseAppBar(
         appbartext: "Kick counter",
         appBar: AppBar(),
-
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -28,10 +75,9 @@ class _kickCounter_pageState extends State<kickCounter_page> {
           children: [
             GestureDetector(
               onTap: () {
-                /*Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => kick_Session_page()));*/
+                Navigator.of(context,rootNavigator: true).
+                push(new MaterialPageRoute(builder: (_)=>new kickSession_page()))
+                    .then((val)=>getKickData());
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -72,12 +118,30 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                 ),
               ),
             ),
-            Padding(
+
+             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Container(
                 height: MediaQuery.of(context).size.height / 1.9,
-                child: ListView.builder(
-                  itemCount: 5,
+                child: isLoading
+                    ? SpinKitFadingFour(
+                  color: buttonColor,
+                  controller: AnimationController(
+                      vsync: this, duration: const Duration(milliseconds: 1200)),
+                )
+                    : message.toString()=="No Data Found"? Container(
+                  child: Center(
+                    child: Text("No Data Found",
+                      style: TextStyle(
+                        fontFamily: "OpenSans",
+
+                        fontWeight: FontWeight.w500,
+                        color: kblack,
+                      ),
+                    ),
+                  ),
+                ):ListView.builder(
+                  itemCount: kickData.length == 0 ? "" : kickData.length,
                   itemBuilder: (context, index) {
                     return Container(
                       child: Padding(
@@ -115,16 +179,14 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        "09 April 2021",
+                                      Text(kickData[index]["stop_date"].toString(),
                                         style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontWeight: FontWeight.w600,
                                           color: kwhite,
                                         ),
                                       ),
-                                      Text(
-                                        "Completed",
+                                      Text(kickData[index]["flag"].toString(),
                                         style: TextStyle(
                                           fontFamily: "OpenSans",
                                           fontWeight: FontWeight.w600,
@@ -153,12 +215,11 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                         ),
                                         SizedBox(height: 5),
                                         Text(
-                                          "7",
+                                          kickData[index]["count"].toString(),
                                           style: TextStyle(
                                             fontFamily: "OpenSans",
                                             fontWeight: FontWeight.w700,
                                             color: kblack,
-
                                           ),
                                         ),
                                       ],
@@ -180,7 +241,7 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                         ),
                                         SizedBox(height: 5),
                                         Text(
-                                          "03:06:07 PM",
+                                          kickData[index]["start_time"].toString(),
                                           style: TextStyle(
                                             fontFamily: "OpenSans",
                                             fontWeight: FontWeight.w500,
@@ -205,8 +266,39 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                           ),
                                         ),
                                         SizedBox(height: 5),
+                                        kickData[index]["flag"].toString()=="active" ?
+                                        StreamBuilder<Map<String, dynamic>>(
+                                          stream: FlutterBackgroundService().onDataReceived,
+                                          builder: (context, snapshot) {
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SpinKitWave(
+                                                  color: buttonColor,
+                                                  size: 12,
+                                                  controller: AnimationController(
+                                                      vsync: this,
+                                                      duration:
+                                                      const Duration(milliseconds: 1200)),
+                                                ),
+                                              );
+                                            }
+                                            final data = snapshot.data;
+                                            DateTime date =
+                                            DateTime.tryParse(data["current_date"]);
+                                            timeStringforkick = snapshot.data;
+                                            return Text(
+                                              data.toString().substring(14, 23),
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: "OpenSans",
+                                                fontWeight: FontWeight.w500,
+                                                color: kblack,
+                                              ),
+                                            );
+                                          },
+                                        ):
                                         Text(
-                                          "0:0:27",
+                                          kickData[index]["duration"].toString(),
                                           style: TextStyle(
                                             fontFamily: "OpenSans",
                                             fontWeight: FontWeight.w500,
@@ -219,13 +311,22 @@ class _kickCounter_pageState extends State<kickCounter_page> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top:5,bottom: 10.0),
+                                padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => kickDetail_page()));
-                                  },
+                                    if(kickData[index]["flag"].toString()=="active"){
+
+                                      Navigator.of(context,rootNavigator: true).
+                                      push(new MaterialPageRoute(builder: (_) => new kickSession_page()))
+                                          .then((val)=>getKickData());
+
+                                    }else{
+                                      Navigator.of(context, rootNavigator: true)
+                                          .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              kickshowDetail_page(kickData[index]["unique_id"])));
+                                    }
+                                    },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [

@@ -208,7 +208,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page>
                                       image: DecorationImage(
                                         image: NetworkImage(url2 +
                                             weekDetail[0]["image"].toString()),
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                     child: Padding(
@@ -219,7 +219,8 @@ class _weeksinfo_pageState extends State<weeksinfo_page>
                                         children: [
                                           Column(
                                             children: [
-                                              Text("Day",style: TextStyle(color: kGray,fontFamily: "OpenSans",
+                                              Text("Day",style: TextStyle(
+                                                  color: kGray,fontFamily: "OpenSans",
                                                   fontWeight: FontWeight.w600)),
                                               Text(userDetail["total_day"].toString(),
                                                 textAlign: TextAlign.start,
@@ -233,11 +234,11 @@ class _weeksinfo_pageState extends State<weeksinfo_page>
                                           ),
                                           Column(
                                             children: [
-                                              Text("Days left",style: TextStyle(color: kGray,fontFamily: "OpenSans",
+                                              Text("Days left",style: TextStyle(
+                                                  color: kGray,fontFamily: "OpenSans",
                                                   fontWeight: FontWeight.w600),),
                                               Text(
-                                                userDetail["remain_day"]
-                                                    .toString(),
+                                                userDetail["remain_day"].toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kwhite,
@@ -260,9 +261,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page>
                                     children: [
                                       SizedBox(height: 30),
                                       Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.19,
+                                        width: MediaQuery.of(context).size.width / 1.19,
                                         child: Column(
                                           children: [
                                             SizedBox(
@@ -278,10 +277,7 @@ class _weeksinfo_pageState extends State<weeksinfo_page>
                                                   height: 28,
                                                   width: 28,
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  50)),
+                                                      borderRadius:BorderRadius.all(Radius.circular(50)),
                                                       color: kwhite,
                                                       border: Border.all(
                                                           color: buttonColor,
@@ -292,61 +288,39 @@ class _weeksinfo_pageState extends State<weeksinfo_page>
                                                         trackHeight: 8,
                                                         thumbShape:
                                                             RoundSliderThumbShape(
-                                                                enabledThumbRadius:
-                                                                    3.0,
+                                                                enabledThumbRadius: 3.0,
                                                                 elevation: 0),
                                                         thumbColor: buttonColor,
-                                                        showValueIndicator:
-                                                            ShowValueIndicator
-                                                                .always,
-                                                        activeTrackColor:
-                                                            kwhite,
-                                                        inactiveTrackColor:
-                                                            Colors.red,
-                                                        valueIndicatorColor:
-                                                            kwhite,
+                                                        showValueIndicator: ShowValueIndicator.always,
+                                                        activeTrackColor: kwhite,
+                                                        inactiveTrackColor: Colors.red,
+                                                        valueIndicatorColor: kwhite,
                                                         valueIndicatorTextStyle:
                                                             TextStyle(
                                                                 color: kwhite,
-                                                                fontFamily:
-                                                                    "OpenSans",
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                        valueIndicatorShape:
-                                                            PaddleSliderValueIndicatorShape(),
-                                                        trackShape:
-                                                            CustomTrackShape(),
-                                                        overlayColor:
-                                                            Colors.transparent),
+                                                                fontFamily: "OpenSans",
+                                                                fontWeight: FontWeight.w600),
+                                                        valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                                                        trackShape: CustomTrackShape(),
+                                                        overlayColor: Colors.transparent),
                                                     child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              1.50,
+                                                      width: MediaQuery.of(context).size.width / 1.50,
                                                       child: Slider(
-                                                          value: sliderValue
-                                                              .toDouble(),
+                                                          value: sliderValue.toDouble(),
                                                           min: 1,
                                                           max: 270,
                                                           divisions: 270,
-                                                          activeColor:
-                                                              buttonColor,
-                                                          inactiveColor:
-                                                              Colors.red[100],
-                                                          label: 'Day ' +
-                                                              '${sliderValue.round()}',
-                                                          onChanged: (double
-                                                              newValue) {
+                                                          activeColor: buttonColor,
+                                                          inactiveColor: Colors.red[100],
+                                                          label: 'Day ' + '${sliderValue.round()}',
+                                                          onChanged: (double newValue) {
                                                             /*setState(() {
                                                         sliderValue =
                                                             newValue.round();
                                                       });*/
                                                           },
                                                           semanticFormatterCallback:
-                                                              (double
-                                                                  newValue) {
+                                                              (double newValue) {
                                                             return '${newValue.round()}';
                                                           }),
                                                     )),
@@ -354,14 +328,10 @@ class _weeksinfo_pageState extends State<weeksinfo_page>
                                                   height: 28,
                                                   width: 28,
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  50)),
+                                                      borderRadius: BorderRadius.all(Radius.circular(50)),
                                                       color: kwhite,
                                                       border: Border.all(
-                                                          color:
-                                                              Colors.red[100],
+                                                          color: Colors.red[100],
                                                           width: 5)),
                                                 ),
                                               ],

@@ -27,18 +27,27 @@ class _birthPlanner_pageState extends State<birthPlanner_page>
   @override
   void initState() {
     super.initState();
-    getbirthplan();
+    getbirthplan("","",null);
   }
 
-  Future<void> getbirthplan() async {
+  Future<void> getbirthplan(String type_data, String flag, int birthid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = "$url1/getbirthplanList";
+
+    print(type_data.toString().toString());
+    print(flag.toString());
+    print(birthid.toString().toString());
+
+    var map = new Map<String, dynamic>();
+    map["type"] = type_data.toString();
+    map["birth_id"] =  birthid.toString();
+    map["flag"] = flag;
 
     Map<String, String> header = {
       "Authorization": prefs.getString("apiToken").toString()
     };
 
-    final response = await http.get(Uri.parse(url), headers: header);
+    final response = await http.post(Uri.parse(url), headers: header,body:map);
 
     final responseJson = json.decode(response.body);
     print("birth plan " + responseJson.toString());
@@ -110,7 +119,7 @@ class _birthPlanner_pageState extends State<birthPlanner_page>
                   backgroundColor: kwhite,
                   contentPadding:
                       EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 20),
-                  content: addbirthplanner())).then((value) => getbirthplan());
+                  content: addbirthplanner())).then((value) => getbirthplan("","",null));
         },
         child: Image.asset("Assets/Icons/add.png"),
       ),
@@ -226,7 +235,7 @@ class _birthPlanner_pageState extends State<birthPlanner_page>
                                           responseJson.toString());
                                       if (responseJson["status"] == "Success") {
                                         setState(() {
-                                          getbirthplan();
+                                          getbirthplan("","",null);
                                         });
                                       } else {
                                         displayToast(
@@ -252,13 +261,20 @@ class _birthPlanner_pageState extends State<birthPlanner_page>
                                                   setState(() {
                                                     if (checkBoxValue == true) {
                                                       checkBoxValue = false;
+                                                      setState(() {
+                                                        getbirthplan("add_data","0",birthPlanList[index]["description"][index1]["id"]);
+                                                      });
                                                     } else {
                                                       checkBoxValue = true;
+                                                      setState(() {
+                                                        getbirthplan("add_data","1",birthPlanList[index]["description"][index1]["id"]);
+                                                      });
                                                     }
                                                   });
                                                 },
                                                 icon: Image.asset(
-                                                  checkBoxValue
+                                                  birthPlanList[index]
+                                                  ["description"][index1]["flag"]==0
                                                       ? "Assets/Icons/check.png"
                                                       : "Assets/Icons/uncheck.png",
                                                 )),

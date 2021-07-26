@@ -60,9 +60,12 @@ dependencies:
   flutter_share:
   html2md: ^1.1.0
   jiffy: ^4.1.0
-  workmanager: ^0.2.0
   syncfusion_flutter_charts: ^19.1.64
-
+  progress_indicators: ^0.1.5
+  url_launcher: ^5.4.10
+  intl:
+  flutter_background_service: ^0.1.5
+  percent_indicator:
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/babyNames_page.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/birthPlanner_page.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/contractionCounter_page.dart';
-import 'package:odiseea_sarcinii/BABY%20TAB/kickCounter_page.dart';
+import 'package:odiseea_sarcinii/BABY%20TAB/kickSession_page.dart';
 import 'package:odiseea_sarcinii/BABY%20TAB/newbornEssentials_page.dart';
 import 'package:odiseea_sarcinii/WIDGETS/listtile.dart';
 import 'package:odiseea_sarcinii/constants.dart';

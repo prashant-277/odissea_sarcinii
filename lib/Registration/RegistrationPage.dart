@@ -48,6 +48,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (Platform.isIOS) iOS_Permission();
+
     if (Platform.isAndroid) Android_Permission();
 
     _firebaseMessaging.getToken().then((token) {
@@ -266,13 +267,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Text(
                         "Skip  ",
                         style: TextStyle(
-                            color: kblack,
+                            color: Colors.transparent,
                             fontSize: 20,
                             fontFamily: "OpenSans",
                             fontWeight: FontWeight.w600),
                       ),
                       Image.asset(
                         "Assets/Icons/right_single.png",
+                        color: Colors.transparent,
                         height: 15,
                       )
                     ],

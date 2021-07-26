@@ -14,7 +14,6 @@ class _termsandconditionState extends State<termsandcondition>
   int count;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -24,7 +23,6 @@ class _termsandconditionState extends State<termsandcondition>
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     setState(() {
