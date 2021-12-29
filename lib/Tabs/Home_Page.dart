@@ -389,14 +389,20 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     height: 125,
                                     width: 125,
                                     image: NetworkImage(
-                                        url2 + userDetail[0]["detail"]["image"].toString()),
-                                    fit: BoxFit.fill,
+                                        url2 +userDetail[0]["detail"]["image"].toString()),
+                                    fit: BoxFit.contain,
                                     placeholder:
-                                        AssetImage("Assets/Images/giphy.gif")),
+                                        AssetImage("Assets/Images/giphy.gif"),
+                                  imageErrorBuilder: (context, url, error) => Icon(
+                                    Icons.error,
+                                    color: kblack,
+                                  ),
+
+                                ),
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100.0),
-                                color: kwhite,
+                                color: kGray,
                               ),
                             ),
                             Text(""),

@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_share/flutter_share.dart';
+//import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:odiseea_sarcinii/APP%20SETUP/Page.dart';
@@ -330,11 +330,11 @@ class _DetailScreenState extends State<DetailScreen>
         widgets: [
           IconButton(
               onPressed: () async {
-                await FlutterShare.share(
+                /*await FlutterShare.share(
                     title: 'Odiseea Sarcinii',
                     text: '',
                     linkUrl: url2 + imageArray[0]["image"].toString(),
-                    chooserTitle: '');
+                    chooserTitle: '');*/
               },
               icon: Image.asset(
                 "Assets/Icons/share.png",

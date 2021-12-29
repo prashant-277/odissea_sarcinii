@@ -15,7 +15,6 @@ import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:odiseea_sarcinii/url.dart';
 
@@ -31,7 +30,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
   File _image1;
   String urlimg1;
   String document_path1;
-  PermissionStatus _status;
 
   TextEditingController fname_controller = TextEditingController();
   TextEditingController lname_controller = TextEditingController();
@@ -40,14 +38,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
   TextEditingController password_controller = TextEditingController();
   TextEditingController dob_controller = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
 
-    PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.camera)
-        .then(_updateStatus);
-  }
 
   String password = '';
   bool show = true;
@@ -183,7 +174,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                                               .width,
                                                           child: FlatButton(
                                                             onPressed:
-                                                                _askPermissionD1,
+                                                            imageSelectorCameraD1,
                                                             child: Row(
                                                               children: <
                                                                   Widget>[
@@ -564,28 +555,6 @@ class _SignUp_PageState extends State<SignUp_Page> {
         ),
       ),
     );
-  }
-
-  void _askPermissionD1() {
-    PermissionHandler().requestPermissions([PermissionGroup.camera]).then(
-        _onStatusRequestedD1);
-  }
-
-  void _onStatusRequestedD1(Map<PermissionGroup, PermissionStatus> value) {
-    final status = value[PermissionGroup.camera];
-    if (status == PermissionStatus.granted) {
-      imageSelectorCameraD1();
-    } else {
-      _updateStatus(status);
-    }
-  }
-
-  _updateStatus(PermissionStatus value) {
-    if (value != _status) {
-      setState(() {
-        _status = value;
-      });
-    }
   }
 
   void imageSelectorCameraD1() async {

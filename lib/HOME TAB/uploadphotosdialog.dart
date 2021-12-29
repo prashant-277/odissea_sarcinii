@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:odiseea_sarcinii/url.dart';
 import 'package:http/http.dart' as http;

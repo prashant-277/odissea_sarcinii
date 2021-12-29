@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:flutter_background_service/flutter_background_service.dart';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:odiseea_sarcinii/APP%20SETUP/Dashboard_Page.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'Registration/RegistrationPage.dart';
 
 void main() async {

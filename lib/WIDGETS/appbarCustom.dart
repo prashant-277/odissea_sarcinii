@@ -16,7 +16,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0,
-
+      centerTitle: false,
       backgroundColor: statusbarColor,
       title: FlatButton(
         splashColor: Colors.transparent,

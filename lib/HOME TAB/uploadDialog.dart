@@ -10,7 +10,6 @@ import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/WIDGETS/textfield.dart';
 import 'package:odiseea_sarcinii/WIDGETS/toastDisplay.dart';
 import 'package:odiseea_sarcinii/constants.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:odiseea_sarcinii/url.dart';
 
@@ -29,7 +28,6 @@ class _uploadDialogState extends State<uploadDialog> {
 
   String urlimg1;
   String document_path1;
-  PermissionStatus _status;
 
   File _image1;
 

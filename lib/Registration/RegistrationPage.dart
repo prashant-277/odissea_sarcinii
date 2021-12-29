@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:odiseea_sarcinii/APP%20SETUP/Dashboard_Page.dart';
 import 'package:odiseea_sarcinii/Registration/ForgotPassword_Page.dart';
 import 'package:odiseea_sarcinii/Registration/SignIn_Page.dart';
 import 'package:odiseea_sarcinii/Registration/SignUp_Page.dart';
-import 'package:http/http.dart' as http;
 import 'package:odiseea_sarcinii/WIDGETS/primarybutton.dart';
 import 'package:odiseea_sarcinii/constants.dart';
 import 'package:page_transition/page_transition.dart';
@@ -23,7 +20,7 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   bool isLoggedIn = false;
   var profileData;
-  static final FacebookLogin facebookSignIn = new FacebookLogin();
+  //static final FacebookLogin facebookSignIn = new FacebookLogin();
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   var device_token;
   var device_id;
@@ -209,7 +206,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                     color: Color(0xff3B5998),
                     onPressed: () {
-                      initiateFacebookLogin();
+                      //initiateFacebookLogin();
                     },
                     child: Text(
                       "Log In with Facebook",
@@ -289,7 +286,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Future<Null> initiateFacebookLogin() async {
+  /*Future<Null> initiateFacebookLogin() async {
     final facebookLoginResult = await facebookSignIn.logIn(['email']);
 
     switch (facebookLoginResult.status) {
@@ -321,5 +318,5 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
         break;
     }
-  }
+  }*/
 }
